@@ -109,7 +109,7 @@ const handleValidate = () => {
           <Grid xs={5}>
             <img
               src="https://cdn-07.9rayti.com/rsrc/cache/widen_750/uploads/2014/06/ENSA-El-Jadida-concours-dacc%C3%A8s-%C3%A0-la-1%C3%A8re-ann%C3%A9e-du-Cycle-dIng%C3%A9nieur-2014.jpg"
-              width="70%"
+              width="65%"
               height="60%"
             />
           </Grid>
@@ -119,7 +119,7 @@ const handleValidate = () => {
           <Grid xs={5}>
             <img
               src="https://www.enssup.gov.ma/storage/settings/October2021/TxyjqNRZ4NmJv8XIlkg4.png"
-              width="80%"
+              width="75%"
               height="60%"
             />
           </Grid>
