@@ -8,15 +8,71 @@ import Typography from '@mui/joy/Typography';
 import Grid from '@mui/joy/Grid';
 import Select from '@mui/joy/Select';
 import Option from '@mui/joy/Option';
+import Textarea from '@mui/joy/Textarea';
 
+import FormControl from '@mui/joy/FormControl';
+import FormLabel from '@mui/joy/FormLabel';
+import Input from '@mui/joy/Input';
+import Modal from '@mui/joy/Modal';
+import ModalDialog from '@mui/joy/ModalDialog';
+import DialogTitle from '@mui/joy/DialogTitle';
+import DialogContent from '@mui/joy/DialogContent';
+import Stack from '@mui/joy/Stack';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import Autocomplete from '@mui/joy/Autocomplete';
+import TextField from '@mui/material/TextField';
 export default function FAQCard() {
-  const [selectedOption, setSelectedOption] = React.useState('att1'); // Initial selected option
+    const [selectedUniversity, setSelectedUniversity] = React.useState(null);
 
+  const handleUniversityChange = (event, newValue) => {
+    setSelectedUniversity(newValue);
+  };
+
+  // Array of university objects with real names from Morocco and France
+  const universities = [
+    { label: 'Université de Paris', country: 'France' },
+    { label: 'Sorbonne Université', country: 'France' },
+    { label: 'École Polytechnique', country: 'France' },
+    { label: 'Paris-Sud University', country: 'France' },
+    { label: 'Université de Aix-Marseille', country: 'France' },
+    { label: 'Université de Lyon', country: 'France' },
+    { label: 'Université de Lille', country: 'France' },
+    { label: 'Université de Toulouse', country: 'France' },
+    { label: 'Université de Bordeaux', country: 'France' },
+    { label: 'Université de Montpellier', country: 'France' },
+    { label: 'Université de Nice Sophia Antipolis', country: 'France' },
+    { label: 'Université de Nantes', country: 'France' },
+    { label: 'Université de Grenoble', country: 'France' },
+    { label: 'Université de Rennes', country: 'France' },
+    { label: 'Université de Poitiers', country: 'France' },
+    { label: 'Université de Rouen', country: 'France' },
+    { label: 'Université de Orleans', country: 'France' },
+    { label: 'Université de Avignon', country: 'France' },
+    // Add more universities here
+  ];
+  const [selectedOption, setSelectedOption] = React.useState('att1'); // Initial selected option
+  const [openAtt2, setOpenAtt2] = React.useState(false);
+  const [openAtt3, setOpenAtt3] = React.useState(false);
+  const [openAtt4, setOpenAtt4] = React.useState(false);
+  //Choose option for demande
   const handleChange = (event, newValue) => {
     setSelectedOption(newValue)
+    
   };
   
-
+const handleValidate = () => {
+    if(selectedOption==='att2'){
+        setOpenAtt2(true);
+    }
+    else if(selectedOption==='att3'){
+        setOpenAtt3(true);
+    }
+    else if(selectedOption==='att4'){
+        setOpenAtt4(true);
+    }
+}
   return (
     <Card
       size="lg"
@@ -90,6 +146,7 @@ export default function FAQCard() {
 <Button
   variant="outlined"
   color="primary"
+  onClick={handleValidate}
   sx={{
     '--variant-borderWidth': '2px',
     borderRadius: 40,
@@ -100,8 +157,165 @@ export default function FAQCard() {
   {selectedOption === 'att1' ? 'Imprimer' : 'Valider'}
 </Button>
 
+<Modal open={openAtt2} onClose={() => setOpenAtt2(false)}>
+        <ModalDialog>
+          <DialogTitle> الإذن بمغادرة التراب الوطني</DialogTitle>
+          <DialogContent>Autorisation de quitter le territoire</DialogContent>
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              setOpenAtt2(false);
+            }}
+          >
+            <Stack spacing={2}>
+              <FormControl>
+              <Grid container spacing={2} style={{marginTop:"2%"}}>
+              <Grid item xs={6} >
+                <FormLabel>De : من</FormLabel>
+                <LocalizationProvider dateAdapter={AdapterDayjs} >
+                <DatePicker 
+                // value={selectedDateVisa} // Pass the selectedDate as the value
+                // onChange={handleDateVisaChange} // Handle date selection
+                // sx={{width:"100%"}}
+                />
+              </LocalizationProvider>
+              </Grid>
+              <Grid item xs={6} >
+                <FormLabel>À : الى</FormLabel>
+                <LocalizationProvider dateAdapter={AdapterDayjs} >
+                <DatePicker 
+                // value={selectedDateVisa} // Pass the selectedDate as the value
+                // onChange={handleDateVisaChange} // Handle date selection
+                // sx={{width:"100%"}}
+                />
+              </LocalizationProvider>
+              </Grid>
+              </Grid>
+              </FormControl>
+              <FormControl>
+                <FormLabel>Université : جامعة</FormLabel>
+              <Autocomplete
+      options={universities}
+      getOptionLabel={(option) => option.label}
+      value={selectedUniversity}
+      onChange={handleUniversityChange}
+      renderInput={(params) => <TextField {...params} label="Select University" variant="outlined" />}
+    />
+    </FormControl>
+              <FormControl>
+                <FormLabel>Description : وصف</FormLabel>
+                <Textarea required minRows={3}/>
+              </FormControl>
+              <Button type="submit">Valider</Button>
+            </Stack>
+          </form>
+        </ModalDialog>
+      </Modal>
+
+
+      <Modal open={openAtt3} onClose={() => setOpenAtt3(false)}>
+        <ModalDialog>
+          <DialogTitle>إجازة إدارية
+</DialogTitle>
+          <DialogContent>Décision de congé administratif</DialogContent>
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              setOpenAtt2(false);
+            }}
+          >
+            <Stack spacing={2}>
+              <FormControl>
+              <Grid container spacing={2} style={{marginTop:"2%"}}>
+              <Grid item xs={6} >
+                <FormLabel>De : من</FormLabel>
+                <LocalizationProvider dateAdapter={AdapterDayjs} >
+                <DatePicker 
+                // value={selectedDateVisa} // Pass the selectedDate as the value
+                // onChange={handleDateVisaChange} // Handle date selection
+                // sx={{width:"100%"}}
+                />
+              </LocalizationProvider>
+              </Grid>
+              <Grid item xs={6} >
+                <FormLabel>À : الى</FormLabel>
+                <LocalizationProvider dateAdapter={AdapterDayjs} >
+                <DatePicker 
+                // value={selectedDateVisa} // Pass the selectedDate as the value
+                // onChange={handleDateVisaChange} // Handle date selection
+                // sx={{width:"100%"}}
+                />
+              </LocalizationProvider>
+              </Grid>
+              </Grid>
+              </FormControl>
+              <FormControl>
+                <FormLabel>Description : وصف</FormLabel>
+                <Textarea required minRows={3}/>
+              </FormControl>
+              <Button type="submit">Valider</Button>
+            </Stack>
+          </form>
+        </ModalDialog>
+      </Modal>
+
+
+
+      <Modal open={openAtt4} onClose={() => setOpenAtt4(false)}>
+        <ModalDialog>
+          <DialogTitle> شهادةاستئناف العمل
+</DialogTitle>
+          <DialogContent>Attestation de reprise de travail</DialogContent>
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              setOpenAtt2(false);
+            }}
+          >
+            <Stack spacing={2}>
+              <FormControl>
+              <Grid container spacing={2} style={{marginTop:"2%"}}>
+              <Grid item xs={6} >
+                <FormLabel>Date d'absence : تاريخ التغيب</FormLabel>
+                <LocalizationProvider dateAdapter={AdapterDayjs} >
+                <DatePicker 
+                // value={selectedDateVisa} // Pass the selectedDate as the value
+                // onChange={handleDateVisaChange} // Handle date selection
+                // sx={{width:"100%"}}
+                />
+              </LocalizationProvider>
+              </Grid>
+              <Grid item xs={6} >
+                <FormLabel>Date reprise : تاريخ الالتحاق</FormLabel>
+                <LocalizationProvider dateAdapter={AdapterDayjs} >
+                <DatePicker 
+                // value={selectedDateVisa} // Pass the selectedDate as the value
+                // onChange={handleDateVisaChange} // Handle date selection
+                // sx={{width:"100%"}}
+                />
+              </LocalizationProvider>
+              </Grid>
+              </Grid>
+              <FormControl>
+              <FormLabel>Numéro financier - الرقم المالي</FormLabel>
+                <Input autoFocus required />
+              </FormControl>
+              </FormControl>
+              <FormControl>
+                <FormLabel>Raison - سببه</FormLabel>
+                <Textarea required minRows={3}/>
+              </FormControl>
+              <Button type="submit">Valider</Button>
+            </Stack>
+          </form>
+        </ModalDialog>
+      </Modal>
+
         </CardContent>
       </CardContent>
     </Card>
+
+
+
   );
 }
