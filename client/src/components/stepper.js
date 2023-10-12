@@ -18,6 +18,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 const steps = ['données personnelles', 'données professionnelles', 'données supplémentaires'];
 const cadreOptions = ['professeur', 'ingénieur'];
+const genreOptions = ['Homme', 'Femme']
 const gradeOptions = ['Grade 1', 'Grade 2'];
 const classeOptions = ['Classe 1', 'Classe 2'];
 const style = {
@@ -241,9 +242,14 @@ const [phoneNumber, setPhoneNumber] = React.useState('');
 
   //Cadre
   const [selectedCadre, setSelectedCadre] = useState(null);
+  const [selectedGenre, setSelectedGenre] = useState(null);
 
   const handleCadreChange = (event, newValue) => {
     setSelectedCadre(newValue);
+  };
+
+  const handleGenreChange = (event, newValue) => {
+    setSelectedGenre(newValue);
   };
 
   //Classe
@@ -294,10 +300,10 @@ const [phoneNumber, setPhoneNumber] = React.useState('');
     try {
       // Show the spinner while the backend request is in progress
       // setIsLoading(true);
-      const url = "http://localhost:4000/prof/add-professeur"; // URL for the backend API
+      const url = "http://localhost:4000/add-professeur"; // URL for the backend API
       const requestData = {
         nom: lastName, // Send the user input as a parameter in the request body
-        prenom: lastName,
+        prenom: firstName,
         email: email,
         tel: phoneNumber,
         cin: cin,
@@ -324,6 +330,25 @@ const [phoneNumber, setPhoneNumber] = React.useState('');
       // setIsLoading(false);
     }
   };
+
+  //Arabic names
+  const [fnArinputValue, setFnArInputValue] = useState('');
+  const [isValidArabicFName, setIsValidArabicFName] = useState(true);
+
+  const handleFnArChange = (event) => {
+    const newValue = event.target.value;
+
+    // Regular expression to match Arabic letters
+    const arabicLettersRegex = /^[\u0621-\u064A\s]+$/;
+
+    // Check if the input value contains only Arabic letters or is empty
+    if (newValue === '' || arabicLettersRegex.test(newValue)) {
+      setFnArInputValue(newValue);
+      setIsValidArabicFName(true);
+    } else {
+      setIsValidArabicFName(false);
+    }
+  }; 
   return (
     <Box sx={{ width: '100%' }}>
       <Stepper nonLinear activeStep={activeStep}>
@@ -338,10 +363,10 @@ const [phoneNumber, setPhoneNumber] = React.useState('');
       <div>
         {activeStep === 0 && (
           <Grid container spacing={2} style={{marginTop:"2%"}}>
-            <Grid item xs={4} >
+            <Grid item xs={3} >
               <div>
                 <Typography variant="subtitle1" gutterBottom>
-                  Prénom (الإسم)
+                  &nbsp;&nbsp;Prénom 
                 </Typography>
                 <TextField
                   variant="outlined"
@@ -353,10 +378,25 @@ const [phoneNumber, setPhoneNumber] = React.useState('');
           />
               </div>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={3} >
               <div>
                 <Typography variant="subtitle1" gutterBottom>
-                  Nom (النسب)
+                &nbsp;&nbsp;الإسم
+                </Typography>
+                <TextField
+                  variant="outlined"
+                  fullWidth
+                  value={fnArinputValue}
+                  onChange={handleFnArChange}
+                  error={!isValidArabicFName}
+                  helperText={!isValidArabicFName ? 'يرجى إدخال حروف عربية فقط' : ''}
+          />
+              </div>
+            </Grid>
+            <Grid item xs={3}>
+              <div>
+                <Typography variant="subtitle1" gutterBottom>
+                &nbsp;&nbsp;Nom 
                 </Typography>
                 <TextField
                   variant="outlined"
@@ -368,7 +408,37 @@ const [phoneNumber, setPhoneNumber] = React.useState('');
           />
               </div>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={3}>
+              <div>
+                <Typography variant="subtitle1" gutterBottom>
+                &nbsp;&nbsp;النسب
+                </Typography>
+                <TextField
+                  variant="outlined"
+                  fullWidth
+                  value={lastName}
+                  onChange={handleChangeLastName}
+                  error={lastNameError}
+                  helperText={lastNameHelperText}
+          />
+              </div>
+            </Grid>
+            <Grid item xs={2} >
+            <div>
+                <Typography variant="subtitle1" gutterBottom>
+                  
+                Genre (الجنس)
+                </Typography>
+                <Autocomplete
+                  id="cadre-autocomplete"
+                  options={genreOptions}
+                  value={selectedGenre}
+                  onChange={handleGenreChange}
+                  renderInput={(params) => <TextField {...params} variant="outlined" />}
+                />
+              </div>
+            </Grid>
+            <Grid item xs={3}>
               <div>
                 <Typography variant="subtitle1" gutterBottom>
                   CIN (رقم ب.ت.وطنية)
@@ -385,7 +455,7 @@ const [phoneNumber, setPhoneNumber] = React.useState('');
                 />
               </div>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <div>
                 <Typography variant="subtitle1" gutterBottom>
                   Email (البريد الإلكتروني)
@@ -400,7 +470,7 @@ const [phoneNumber, setPhoneNumber] = React.useState('');
         />
               </div>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={3}>
       <div>
         <Typography variant="subtitle1" gutterBottom>
           Numéro de téléphone (رقم الهاتف)

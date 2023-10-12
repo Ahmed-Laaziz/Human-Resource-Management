@@ -4,13 +4,13 @@ const jwt = require('jsonwebtoken');
 const JWT_SECRET = "RandomJWTSecretKey123"
 
 
-// mongoose.connect("mongodb+srv://ahmed:ahmed123@cluster0.i5myq.mongodb.net/?retryWrites=true&w=majority").then(() => console.log('connect to db...')).catch(err => console.log('failed to connect to db : ', err));
-mongoose.connect('mongodb://cluster0.i5myq.mongodb.net:27017/ensaj', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  user: 'ahmed',
-  pass: 'ahmed123'
-});
+ mongoose.connect("mongodb+srv://ahmed:ahmed123@cluster0.i5myq.mongodb.net/?retryWrites=true&w=majority").then(() => console.log('connect to db...')).catch(err => console.log('failed to connect to db : ', err));
+// mongoose.connect('mongodb://cluster0.i5myq.mongodb.net:27017/ensaj', {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+//   user: 'ahmed',
+//   pass: 'ahmed123'
+// });
 
 exports.login =  async (req, res) => {
     const { email, password } = req.body;

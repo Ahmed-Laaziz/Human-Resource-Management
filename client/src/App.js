@@ -5,6 +5,7 @@ import Login from "./components/sign-in";
 import Home from "./pages/home";
 import Add from "./pages/addProfessor";
 import All from "./pages/allProfessors";
+import Demandes from "./pages/options";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
         <Route path="home" element={<Home />} />
         <Route path="add-professor" element={<Add/>} />
         <Route path="all-professors" element={<All/>} />
+        <Route path="demandes" element={<Demandes/>} />
         {/* </Route> */}
       </Routes>
     </BrowserRouter>
