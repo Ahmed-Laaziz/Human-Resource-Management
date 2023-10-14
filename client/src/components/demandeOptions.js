@@ -9,7 +9,7 @@ import Grid from '@mui/joy/Grid';
 import Select from '@mui/joy/Select';
 import Option from '@mui/joy/Option';
 import Textarea from '@mui/joy/Textarea';
-
+import { useState } from 'react';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
 import Input from '@mui/joy/Input';
@@ -23,9 +23,10 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import Autocomplete from '@mui/joy/Autocomplete';
 import TextField from '@mui/material/TextField';
-export default function FAQCard() {
+import axios from 'axios';
+export default function FAQCard({profId}) {
     const [selectedUniversity, setSelectedUniversity] = React.useState(null);
-
+    
   const handleUniversityChange = (event, newValue) => {
     setSelectedUniversity(newValue);
   };
@@ -56,10 +57,19 @@ export default function FAQCard() {
   const [openAtt2, setOpenAtt2] = React.useState(false);
   const [openAtt3, setOpenAtt3] = React.useState(false);
   const [openAtt4, setOpenAtt4] = React.useState(false);
+  const [description, setDescription] = React.useState('');
+  const [selectedDate1, setSelectedDate1] = useState(null);
+  const [selectedDate2, setSelectedDate2] = useState(null);
+  // Function to handle date selection
+  const handleDate1Change = (date) => {
+    setSelectedDate1(date);
+  };
+  const handleDate2Change = (date) => {
+    setSelectedDate2(date);
+  };
   //Choose option for demande
   const handleChange = (event, newValue) => {
     setSelectedOption(newValue)
-    
   };
   
 const handleValidate = () => {
@@ -73,6 +83,34 @@ const handleValidate = () => {
         setOpenAtt4(true);
     }
 }
+const handleDescriptionChange = (event) => {
+  setDescription(event.target.value);
+};
+
+
+const addDemande2 = async () => {
+  try {
+    // Show the spinner while the backend request is in progress
+    // setIsLoading(true);
+    const url = "http://localhost:4000/demande/add-demande-quitter-territoire"; // URL for the backend API
+    const requestData = {
+      professeur: profId, // Send the user input as a parameter in the request body
+      description: description,
+      de_date: selectedDate1,
+      a_date: selectedDate2,
+      universite: selectedUniversity.label,
+    };
+
+    // Make a POST request to your backend API
+    const response = await axios.post(url, requestData);
+    
+  } catch (error) {
+    console.error("Error fetching abstract:", error);
+  } finally {
+    // Hide the spinner after the backend request is completed
+    // setIsLoading(false);
+  }
+};
   return (
     <Card
       size="lg"
@@ -172,10 +210,11 @@ const handleValidate = () => {
               <Grid container spacing={2} style={{marginTop:"2%"}}>
               <Grid item xs={6} >
                 <FormLabel>De : من</FormLabel>
-                <LocalizationProvider dateAdapter={AdapterDayjs} >
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker 
-                // value={selectedDateVisa} // Pass the selectedDate as the value
-                // onChange={handleDateVisaChange} // Handle date selection
+                required
+                value={selectedDate1} // Pass the selectedDate as the value
+                onChange={handleDate1Change} // Handle date selection
                 // sx={{width:"100%"}}
                 />
               </LocalizationProvider>
@@ -184,8 +223,8 @@ const handleValidate = () => {
                 <FormLabel>À : الى</FormLabel>
                 <LocalizationProvider dateAdapter={AdapterDayjs} >
                 <DatePicker 
-                // value={selectedDateVisa} // Pass the selectedDate as the value
-                // onChange={handleDateVisaChange} // Handle date selection
+                value={selectedDate2} // Pass the selectedDate as the value
+                onChange={handleDate2Change} // Handle date selection
                 // sx={{width:"100%"}}
                 />
               </LocalizationProvider>
@@ -197,6 +236,7 @@ const handleValidate = () => {
               <Autocomplete
       options={universities}
       getOptionLabel={(option) => option.label}
+      required
       value={selectedUniversity}
       onChange={handleUniversityChange}
       renderInput={(params) => <TextField {...params} label="Select University" variant="outlined" />}
@@ -204,9 +244,14 @@ const handleValidate = () => {
     </FormControl>
               <FormControl>
                 <FormLabel>Description : وصف</FormLabel>
-                <Textarea required minRows={3}/>
+                <Textarea 
+                required 
+                minRows={3}
+                value={description} // Bind the value to the description state
+                onChange={handleDescriptionChange}
+                />
               </FormControl>
-              <Button type="submit">Valider</Button>
+              <Button type="submit" onClick={addDemande2}>Valider</Button>
             </Stack>
           </form>
         </ModalDialog>
