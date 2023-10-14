@@ -17,10 +17,25 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 const steps = ['données personnelles', 'données professionnelles', 'données supplémentaires'];
-const cadreOptions = ['professeur', 'ingénieur'];
 const genreOptions = ['Homme', 'Femme']
+const cadreOptions = ["Professeur de l'enseignement superieur", 'Professeur habilité', 'Professeur assistant'];
 const gradeOptions = ['Grade 1', 'Grade 2'];
 const classeOptions = ['Classe 1', 'Classe 2'];
+// Define the mapping of cadreOptions to gradeOptions
+const cadreGradeMapping = {
+  "Professeur de l'enseignement superieur": ['Grade D', 'Grade C', 'Grade B', 'Grade A'],
+  'Professeur habilité': ['Grade C', 'Grade B', 'Grade A'],
+  'Professeur assistant': ['Grade D', 'Grade C', 'Grade B', 'Grade A'],
+};
+
+// Define the mapping of grade to classeOptions
+const gradeClasseMapping = {
+  'Grade D': ['930-01', '960-02', '990-03', '1020-04'],
+  'Grade C': ['812-01', '840-02', '870-03', '900-04'],
+  'Grade B': ['639-01', '704-02', '746-03', '779-04'],
+  'Grade A': ['509-01', '542-02', '574-03', '606-04'],
+  // Define classeOptions for other grades
+};
 const style = {
   position: 'absolute',
   top: '50%',
@@ -246,6 +261,10 @@ const [phoneNumber, setPhoneNumber] = React.useState('');
 
   const handleCadreChange = (event, newValue) => {
     setSelectedCadre(newValue);
+
+    // Clear the selected grade and classe when cadre changes
+    setSelectedGrade(null);
+    setSelectedClasse(null);
   };
 
   const handleGenreChange = (event, newValue) => {
@@ -264,6 +283,9 @@ const [phoneNumber, setPhoneNumber] = React.useState('');
 
   const handleGradeChange = (event, newValue) => {
     setSelectedGrade(newValue);
+
+    // Clear the selected classe when grade changes
+    setSelectedClasse(null);
   };
 
   //Date fonction
@@ -333,8 +355,9 @@ const [phoneNumber, setPhoneNumber] = React.useState('');
 
   //Arabic names
   const [fnArinputValue, setFnArInputValue] = useState('');
+  const [lnArinputValue, setLnArInputValue] = useState('');
   const [isValidArabicFName, setIsValidArabicFName] = useState(true);
-
+  const [isValidArabicLName, setIsValidArabicLName] = useState(true);
   const handleFnArChange = (event) => {
     const newValue = event.target.value;
 
@@ -347,6 +370,20 @@ const [phoneNumber, setPhoneNumber] = React.useState('');
       setIsValidArabicFName(true);
     } else {
       setIsValidArabicFName(false);
+    }
+  }; 
+  const handleLnArChange = (event) => {
+    const newValue = event.target.value;
+
+    // Regular expression to match Arabic letters
+    const arabicLettersRegex = /^[\u0621-\u064A\s]+$/;
+
+    // Check if the input value contains only Arabic letters or is empty
+    if (newValue === '' || arabicLettersRegex.test(newValue)) {
+      setLnArInputValue(newValue);
+      setIsValidArabicLName(true);
+    } else {
+      setIsValidArabicLName(false);
     }
   }; 
   return (
@@ -416,10 +453,10 @@ const [phoneNumber, setPhoneNumber] = React.useState('');
                 <TextField
                   variant="outlined"
                   fullWidth
-                  value={lastName}
-                  onChange={handleChangeLastName}
-                  error={lastNameError}
-                  helperText={lastNameHelperText}
+                  value={lnArinputValue}
+                  onChange={handleLnArChange}
+                  error={!isValidArabicLName}
+                  helperText={!isValidArabicLName ? 'يرجى إدخال حروف عربية فقط' : ''}
           />
               </div>
             </Grid>
@@ -580,13 +617,14 @@ const [phoneNumber, setPhoneNumber] = React.useState('');
             <div>
                 <Typography variant="subtitle1" gutterBottom>
                   
-                Classe (الدرجة)
+                Grade (الدرجة)
                 </Typography>
                 <Autocomplete
                   id="cadre-autocomplete"
-                  options={classeOptions}
-                  value={selectedClasse}
-                  onChange={handleClasseChange}
+                  
+                  options={selectedCadre ? cadreGradeMapping[selectedCadre] : []}
+                  value={selectedGrade}
+                  onChange={handleGradeChange}
                   renderInput={(params) => <TextField {...params} variant="outlined" />}
                 />
               </div>
@@ -595,13 +633,13 @@ const [phoneNumber, setPhoneNumber] = React.useState('');
             <div>
                 <Typography variant="subtitle1" gutterBottom>
                   
-                Grade (الرتبة)
+                Indice-Échelon (الرتبة)
                 </Typography>
                 <Autocomplete
                   id="cadre-autocomplete"
-                  options={gradeOptions}
-                  value={selectedGrade}
-                  onChange={handleGradeChange}
+                  options={selectedGrade ? gradeClasseMapping[selectedGrade] : []}
+                  value={selectedClasse}
+                  onChange={handleClasseChange}
                   renderInput={(params) => <TextField {...params} variant="outlined" />}
                 />
               </div>
