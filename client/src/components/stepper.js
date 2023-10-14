@@ -19,8 +19,8 @@ import axios from 'axios';
 const steps = ['données personnelles', 'données professionnelles', 'données supplémentaires'];
 const genreOptions = ['Homme', 'Femme']
 const cadreOptions = ["Professeur de l'enseignement superieur", 'Professeur habilité', 'Professeur assistant'];
-const gradeOptions = ['Grade 1', 'Grade 2'];
-const classeOptions = ['Classe 1', 'Classe 2'];
+// const gradeOptions = ['Grade 1', 'Grade 2'];
+// const classeOptions = ['Classe 1', 'Classe 2'];
 // Define the mapping of cadreOptions to gradeOptions
 const cadreGradeMapping = {
   "Professeur de l'enseignement superieur": ['Grade D', 'Grade C', 'Grade B', 'Grade A'],

@@ -24,7 +24,9 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import Autocomplete from '@mui/joy/Autocomplete';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
-export default function FAQCard({profId}) {
+import { useNavigate } from "react-router-dom";
+export default function FAQCard({prof}) {
+  const navigate = useNavigate();
     const [selectedUniversity, setSelectedUniversity] = React.useState(null);
     
   const handleUniversityChange = (event, newValue) => {
@@ -73,7 +75,11 @@ export default function FAQCard({profId}) {
   };
   
 const handleValidate = () => {
-    if(selectedOption==='att2'){
+  if(selectedOption==='att1'){
+    console.log("in att1")
+    navigate('/attestationTravail', { state: {input1:prof.prenom , input2:prof.nom, input3:'Grade B', input4:prof.num_loyer, input5:prof.date_entre_ecole}})
+}
+    else if(selectedOption==='att2'){
         setOpenAtt2(true);
     }
     else if(selectedOption==='att3'){
@@ -94,7 +100,7 @@ const addDemande2 = async () => {
     // setIsLoading(true);
     const url = "http://localhost:4000/demande/add-demande-quitter-territoire"; // URL for the backend API
     const requestData = {
-      professeur: profId, // Send the user input as a parameter in the request body
+      professeur: prof._id, // Send the user input as a parameter in the request body
       description: description,
       de_date: selectedDate1,
       a_date: selectedDate2,

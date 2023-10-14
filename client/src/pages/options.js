@@ -95,7 +95,7 @@ const navigate = useNavigate();
 >
  <Breadcrumb />
  <>&nbsp;</>
-   <DemandeOptions profId={agent._id}/>
+   <DemandeOptions prof={agent}/>
             </Box>
             </>
           ):<h1 style={{margin:"auto", marginTop:"10%"}}>Ooops! Espace reservée pour les professeurs</h1>}

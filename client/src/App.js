@@ -6,7 +6,8 @@ import Home from "./pages/home";
 import Add from "./pages/addProfessor";
 import All from "./pages/allProfessors";
 import Demandes from "./pages/options";
-
+import AttestationTravail from "./documents/AttestationTravail";
+import ProfDemandes from "./pages/profDemandes";
 export default function App() {
   return (
     <TokenProvider>
@@ -17,6 +18,8 @@ export default function App() {
         <Route path="add-professor" element={<Add/>} />
         <Route path="all-professors" element={<All/>} />
         <Route path="demandes" element={<Demandes/>} />
+        <Route path="attestationTravail" element={<AttestationTravail/>} />
+        <Route path="prof-demandes" element={<ProfDemandes/>} />
         {/* </Route> */}
       </Routes>
     </BrowserRouter>
