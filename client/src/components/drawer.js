@@ -219,7 +219,7 @@ export default function MiniDrawer({role}) {
         </ListItemButton>
       </Link>
     </ListItem>
-    { sessionStorage.getItem('user')._t === 'Admin' ? (
+    { localStorage.getItem('type') === 'Admin' ? (
   <>
     <ListItem disablePadding sx={{ display: 'block' }}>
       {/* Use the Link component to specify the "to" prop */}
@@ -269,7 +269,7 @@ export default function MiniDrawer({role}) {
       </Link>
     </ListItem>
   </>
-) : userRole === 'Professeur' ? (
+) : localStorage.getItem('type') === 'Professeur' ? (
   /* Content for Professors */
   <ListItem disablePadding sx={{ display: 'block' }}>
     {/* Use the Link component to specify the "to" prop */}
@@ -296,7 +296,7 @@ export default function MiniDrawer({role}) {
   </ListItem>
 ) : null}
 
-{ sessionStorage.getItem('user')._t === 'Professeur' ? (
+{ localStorage.getItem('type') === 'Professeur' ? (
   <>
     <ListItem disablePadding sx={{ display: 'block' }}>
       {/* Use the Link component to specify the "to" prop */}

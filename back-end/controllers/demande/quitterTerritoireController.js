@@ -13,7 +13,11 @@ const DB_HOST = 'mongo'
 //Local
 const URI = "mongodb+srv://ahmed:ahmed123@cluster0.i5myq.mongodb.net/?retryWrites=true&w=majority"
 
-mongoose.connect(URI).then(() => console.log('connect to db...')).catch(err => console.log('failed to connect to db : ', err));
+//mongoose.connect(URI).then(() => console.log('connect to db...')).catch(err => console.log('failed to connect to db : ', err));
+mongoose.connect('mongodb://127.0.0.1:27017/ensaj', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 // Add a route to retrieve and display a list of Professeurs
 // exports.getAdmins = async (req, res, next) => {
