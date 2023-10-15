@@ -22,6 +22,11 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import GroupIcon from '@mui/icons-material/Group';
 import HomeIcon from '@mui/icons-material/Home';
 import { Link } from 'react-router-dom';
+import Avatar from '@mui/joy/Avatar';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import { useNavigate } from 'react-router-dom';
+import HistoryIcon from '@mui/icons-material/History';
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -92,6 +97,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 
 export default function MiniDrawer({role}) {
+  const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -104,29 +111,82 @@ export default function MiniDrawer({role}) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const LogOut = () => {
+    console.log("logout");
+    
+    localStorage.setItem('user', {})
+    localStorage.setItem('token', "")
+    window.history.pushState({}, document.title, window.location.pathname);
+
+    navigate("/");
+  };
+
 
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: 5,
-              ...(open && { display: 'none' }),
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Mini variant drawer
-          </Typography>
-        </Toolbar>
-      </AppBar>
+  <Toolbar>
+    <IconButton
+      color="inherit"
+      aria-label="open drawer"
+      onClick={handleDrawerOpen}
+      edge="start"
+      sx={{
+        marginRight: 5,
+        ...(open && { display: 'none' }),
+      }}
+    >
+      <MenuIcon />
+    </IconButton>
+    <Typography variant="h6" noWrap component="div">
+      Mini variant drawer
+    </Typography>
+    
+    {/* Add custom styling to the Avatar to move it to the far right */}
+    <>
+    <Avatar
+      color="neutral"
+      size="sm"
+      variant="soft"
+      src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
+      aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+      sx={{
+        marginLeft: 'auto', // Move the Avatar to the right
+      }}
+    />
+    <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={LogOut}>Logout</MenuItem>
+              </Menu>
+    </>
+  </Toolbar>
+</AppBar>
+
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
@@ -158,7 +218,7 @@ export default function MiniDrawer({role}) {
         </ListItemButton>
       </Link>
     </ListItem>
-    { userRole === 'Admin' ? (
+    { sessionStorage.getItem('user')._t === 'Admin' ? (
   <>
     <ListItem disablePadding sx={{ display: 'block' }}>
       {/* Use the Link component to specify the "to" prop */}
@@ -207,6 +267,36 @@ export default function MiniDrawer({role}) {
         </ListItemButton>
       </Link>
     </ListItem>
+  </>
+) : null}
+
+{ sessionStorage.getItem('user')._t === 'Professeur' ? (
+  <>
+    <ListItem disablePadding sx={{ display: 'block' }}>
+      {/* Use the Link component to specify the "to" prop */}
+      <Link to="/historiques" style={{ textDecoration: 'none' }}>
+        <ListItemButton
+          sx={{
+            minHeight: 48,
+            justifyContent: open ? 'initial' : 'center',
+            px: 2.5,
+          }}
+        >
+          <ListItemIcon
+            sx={{
+              minWidth: 0,
+              mr: open ? 3 : 'auto',
+              justifyContent: 'center',
+            }}
+          >
+            <HistoryIcon/>
+          </ListItemIcon>
+          <ListItemText primary="historiques" sx={{ opacity: open ? 1 : 0 }} />
+        </ListItemButton>
+      </Link>
+    </ListItem>
+
+  
   </>
 ) : null}
 

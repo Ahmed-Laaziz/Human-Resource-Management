@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
+import { Redirect } from "react-router-dom";
 import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios'; // Import Axios
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { useNavigate } from 'react-router-dom';
+import { useProf } from '../context/ProfContext';
 
 const columns = [
   {
@@ -65,7 +68,11 @@ const columns = [
   },
 ];
 
+
 function MoreActionsCell({ rowParams }) {
+  const navigate = useNavigate();
+  const { updateProf } = useProf();
+
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleMenuOpen = (event) => {
@@ -77,14 +84,16 @@ function MoreActionsCell({ rowParams }) {
   };
 
   const handleHistoriqueClick = () => {
-    // Handle "Historique" option click
-    // You can implement the logic here
+    updateProf(rowParams.row);
+    
+    navigate("/historiques");
     handleMenuClose();
   };
 
   const handleProfileClick = () => {
-    // Handle "Profile" option click
-    // You can implement the logic here
+    updateProf(rowParams.row);
+    
+    navigate("/prof-profile");
     handleMenuClose();
   };
 

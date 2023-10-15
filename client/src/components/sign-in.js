@@ -17,6 +17,7 @@ import EnsaImg from '../images/ensaj.jpg';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useToken } from '../auth/TokenContext';
+import { useProf } from '../context/ProfContext';
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -36,6 +37,9 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignInSide() {
+
+  const { updateProf } = useProf();
+
   const navigate = useNavigate();
   const { setToken } = useToken();
   const [emailError, setEmailError] = useState('');
@@ -45,6 +49,10 @@ const [passwordError, setPasswordError] = useState('');
     const data = new FormData(event.currentTarget);
     const email = data.get('email');
     const password = data.get('password');
+
+    
+
+    
 
     // Reset previous error messages
   setEmailError('');
@@ -69,6 +77,12 @@ const [passwordError, setPasswordError] = useState('');
 
       // If authentication is successful, you will receive a JWT token in the response
       const token = response.data.token;
+
+      updateProf(response.data.user);
+      sessionStorage.setItem('user', response.data.user)
+
+      
+      console.log(response.data.user)
 
       // You can store the token in a cookie or local storage for future authenticated requests
       // For this example, we'll just log the token

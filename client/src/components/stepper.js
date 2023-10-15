@@ -297,7 +297,7 @@ const [phoneNumber, setPhoneNumber] = React.useState('');
       const url = "http://localhost:4000/prof/add-professeur"; // URL for the backend API
       const requestData = {
         nom: lastName, // Send the user input as a parameter in the request body
-        prenom: lastName,
+        prenom: firstName,
         email: email,
         tel: phoneNumber,
         cin: cin,

@@ -1,4 +1,5 @@
 const Professeur = require("../../models/professeur");
+const Historique = require("../../models/historique");
 const sendEmail = require('../../business/emailSender');
 const generateRandomPassword = require('../../business/passwordGenerator');
 const mongoose = require('mongoose');
@@ -14,8 +15,11 @@ const URI = `mongodb://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}`
 //Local
 //const URI = "mongodb+srv://ahmed:ahmed123@cluster0.i5myq.mongodb.net/?retryWrites=true&w=majority"
 
-mongoose.connect(URI).then(() => console.log('connect to db...')).catch(err => console.log('failed to connect to db : ', err));
-
+//mongoose.connect(URI).then(() => console.log('connect to db...')).catch(err => console.log('failed to connect to db : ', err));
+mongoose.connect('mongodb://127.0.0.1:27017/ensaj', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 // Define a route to retrieve and return data from the "professeur" collection
 exports.getProfs = async (req, res, next) => {

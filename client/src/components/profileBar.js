@@ -79,7 +79,7 @@ export default function UserCard({ agent }) {
               <Typography level="body-xs" fontWeight="lg">
                 Tel
               </Typography>
-              <Typography fontWeight="lg">{agent ? agent.tel : 'Loading...'}</Typography>
+              <Typography fontWeight="lg">{agent ? "+212 "+agent.tel.replace(/^0+/, '') : 'Loading...'}</Typography>
             </div>
           </Sheet>
           <Box sx={{ display: 'flex', gap: 1.5, '& > button': { flex: 1 } }}>
