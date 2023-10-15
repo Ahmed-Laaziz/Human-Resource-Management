@@ -21,6 +21,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import GroupIcon from '@mui/icons-material/Group';
 import HomeIcon from '@mui/icons-material/Home';
+import ArticleIcon from '@mui/icons-material/Article';
 import { Link } from 'react-router-dom';
 import Avatar from '@mui/joy/Avatar';
 import MenuItem from '@mui/material/MenuItem';
@@ -268,6 +269,31 @@ export default function MiniDrawer({role}) {
       </Link>
     </ListItem>
   </>
+) : userRole === 'Professeur' ? (
+  /* Content for Professors */
+  <ListItem disablePadding sx={{ display: 'block' }}>
+    {/* Use the Link component to specify the "to" prop */}
+    <Link to="/demandes" style={{ textDecoration: 'none' }}>
+      <ListItemButton
+        sx={{
+          minHeight: 48,
+          justifyContent: open ? 'initial' : 'center',
+          px: 2.5,
+        }}
+      >
+        <ListItemIcon
+          sx={{
+            minWidth: 0,
+            mr: open ? 3 : 'auto',
+            justifyContent: 'center',
+          }}
+        >
+          <ArticleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Demandes" sx={{ opacity: open ? 1 : 0 }} />
+      </ListItemButton>
+    </Link>
+  </ListItem>
 ) : null}
 
 { sessionStorage.getItem('user')._t === 'Professeur' ? (
