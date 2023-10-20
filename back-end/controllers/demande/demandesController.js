@@ -1,4 +1,4 @@
-const Agent = require("../../models/agent");
+const Demande = require("../../models/demande");
 const mongoose = require('mongoose');
 
 
@@ -19,21 +19,16 @@ mongoose.connect(URI).then(() => console.log('connect to db...')).catch(err => c
 // });
 
 // Define a route to get agent data by ID
-exports.getAgent =  async (req, res, next) => {
+exports.getDemandesForProfesseur = async (req, res) => {
     try {
-      const agentId = req.params.id;
+      const professeurId = req.params.professeurId;
   
-      // Find the agent by ID in your Agent collection
-      const agent = await Agent.findById(agentId);
+      // Use Mongoose to find all demandes with the matching professeur ID
+      const demandes = await Demande.find({ professeur: professeurId });
   
-      if (!agent) {
-        return res.status(404).json({ error: 'Agent not found' });
-      }
-  
-      // Return the agent data as JSON
-      res.status(200).json(agent);
+      res.json(demandes);
     } catch (error) {
-      console.error('Error fetching agent by ID:', error);
-      res.status(500).json({ error: 'Internal server error' });
+      console.error('Error fetching demandes:', error);
+      res.status(500).json({ error: 'Server error' });
     }
   };

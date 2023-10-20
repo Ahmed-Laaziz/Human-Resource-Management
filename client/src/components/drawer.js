@@ -28,6 +28,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { useNavigate } from 'react-router-dom';
 import HistoryIcon from '@mui/icons-material/History';
+import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -219,7 +220,8 @@ export default function MiniDrawer({role}) {
         </ListItemButton>
       </Link>
     </ListItem>
-    { sessionStorage.getItem('user')._t === 'Admin' ? (
+    {/* { sessionStorage.getItem('user')._t === 'Admin' ? ( */}
+    { userRole === 'Admin' ? (
   <>
     <ListItem disablePadding sx={{ display: 'block' }}>
       {/* Use the Link component to specify the "to" prop */}
@@ -296,7 +298,8 @@ export default function MiniDrawer({role}) {
   </ListItem>
 ) : null}
 
-{ sessionStorage.getItem('user')._t === 'Professeur' ? (
+{/* { sessionStorage.getItem('user')._t === 'Professeur' ? ( */}
+{ userRole === 'Professeur' ? (
   <>
     <ListItem disablePadding sx={{ display: 'block' }}>
       {/* Use the Link component to specify the "to" prop */}
@@ -321,6 +324,29 @@ export default function MiniDrawer({role}) {
         </ListItemButton>
       </Link>
     </ListItem>
+    <ListItem disablePadding sx={{ display: 'block' }}>
+    {/* Use the Link component to specify the "to" prop */}
+    <Link to="/prof-demandes" style={{ textDecoration: 'none' }}>
+      <ListItemButton
+        sx={{
+          minHeight: 48,
+          justifyContent: open ? 'initial' : 'center',
+          px: 2.5,
+        }}
+      >
+        <ListItemIcon
+          sx={{
+            minWidth: 0,
+            mr: open ? 3 : 'auto',
+            justifyContent: 'center',
+          }}
+        >
+          <CollectionsBookmarkIcon />
+        </ListItemIcon>
+        <ListItemText primary="AllDemandes" sx={{ opacity: open ? 1 : 0 }} />
+      </ListItemButton>
+    </Link>
+  </ListItem>
 
   
   </>

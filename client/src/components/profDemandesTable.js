@@ -1,10 +1,13 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import PrintIcon from '@mui/icons-material/Print';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { DataGrid} from '@mui/x-data-grid';
+import jwt_decode from 'jwt-decode';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import {
   randomCreatedDate,
   randomTraderName,
@@ -12,51 +15,67 @@ import {
   randomUpdatedDate,
 } from '@mui/x-data-grid-generator';
 
-export default function ColumnPinningDynamicRowHeight() {
+export default function ColumnPinningDynamicRowHeight({profId}) {
+
   const [showEditDelete, setShowEditDelete] = React.useState(true);
 
   const columns = React.useMemo(
     () => [
-      { field: 'name', headerName: 'Name', width: 160, editable: true },
-      { field: 'email', headerName: 'Email', width: 200, editable: true },
-      { field: 'age', headerName: 'Age', type: 'number', editable: true },
-      {
-        field: 'dateCreated',
-        headerName: 'Date Created',
-        type: 'date',
-        width: 180,
-        editable: true,
-      },
-      {
-        field: 'lastLogin',
-        headerName: 'Last Login',
-        type: 'dateTime',
-        width: 220,
-        editable: true,
-      },
-
+      { field: '__t', headerName: 'Type', width: 210, editable: false },
       {
         field: 'statut',
         headerName: 'Statut',
-        width: 160,
-        renderCell: () => (
+        width: 210,
+        renderCell: (params) => (
           <Stack spacing={1} sx={{ width: 1, py: 1 }}>
-             
-              <React.Fragment>
+             {/* Display the value of the 'statut' field */}
+            <React.Fragment>
               <Button
-                // color="primary"
-                sx={ { borderRadius: 28 , color:'orange', borderColor:'orange'}}
+              size="small"
+              sx={{
+                borderRadius: 28,
+                borderColor: (() => {
+                  switch (params.value) {
+                    case 'En attente':
+                      return 'orange';
+                    case 'Approuvée':
+                      return 'green';
+                    case 'Non approuvée':
+                      return 'red';
+                    default:
+                      return 'orange'; // Default color (you can change this)
+                  }
+                })(),
+                color: (() => {
+                  switch (params.value) {
+                    case 'En attente':
+                      return 'orange';
+                    case 'Approuvée':
+                      return 'green';
+                    case 'Non approuvée':
+                      return 'red';
+                    default:
+                      return 'orange'; // Default color (you can change this)
+                  }
+                })(),
+                }}
                 variant="outlined"
-              >En attente</Button>
-              </React.Fragment>
+              >
+                {params.value} {/* Add your button content here */}
+              </Button>
+            </React.Fragment>
           </Stack>
         ),
       },
+      { field: 'createdAt', headerName: 'Date Demande', width: 210, type: 'Date',editable: false },
+      { field: 'updatedAt', headerName: 'Derniere modification',width: 210, type: 'Date', editable: true },
+      
+      
       {
         field: 'actions',
         headerName: 'Actions',
-        width: 100,
-        renderCell: () => (
+        width: 210,
+        renderCell: (params) => (
           <Stack spacing={1} sx={{ width: 1, py: 1 }}>
             {showEditDelete && (
               <React.Fragment>
@@ -68,45 +87,51 @@ export default function ColumnPinningDynamicRowHeight() {
                 </Button>
               </React.Fragment>
             )}
-
-            <Button variant="outlined" size="small" startIcon={<PrintIcon />}>
+            <Button
+              variant="outlined"
+              size="small"
+              startIcon={<PrintIcon />}
+              disabled={params.row.statut !== 'Approuvée'}
+            >
               Print
             </Button>
           </Stack>
         ),
       },
+      
     ],
     // [showEditDelete],
   );
 
-  // const [professeurs, setProfesseurs] = useState([]);
+  const [demandes, setDemandes] = useState([]);
   
-  // const fetchProfessor = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       `http://localhost:4000/prof/professeurs` // Replace with your actual API endpoint
-  //     );
-  //     setProfesseurs(response.data);
-  //   } catch (error) {
-  //     console.error('Error fetching title:', error);
-  //   }
-  // };
+  const fetchDemandes = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:4000/demandes/profDemandes/${profId}` // Replace with your actual API endpoint
+      );
+      setDemandes(response.data);
+    } catch (error) {
+      console.error('Error fetching demandes:', error);
+    }
+  };
 
-  // useEffect(() => {
-  //   // Fetch the title from the backend API
+  useEffect(() => {
+    // Fetch the title from the backend API
 
-  //   fetchProfessor(); // Call the fetchTitle function when the component mounts
-  // }, []);
+    fetchDemandes(); // Call the fetchTitle function when the component mounts
+  }, []);
 
   return (
     <div style={{ width: '100%' }}>
       {/* <Button sx={{ mb: 1 }} onClick={handleToggleClick}>
         Toggle edit & delete
       </Button> */}
-      <div style={{ height: 400 }}>
+      <div style={{ height: 500 }}>
         <DataGrid
-          rows={rows}
+          rows={demandes}
           columns={columns}
+          getRowId={(row) => row._id}
           getRowHeight={() => 'auto'}
           initialState={{ pinnedColumns: { left: ['name'], right: ['actions'] } }}
         />
@@ -115,32 +140,3 @@ export default function ColumnPinningDynamicRowHeight() {
   );
 }
 
-const rows = [
-  {
-    id: 1,
-    name: randomTraderName(),
-    email: randomEmail(),
-    age: 25,
-    dateCreated: randomCreatedDate(),
-    lastLogin: randomUpdatedDate(),
-    statut: "En attente"
-  },
-  {
-    id: 2,
-    name: randomTraderName(),
-    email: randomEmail(),
-    age: 36,
-    dateCreated: randomCreatedDate(),
-    lastLogin: randomUpdatedDate(),
-    statut: "En attente"
-  },
-  {
-    id: 3,
-    name: randomTraderName(),
-    email: randomEmail(),
-    age: 19,
-    dateCreated: randomCreatedDate(),
-    lastLogin: randomUpdatedDate(),
-    statut: "En attente"
-  }
-];

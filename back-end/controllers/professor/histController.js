@@ -8,21 +8,21 @@ const DB_PASSWORD = 'example';
 const DB_PORT = 27017
 const DB_HOST = 'mongo'
 //Docker
-//const URI = `mongodb://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}`
+// const URI = `mongodb://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}`
 //Local
 const URI = "mongodb+srv://ahmed:ahmed123@cluster0.i5myq.mongodb.net/?retryWrites=true&w=majority"
 
-//mongoose.connect(URI).then(() => console.log('connect to db...')).catch(err => console.log('failed to connect to db : ', err));
-mongoose.connect('mongodb://127.0.0.1:27017/ensaj', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(URI).then(() => console.log('connect to db...')).catch(err => console.log('failed to connect to db : ', err));
+// mongoose.connect('mongodb://127.0.0.1:27017/ensaj', {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// });
 
 exports.addHist =  async (req, res, next) => {
     console.log(req);
     try {
       const newHistorique = new Historique({
-        professeur: '6515b457e26ddce65436f34c', // Replace with the actual ObjectId of the related Professeur
+        professeur: '6521b25c2f79d1a580123c5b', // Replace with the actual ObjectId of the related Professeur
         grade: 'Associate Professor', // Replace with the actual grade
         annee: 2023, // Replace with the actual year
       });

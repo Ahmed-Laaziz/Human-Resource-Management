@@ -12,7 +12,7 @@ export default function Home() {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <Drawer role={prof._t} />
+      <Drawer role="Admin" />
       <Box
         component="main"
         sx={{

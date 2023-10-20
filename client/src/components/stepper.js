@@ -322,10 +322,10 @@ const [phoneNumber, setPhoneNumber] = React.useState('');
     try {
       // Show the spinner while the backend request is in progress
       // setIsLoading(true);
-      const url = "http://localhost:4000/add-professeur"; // URL for the backend API
+      const url = "http://localhost:4000/prof/add-professeur"; // URL for the backend API
       const requestData = {
-        nom: lastName, // Send the user input as a parameter in the request body
-        prenom: firstName,
+        nom: lastName+"|"+lnArinputValue, // Send the user input as a parameter in the request body
+        prenom: firstName+"|"+fnArinputValue,
         email: email,
         tel: phoneNumber,
         cin: cin,

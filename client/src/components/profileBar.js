@@ -47,7 +47,7 @@ export default function UserCard({ agent }) {
         </AspectRatio>
         <CardContent>
           <Typography fontSize="xl" fontWeight="lg">
-          {agent ? agent.prenom + " " + agent.nom : 'Loading...'} 
+          {agent ? agent.prenom.split('|')[0]  + " " + agent.nom.split('|')[0] + "       " +  agent.prenom.split('|')[1]  + " " + agent.nom.split('|')[1] : 'Loading...'} 
           </Typography>
           <Typography level="body-sm" fontWeight="lg" textColor="text.tertiary">
           {isAdmin ? agent.fonction : 'Professeur'} 

@@ -25,6 +25,7 @@ import Autocomplete from '@mui/joy/Autocomplete';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+
 export default function FAQCard({prof}) {
   const navigate = useNavigate();
     const [selectedUniversity, setSelectedUniversity] = React.useState(null);
@@ -77,7 +78,7 @@ export default function FAQCard({prof}) {
 const handleValidate = () => {
   if(selectedOption==='att1'){
     console.log("in att1")
-    navigate('/attestationTravail', { state: {input1:prof.prenom , input2:prof.nom, input3:'Grade B', input4:prof.num_loyer, input5:prof.date_entre_ecole}})
+    navigate('/attestationTravail', { state: {input1:prof.prenom.split('|')[0] , input2:prof.nom.split('|')[0], input3:'Grade B', input4:prof.num_loyer, input5:prof.date_entre_ecole}})
 }
     else if(selectedOption==='att2'){
         setOpenAtt2(true);
@@ -109,7 +110,7 @@ const addDemande2 = async () => {
 
     // Make a POST request to your backend API
     const response = await axios.post(url, requestData);
-    
+    navigate('/prof-demandes')
   } catch (error) {
     console.error("Error fetching abstract:", error);
   } finally {
