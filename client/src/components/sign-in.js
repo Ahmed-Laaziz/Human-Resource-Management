@@ -79,10 +79,12 @@ const [passwordError, setPasswordError] = useState('');
       const token = response.data.token;
 
       updateProf(response.data.user);
-      sessionStorage.setItem('user', response.data.user)
+      localStorage.setItem('user', response.data.user)
+      localStorage.setItem('type', response.data.user.__t)
 
       
-      console.log(response.data.user)
+      console.log("the profession is : ")
+      console.log(response.data.user.__t)
 
       // You can store the token in a cookie or local storage for future authenticated requests
       // For this example, we'll just log the token
