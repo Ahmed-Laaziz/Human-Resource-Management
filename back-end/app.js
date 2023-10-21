@@ -14,6 +14,7 @@ var authRouter = require('./routes/auth/authRouter');
 var profRouter = require('./routes/professor/profRouter');
 var histRouter = require('./routes/professor/histRouter');
 var demandeRouter = require('./routes/demande/quitterTerritoire');
+var demandeCongeRouter = require('./routes/demande/conge');
 var profDemandeRouter = require('./routes/demande/demandes');
 
 var app = express();
@@ -39,6 +40,7 @@ app.use('/auth', authRouter);
 app.use('/prof', profRouter);
 app.use('/hist', histRouter);
 app.use('/demande', demandeRouter)
+app.use('/demandeConge', demandeCongeRouter)
 app.use('/demandes', profDemandeRouter)
 
 // catch 404 and forward to error handler

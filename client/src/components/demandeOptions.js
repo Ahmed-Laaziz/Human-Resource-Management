@@ -61,14 +61,23 @@ export default function FAQCard({prof}) {
   const [openAtt3, setOpenAtt3] = React.useState(false);
   const [openAtt4, setOpenAtt4] = React.useState(false);
   const [description, setDescription] = React.useState('');
+  const [descriptionConge, setDescriptionConge] = React.useState('');
   const [selectedDate1, setSelectedDate1] = useState(null);
   const [selectedDate2, setSelectedDate2] = useState(null);
+  const [selectedDateConge1, setSelectedDateConge1] = useState(null);
+  const [selectedDateConge2, setSelectedDateConge2] = useState(null);
   // Function to handle date selection
   const handleDate1Change = (date) => {
     setSelectedDate1(date);
   };
   const handleDate2Change = (date) => {
     setSelectedDate2(date);
+  };
+  const handleDateConge1Change = (date) => {
+    setSelectedDateConge1(date);
+  };
+  const handleDateConge2Change = (date) => {
+    setSelectedDateConge2(date);
   };
   //Choose option for demande
   const handleChange = (event, newValue) => {
@@ -93,6 +102,9 @@ const handleValidate = () => {
 const handleDescriptionChange = (event) => {
   setDescription(event.target.value);
 };
+const handleDescriptionCongeChange = (event) => {
+  setDescriptionConge(event.target.value);
+};
 
 
 const addDemande2 = async () => {
@@ -106,6 +118,30 @@ const addDemande2 = async () => {
       de_date: selectedDate1,
       a_date: selectedDate2,
       universite: selectedUniversity.label,
+    };
+
+    // Make a POST request to your backend API
+    const response = await axios.post(url, requestData);
+    navigate('/prof-demandes')
+  } catch (error) {
+    console.error("Error fetching abstract:", error);
+  } finally {
+    // Hide the spinner after the backend request is completed
+    // setIsLoading(false);
+  }
+};
+
+
+const addDemande3 = async () => {
+  try {
+    // Show the spinner while the backend request is in progress
+    // setIsLoading(true);
+    const url = "http://localhost:4000/demandeConge/add-demande-conge"; // URL for the backend API
+    const requestData = {
+      professeur: prof._id, // Send the user input as a parameter in the request body
+      description: descriptionConge,
+      de_date: selectedDateConge1,
+      a_date: selectedDateConge2,
     };
 
     // Make a POST request to your backend API
@@ -283,8 +319,8 @@ const addDemande2 = async () => {
                 <FormLabel>De : من</FormLabel>
                 <LocalizationProvider dateAdapter={AdapterDayjs} >
                 <DatePicker 
-                // value={selectedDateVisa} // Pass the selectedDate as the value
-                // onChange={handleDateVisaChange} // Handle date selection
+                value={selectedDateConge1} // Pass the selectedDate as the value
+                onChange={handleDateConge1Change} // Handle date selection
                 // sx={{width:"100%"}}
                 />
               </LocalizationProvider>
@@ -293,8 +329,8 @@ const addDemande2 = async () => {
                 <FormLabel>À : الى</FormLabel>
                 <LocalizationProvider dateAdapter={AdapterDayjs} >
                 <DatePicker 
-                // value={selectedDateVisa} // Pass the selectedDate as the value
-                // onChange={handleDateVisaChange} // Handle date selection
+                value={selectedDateConge2} // Pass the selectedDate as the value
+                onChange={handleDateConge2Change} // Handle date selection
                 // sx={{width:"100%"}}
                 />
               </LocalizationProvider>
@@ -303,9 +339,14 @@ const addDemande2 = async () => {
               </FormControl>
               <FormControl>
                 <FormLabel>Description : وصف</FormLabel>
-                <Textarea required minRows={3}/>
+                <Textarea 
+                required 
+                minRows={3}
+                value={descriptionConge} // Bind the value to the description state
+                onChange={handleDescriptionCongeChange}
+                />
               </FormControl>
-              <Button type="submit">Valider</Button>
+              <Button type="submit" onClick={addDemande3}>Valider</Button>
             </Stack>
           </form>
         </ModalDialog>

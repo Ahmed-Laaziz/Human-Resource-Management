@@ -18,6 +18,17 @@ mongoose.connect(URI).then(() => console.log('connect to db...')).catch(err => c
 //   useUnifiedTopology: true,
 // });
 
+
+exports.getDemands = async (req, res, next) => {
+  try {
+    const allDemands = await Demande.find({});
+    res.status(200).json(allDemands);
+  } catch (error) {
+    console.error('Error retrieving demand:', error);
+    res.status(500).json({ error: 'Failed to retrieve demand' });
+  }
+};
+
 // Define a route to get agent data by ID
 exports.getDemandesForProfesseur = async (req, res) => {
     try {
@@ -29,6 +40,39 @@ exports.getDemandesForProfesseur = async (req, res) => {
       res.json(demandes);
     } catch (error) {
       console.error('Error fetching demandes:', error);
+      res.status(500).json({ error: 'Server error' });
+    }
+  };
+
+  exports.updateStatut = async (req, res) => {
+    try {
+      const demandId = req.params.demandId;
+      const newStatut = req.body.statut; // You can send the new statut in the request body
+  
+      // Use Mongoose to find the demand by ID and update its statut field
+      const updatedDemand = await Demande.findByIdAndUpdate(
+        demandId,
+        { statut: newStatut },
+        { new: true } // This option returns the updated document
+      );
+  
+      if (!updatedDemand) {
+        return res.status(404).json({ error: 'Demand not found' });
+      }
+  
+      res.status(200).json(updatedDemand);
+    } catch (error) {
+      console.error('Error updating statut:', error);
+      res.status(500).json({ error: 'Failed to update statut' });
+    }
+  };
+  exports.getEnAttenteDemands = async (req, res) => {
+    try {
+      // Use Mongoose to find demands with the specified 'statut'
+      const enAttenteDemands = await Demande.find({ statut: 'En attente' });
+      res.json(enAttenteDemands);
+    } catch (error) {
+      console.error('Error fetching "En attente" demands:', error);
       res.status(500).json({ error: 'Server error' });
     }
   };

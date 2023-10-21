@@ -15,9 +15,19 @@ import {
   randomUpdatedDate,
 } from '@mui/x-data-grid-generator';
 
-export default function ColumnPinningDynamicRowHeight({profId}) {
+export default function ColumnPinningDynamicRowHeight({prof}) {
 
   const [showEditDelete, setShowEditDelete] = React.useState(true);
+  const navigate = useNavigate();
+  const handlePrintClick = (demand) => {
+   if (demand.__t === 'DemandeQuitterTerritoire'){
+    navigate('/autorisationQuitterTerritoire', { state: {input1:`${prof.prenom.split('|')[0]} ${prof.nom.split('|')[0]}`, input2:`${prof.cadre}` , input3:`${demand.de_date}`, input4:`${demand.a_date}`, input5:`${prof.prenom.split('|')[0]} ${prof.nom.split('|')[0]}`, input6:`${prof.cadre}`, input7:`${demand.universite}`}})
+   }
+   else if (demand.__t === 'DemandeConge')
+    {
+      navigate('/decisionConge', { state: {input1:`${prof.prenom.split('|')[0]} ${prof.nom.split('|')[0]}`, input2:`${prof.cadre}` , input3:`${demand.de_date}`, input4:`${demand.a_date}`, input5:`${demand.doti}`, input6:`${prof.cadre}`,}})
+    }
+  };
 
   const columns = React.useMemo(
     () => [
@@ -92,6 +102,7 @@ export default function ColumnPinningDynamicRowHeight({profId}) {
               size="small"
               startIcon={<PrintIcon />}
               disabled={params.row.statut !== 'Approuvée'}
+              onClick={() => handlePrintClick(params.row)}
             >
               Print
             </Button>
@@ -108,7 +119,7 @@ export default function ColumnPinningDynamicRowHeight({profId}) {
   const fetchDemandes = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/demandes/profDemandes/${profId}` // Replace with your actual API endpoint
+        `http://localhost:4000/demandes/profDemandes/${prof._id}` // Replace with your actual API endpoint
       );
       setDemandes(response.data);
     } catch (error) {
@@ -133,6 +144,11 @@ export default function ColumnPinningDynamicRowHeight({profId}) {
           columns={columns}
           getRowId={(row) => row._id}
           getRowHeight={() => 'auto'}
+          // onCellClick={(params) => {
+          //   if (params.field === 'actions') {
+          //     handlePrintClick(params.row);
+          //   }
+          // }}
           initialState={{ pinnedColumns: { left: ['name'], right: ['actions'] } }}
         />
       </div>

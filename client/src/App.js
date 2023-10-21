@@ -7,7 +7,10 @@ import Add from "./pages/addProfessor";
 import All from "./pages/allProfessors";
 import Demandes from "./pages/options";
 import AttestationTravail from "./documents/AttestationTravail";
+import AutorisationQuitterTerritoire from "./documents/AutorisationDeQuitterLeTerritoire"
+import DecisionConge from "./documents/DecisionDeCongeAdministratif"
 import ProfDemandes from "./pages/profDemandes";
+import AdminDemandes from "./pages/adminDemandes";
 import Hists from "./pages/profHistoriques";
 import { ProfProvider } from "./context/ProfContext";
 import Proffile from "./pages/profProfile";
@@ -24,7 +27,10 @@ export default function App() {
         <Route path="all-professors" element={<All/>} />
         <Route path="demandes" element={<Demandes/>} />
         <Route path="attestationTravail" element={<AttestationTravail/>} />
+        <Route path="autorisationQuitterTerritoire" element={<AutorisationQuitterTerritoire/>} />
+        <Route path="decisionConge" element={<DecisionConge/>} />
         <Route path="prof-demandes" element={<ProfDemandes/>} />
+        <Route path="admin-demandes" element={<AdminDemandes/>} />
         <Route path="historiques" element={<Hists/>} />
         <Route path="prof-profile" element={<Proffile/>} />
         {/* </Route> */}

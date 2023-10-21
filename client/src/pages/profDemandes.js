@@ -80,7 +80,7 @@ useEffect(() => {
 <Breadcrumb />
 <>&nbsp;</>
 {agent?(
-  <DemandesTable sx={{marginTop:'10%'}} profId={agent._id}/>
+  <DemandesTable sx={{marginTop:'10%'}} prof={agent}/>
 ):null}
   
 </Box>

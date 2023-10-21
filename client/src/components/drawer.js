@@ -29,6 +29,7 @@ import Menu from '@mui/material/Menu';
 import { useNavigate } from 'react-router-dom';
 import HistoryIcon from '@mui/icons-material/History';
 import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
+import RuleFolderIcon from '@mui/icons-material/RuleFolder';
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -270,6 +271,30 @@ export default function MiniDrawer({role}) {
             <PersonAddIcon/>
           </ListItemIcon>
           <ListItemText primary="all professors" sx={{ opacity: open ? 1 : 0 }} />
+        </ListItemButton>
+      </Link>
+    </ListItem>
+
+    <ListItem disablePadding sx={{ display: 'block' }}>
+      {/* Use the Link component to specify the "to" prop */}
+      <Link to="/admin-demandes" style={{ textDecoration: 'none' }}>
+        <ListItemButton
+          sx={{
+            minHeight: 48,
+            justifyContent: open ? 'initial' : 'center',
+            px: 2.5,
+          }}
+        >
+          <ListItemIcon
+            sx={{
+              minWidth: 0,
+              mr: open ? 3 : 'auto',
+              justifyContent: 'center',
+            }}
+          >
+            <RuleFolderIcon/>
+          </ListItemIcon>
+          <ListItemText primary="Demandes" sx={{ opacity: open ? 1 : 0 }} />
         </ListItemButton>
       </Link>
     </ListItem>

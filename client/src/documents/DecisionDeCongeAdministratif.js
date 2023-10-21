@@ -1,15 +1,41 @@
 import React, { useState } from "react";
 import ReactToPrint from "react-to-print";
-import ensa from "../image/ensaj1.png";
-import ucd from "../image/Logo_UCD.png";
+import ensa from "../images/ensaj1.png";
+import ucd from "../images/Logo_UCD.png";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
+import Drawer from '../components/drawer';
+import Box from '@mui/material/Box';
+import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
+import Fab from '@mui/material/Fab';
+const fabStyle = {
+    position: 'absolute',
+    bottom: 16,
+    right: 24,
+  };
 class ComponentToPrint extends React.Component {
     render() {
         const { input1, input2, input3, input4, input5, input6, currentDate } = this.props
         return (
-            <div className="body">
+
+            <Box sx={{ display: 'flex' }}>
+        <Drawer role='Professeur'/>
+        
+        <Box
+            component="main"
+            sx={{
+                flexGrow: 1,
+                p: 3,
+                marginTop: "2%",
+                marginLeft: "5%",
+                marginRight: "5%",
+                marginBottom: "1%",
+    // boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Add the boxShadow property
+  }}
+></Box>
+<center>
+    <div style={{ overflow: "auto", height: "100vh" , width:"87%", marginTop:'5%', marginRight:'20%'}}>
+    <div className="body" id="print-content">
                 <div class="body" ref={el => { this.componentRef = el }}>
                     <div class="div1">
                         <div class="third"><img src={ensa} className="ucd-image" /></div>
@@ -43,12 +69,12 @@ class ComponentToPrint extends React.Component {
                         </div>
                         <div style={{ margin: "30px" }}>
                             <p><b>DOTI  </b>: <b>{input5}</b></p>
-                            <p><b>GRADE </b>: Professeur <b>{input6}</b></p>
+                            <p><b>GRADE </b>: <b>{input6}</b></p>
                         </div>
                         <b><u>Article 2</u>   : </b><p style={{ display: 'inline' }}>L’intéressée est autorisée à quitter le   territoire marocain durant la période
-                            dès sa reprise de &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;indiquée à l’article I.</p><br /><br />
+                            dès sa reprise de indiquée à l’article I.</p><br /><br />
                         <b><u>Article 3</u>   : </b><p style={{ display: 'inline' }}>L’intéressée est tenu(e) d’aviser le service compétent de sa  reprise
-                            de service à l’expiration de &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;ce congé.
+                            de service à l’expiration de ce congé.
                         </p>
                     </div>
                     <div class="div4" style={{ marginTop: '70px', marginBottom: '70px' }}>
@@ -73,6 +99,9 @@ class ComponentToPrint extends React.Component {
                     </div>
                 </div>
             </div>
+            </div>
+</center>
+            </Box>
         );
     }
 }
@@ -87,9 +116,11 @@ export default function Test() {
         <div>
             <ReactToPrint
                 trigger={() => {
-                    return <button>Imprimer l'attestation</button>;
+                    return <Fab sx = {fabStyle} color="primary" aria-label="add">
+                    <LocalPrintshopIcon />
+                  </Fab>;;
                 }}
-                content={() => componentRef}
+                content={() => document.getElementById('print-content')}
                 pageStyle="print"
             />
             <button onClick={() => { navigate(-1) }}>Retour</button>

@@ -1,4 +1,4 @@
-const DemandeQuitterTerritoire = require("../../models/dem_quitter_territoire");
+const DemandeConge = require("../../models/dem_conge");
 const mongoose = require('mongoose');
 
 
@@ -19,18 +19,18 @@ mongoose.connect(URI).then(() => console.log('connect to db...')).catch(err => c
 //   useUnifiedTopology: true,
 // });
 
-exports.addDemandeQuitterTerritoire = async (req, res, next) => {
+
+exports.addDemandeConge = async (req, res, next) => {
     console.log(req.body);
     try {
-      const newDemandeQuitterTerritoire = new DemandeQuitterTerritoire({
+      const newDemandeConge = new DemandeConge({
         professeur: req.body.professeur, 
         description: req.body.description, 
         de_date: req.body.de_date, 
         a_date: req.body.a_date,
-        universite: req.body.universite,
       });
   
-      const savedDemande = await newDemandeQuitterTerritoire.save();
+      const savedDemande = await newDemandeConge.save();
   
       res.status(200).json(savedDemande);
     } catch (error) {
