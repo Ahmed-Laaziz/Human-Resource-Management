@@ -151,7 +151,7 @@ export default function MiniDrawer({role}) {
       <MenuIcon />
     </IconButton>
     <Typography variant="h6" noWrap component="div">
-      Mini variant drawer
+      ENSAJ Gestion RH
     </Typography>
     
     {/* Add custom styling to the Avatar to move it to the far right */}
@@ -376,7 +376,7 @@ export default function MiniDrawer({role}) {
         >
           <CollectionsBookmarkIcon />
         </ListItemIcon>
-        <ListItemText primary="AllDemandes" sx={{ opacity: open ? 1 : 0 }} />
+        <ListItemText primary="All Demandes" sx={{ opacity: open ? 1 : 0 }} />
       </ListItemButton>
     </Link>
   </ListItem>
@@ -387,32 +387,11 @@ export default function MiniDrawer({role}) {
 
         
     
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
+          
         </List>
         <Divider />
         <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
+          {['All mail', 'Trash', 'Drafts'].map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{

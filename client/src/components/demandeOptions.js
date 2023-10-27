@@ -216,7 +216,7 @@ const addDemande3 = async () => {
             Avez vous besoin d'un document administratif?
           </Typography>
           <Typography fontSize="sm" sx={{ mt: 0.5 }}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+            Choisissez votre document de besoin et remplire le formulaire avec les données appropriées
           </Typography>
           <Select defaultValue="att1" onChange={handleChange}>
   <Option value="att1">Attestation de travail - شهادة عمل</Option>

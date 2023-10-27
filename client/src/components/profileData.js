@@ -71,11 +71,6 @@ export default function ProfileData({ agent }) {
     <Input endDecorator={<InfoOutlined />} defaultValue={isProfesseur ? agent.date_fct_publique : 'Loading...'} disabled sx={{fontFamily:'bold'}}/>
   </FormControl>
   <Checkbox label="Change password" sx={{ gridColumn: '1/-1', my: 1 }} />
-  <CardActions sx={{ gridColumn: '1/-1' }}>
-    <Button variant="solid" color="primary">
-      Add card
-    </Button>
-  </CardActions>
 </CardContent>
 ) : isAdmin ? (
   <CardContent

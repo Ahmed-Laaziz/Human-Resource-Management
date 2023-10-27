@@ -6,11 +6,32 @@ import Card from '@mui/joy/Card';
 import CardContent from '@mui/joy/CardContent';
 import Typography from '@mui/joy/Typography';
 import Sheet from '@mui/joy/Sheet';
+import Modal from '@mui/joy/Modal';
+import ModalDialog from '@mui/joy/ModalDialog';
+import DialogTitle from '@mui/joy/DialogTitle';
+import DialogContent from '@mui/joy/DialogContent';
+import Stack from '@mui/joy/Stack';
+import TextField from '@mui/material/TextField';
+import FormControl from '@mui/joy/FormControl';
+import FormLabel from '@mui/joy/FormLabel';
+import Grid from '@mui/joy/Grid';
 
 export default function UserCard({ agent }) {
 
   const isAdmin = agent && agent.__t === 'Admin';
   const isProfesseur = agent && agent.__t === 'Professeur';
+
+  const handleValidate = () => {
+    setOpenAtt2(true);
+  }
+
+  const handleClose = () => {
+    setOpenAtt2(false);
+  }
+
+  const [openAtt2, setOpenAtt2] = React.useState(false);
+
+  
 
   return (
     <Box
@@ -47,7 +68,7 @@ export default function UserCard({ agent }) {
         </AspectRatio>
         <CardContent>
           <Typography fontSize="xl" fontWeight="lg">
-          {agent ? agent.prenom.split('|')[0]  + " " + agent.nom.split('|')[0] + "       " +  agent.prenom.split('|')[1]  + " " + agent.nom.split('|')[1] : 'Loading...'} 
+          {agent ? agent.prenom.split('|')[0]  + " " + agent.nom.split('|')[0] + "   |   " +  agent.prenom.split('|')[1]  + " " + agent.nom.split('|')[1] : 'Loading...'} 
           </Typography>
           <Typography level="body-sm" fontWeight="lg" textColor="text.tertiary">
           {isAdmin ? agent.fonction : 'Professeur'} 
@@ -82,16 +103,99 @@ export default function UserCard({ agent }) {
               <Typography fontWeight="lg">{agent ? "+212 "+agent.tel.replace(/^0+/, '') : 'Loading...'}</Typography>
             </div>
           </Sheet>
+          { localStorage.getItem('type') === 'Admin' ? (
           <Box sx={{ display: 'flex', gap: 1.5, '& > button': { flex: 1 } }}>
-            <Button variant="outlined" color="neutral">
-              Preiew
-            </Button>
-            <Button variant="solid" color="primary">
+            <Button variant="solid" color="primary"
+            onClick={handleValidate}>
               Edit
             </Button>
           </Box>
+          ) : localStorage.getItem('type') === 'Professeur' ? (
+            <></>
+          ) : null}
         </CardContent>
       </Card>
+
+      { agent && agent.__t === 'Admin' ? (
+      <Modal open={openAtt2} onClose={() => handleClose()}>
+        <ModalDialog>
+          <DialogTitle> تحديث بيانات المستخدم</DialogTitle>
+          <DialogContent>Modifier les données utilisateur</DialogContent>
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+
+              handleClose();
+            }}
+          >
+            <Stack spacing={2}>
+            <FormControl>
+              <Grid container spacing={2} style={{marginTop:"2%"}}>
+              <Grid item xs={6} >
+                <FormLabel>Nom : </FormLabel>
+                <TextField variant="outlined" value={agent ? agent.nom.split('|')[0] : 'Loading...'}/>
+              </Grid>
+              <Grid item xs={6} >
+                <FormLabel>Prenom : </FormLabel>
+                <TextField variant="outlined" value={agent ? agent.prenom.split('|')[0] : 'Loading...'}/>
+              </Grid>
+              </Grid>
+              <Grid container spacing={2} style={{marginTop:"2%"}}>
+              <Grid item xs={6} >
+                <FormLabel>النسب :</FormLabel>
+                <TextField variant="outlined" value={agent ? agent.nom.split('|')[1] : 'Loading...'}/>
+              </Grid>
+              <Grid item xs={6} >
+                <FormLabel>الأسم :</FormLabel>
+                <TextField variant="outlined" value={agent ? agent.prenom.split('|')[1] : 'Loading...'}/>
+              </Grid>
+              </Grid>
+              <Grid container spacing={2} style={{marginTop:"2%"}}>
+              <Grid item xs={6} >
+                <FormLabel> CIN (رقم ب.ت.وطنية) :</FormLabel>
+                <TextField variant="outlined" value={agent ? agent.cin : 'Loading...'}/>
+              </Grid>
+              <Grid item xs={6} >
+                <FormLabel>Numéro téléphone (رقم الهاتف) :</FormLabel>
+                <TextField variant="outlined" value={agent ? agent.tel : 'Loading...'}/>
+              </Grid>
+              </Grid>
+              <Grid container style={{marginTop:"4%"}} xs={12}>
+                <FormLabel> Email (البريد الإلكتروني) :</FormLabel>
+                <TextField variant="outlined" value={agent ? agent.email : 'Loading...'} fullWidth/>
+              </Grid>
+              </FormControl>
+            </Stack>
+            <Box sx={{ display: 'flex', gap: 1.5, '& > button': { flex: 1 } }} style={{marginTop:"12%"}}>
+            <Button variant="solid" color="primary">
+              Valider
+            </Button>
+          </Box>
+          </form>
+        </ModalDialog>
+      </Modal>
+      ) : agent && agent.__t === 'Professeur' ? (
+        <Modal open={openAtt2} onClose={() => handleClose()}>
+        <ModalDialog>
+          <DialogTitle> تحديث بيانات المستخدم</DialogTitle>
+          <DialogContent>Modifier les données utilisateur</DialogContent>
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              handleClose();
+            }}
+          >
+            <Stack spacing={2}>
+            <FormControl>
+
+              </FormControl>
+            </Stack>
+          </form>
+        </ModalDialog>
+      </Modal>
+      ) : null}
     </Box>
+
+    
   );
 }
