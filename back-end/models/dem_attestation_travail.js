@@ -3,9 +3,8 @@ const Demande = require('./demande');
 const Schema = mongoose.Schema;
 
 const demandeAttestationTravail = new Schema({
-    date_expiration: {
+    description: {
         type: String,
-        default: '2024'
     },
     }
 )
