@@ -13,7 +13,7 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import EnsaImg from '../images/ensaj.jpg';
+import EnsaImg from '../images/ensaj2.jpeg';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useToken } from '../auth/TokenContext';
@@ -61,7 +61,6 @@ const [passwordError, setPasswordError] = useState('');
   if (!email) {
     // Display an error message if email or password is empty
     setEmailError('Email is required');
-    
     // return;
   }
   if (!password) {
@@ -139,6 +138,10 @@ const [passwordError, setPasswordError] = useState('');
               alignItems: 'center',
             }}
           >
+            <Typography component="h1" variant="h5">
+              Gestion des Ressources Humaines
+            </Typography>
+            <Grid>&nbsp;</Grid>
             <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
               <LockOutlinedIcon />
             </Avatar>

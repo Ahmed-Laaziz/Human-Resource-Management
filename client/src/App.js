@@ -14,7 +14,7 @@ import AdminDemandes from "./pages/adminDemandes";
 import Hists from "./pages/profHistoriques";
 import { ProfProvider } from "./context/ProfContext";
 import Proffile from "./pages/profProfile";
-
+import DemandsHistory from "./pages/demandsHistory";
 export default function App() {
   return (
     <TokenProvider>
@@ -30,6 +30,7 @@ export default function App() {
         <Route path="autorisationQuitterTerritoire" element={<AutorisationQuitterTerritoire/>} />
         <Route path="decisionConge" element={<DecisionConge/>} />
         <Route path="prof-demandes" element={<ProfDemandes/>} />
+        <Route path="demands-history" element={<DemandsHistory/>} />
         <Route path="admin-demandes" element={<AdminDemandes/>} />
         <Route path="historiques" element={<Hists/>} />
         <Route path="prof-profile" element={<Proffile/>} />

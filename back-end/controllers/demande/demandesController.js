@@ -66,13 +66,13 @@ exports.getDemandesForProfesseur = async (req, res) => {
       res.status(500).json({ error: 'Failed to update statut' });
     }
   };
-  exports.getEnAttenteDemands = async (req, res) => {
+  exports.getEnAttenteAndEnCoursDemands = async (req, res) => {
     try {
-      // Use Mongoose to find demands with the specified 'statut'
-      const enAttenteDemands = await Demande.find({ statut: 'En attente' });
-      res.json(enAttenteDemands);
+      // Use Mongoose to find demands with 'statut' equal to either "En attente" or "En cours"
+      const enAttenteAndEnCoursDemands = await Demande.find({ statut: { $in: ['En attente', 'En Cours'] } });
+      res.json(enAttenteAndEnCoursDemands);
     } catch (error) {
-      console.error('Error fetching "En attente" demands:', error);
+      console.error('Error fetching "En attente" and "En cours" demands:', error);
       res.status(500).json({ error: 'Server error' });
     }
   };

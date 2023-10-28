@@ -64,7 +64,7 @@ export default function AdminDemandes(){
 
     return(
         <Box sx={{ display: 'flex' }}>
-        <Drawer role='Admin'/>
+        <Drawer role='Admin' pageTitle={"Demandes des Professeurs"}/>
         
         <Box
   component="main"

@@ -34,7 +34,7 @@ const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toStri
         return (
 
 <Box sx={{ display: 'flex' }}>
-        <Drawer role='Professeur'/>
+        <Drawer role='Admin'/>
         
         <Box
             component="main"

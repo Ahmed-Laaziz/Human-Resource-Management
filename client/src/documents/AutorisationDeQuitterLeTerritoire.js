@@ -19,7 +19,7 @@ class ComponentToPrint extends React.Component {
         return (
 
             <Box sx={{ display: 'flex' }}>
-        <Drawer role='Professeur'/>
+        <Drawer role='Admin'/>
         
         <Box
             component="main"

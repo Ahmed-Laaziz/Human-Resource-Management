@@ -67,7 +67,7 @@ useEffect(() => {
         // Render content for logged-in users
         <Box sx={{ display: 'flex' }}>
           {agent ? (
-            <Drawer role={agent.__t}/>
+            <Drawer role={agent.__t} pageTitle={"Page d'accueil"}/>
           ):null}
         
         <Box

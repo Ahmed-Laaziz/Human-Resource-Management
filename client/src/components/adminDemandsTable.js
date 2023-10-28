@@ -22,11 +22,19 @@ import Modal from '@mui/joy/Modal';
 import ModalDialog from '@mui/joy/ModalDialog';
 import DialogTitle from '@mui/joy/DialogTitle';
 import DialogContent from '@mui/joy/DialogContent';
-
+import HistoryIcon from '@mui/icons-material/History';
+import Fab from '@mui/material/Fab';
+const fabStyle = {
+    position: 'absolute',
+    high: 10,
+    right: 24,
+  };
 export default function ColumnPinningDynamicRowHeight() {
+  const navigate = useNavigate();
     const [openModal, setOpenModal] = useState(false);
   const [selectedDemand, setSelectedDemand] = useState(null);
     const [agent, setAgent] = useState(null);
+    const [professorNames, setProfessorNames] = useState({});
   const handlePreviewClick = async (demand) => {
     setSelectedDemand(demand);
     try {
@@ -41,12 +49,25 @@ export default function ColumnPinningDynamicRowHeight() {
     setOpenModal(false);
   };
 
-  const handleApprouverClick = async () => {
+  const handleApprouverClick = async (demand) => {
+    setSelectedDemand(demand);
     if (selectedDemand) {
       try {
         const response = await axios.put(`http://localhost:4000/demandes/updateStatut/${selectedDemand._id}`, {
-          statut: 'Approuvée', // Set the new statut here
+          statut: 'En Cours', // Set the new statut here
         });
+          if (selectedDemand.__t === 'DemandeQuitterTerritoire'){
+           navigate('/autorisationQuitterTerritoire', { state: {input1:`${agent.prenom.split('|')[0]} ${agent.nom.split('|')[0]}`, input2:`${agent.cadre}` , input3:`${selectedDemand.de_date}`, input4:`${selectedDemand.a_date}`, input5:`${agent.prenom.split('|')[0]} ${agent.nom.split('|')[0]}`, input6:`${agent.cadre}`, input7:`${selectedDemand.universite}`}})
+          }
+          else if (selectedDemand.__t === 'DemandeConge')
+           {
+             navigate('/decisionConge', { state: {input1:`${agent.prenom.split('|')[0]} ${agent.nom.split('|')[0]}`, input2:`${agent.cadre}` , input3:`${selectedDemand.de_date}`, input4:`${selectedDemand.a_date}`, input5:`${selectedDemand.doti}`, input6:`${agent.cadre}`,}})
+           }
+           else if (selectedDemand.__t == 'DemandeAttestationTravail')
+           {
+            navigate('/attestationTravail', { state: {input1:agent.prenom.split('|')[0] , input2:agent.nom.split('|')[0], input3:'Grade B', input4:agent.num_loyer, input5:agent.date_entre_ecole}})
+           }
+         
         // Handle the response as needed (e.g., update UI, show a notification, etc.)
         console.log('Statut updated successfully:', response.data);
 
@@ -61,11 +82,12 @@ export default function ColumnPinningDynamicRowHeight() {
     }
   };
 
-  const handleRefuserClick = async () => {
-    if (selectedDemand) {
+  const handleValiderClick = async (demand) => {
+    setSelectedDemand(demand);
       try {
-        const response = await axios.put(`http://localhost:4000/demandes/updateStatut/${selectedDemand._id}`, {
-          statut: 'Non approuvée', // Set the new statut here
+        console.log("in handle valider");
+        const response = await axios.put(`http://localhost:4000/demandes/updateStatut/${demand._id}`, {
+          statut: 'Validée', // Set the new statut here
         });
         // Handle the response as needed (e.g., update UI, show a notification, etc.)
         console.log('Statut updated successfully:', response.data);
@@ -78,12 +100,44 @@ export default function ColumnPinningDynamicRowHeight() {
         console.error('Error updating statut:', error);
         // Handle the error appropriately (e.g., show an error message).
       }
-    }
+    
+  };
+
+
+  const handleRejeterClick = async (demand) => {
+    setSelectedDemand(demand);
+      try {
+        console.log("in handle valider");
+        const response = await axios.put(`http://localhost:4000/demandes/updateStatut/${demand._id}`, {
+          statut: 'Rejetée', // Set the new statut here
+        });
+        // Handle the response as needed (e.g., update UI, show a notification, etc.)
+        console.log('Statut updated successfully:', response.data);
+
+        // You can also close the modal or update the demand list after updating the statut.
+        // For example:
+        setOpenModal(false);
+        fetchDemandes(); // Fetch updated demand list
+      } catch (error) {
+        console.error('Error updating statut:', error);
+        // Handle the error appropriately (e.g., show an error message).
+      }
+    
+  };
+
+  const handleFabClick = () => {
+    // Use the navigate function to navigate to another page
+    navigate('/demands-history'); // Replace '/your-page' with the actual route you want to navigate to
   };
   
 
   const columns = React.useMemo(
     () => [
+      {
+        field: 'professorName',
+        headerName: 'Professeur',
+        width: 210,
+      },
       { field: '__t', headerName: 'Type', width: 210, editable: false },
       {
         field: 'statut',
@@ -101,9 +155,11 @@ export default function ColumnPinningDynamicRowHeight() {
                   switch (params.value) {
                     case 'En attente':
                       return 'orange';
-                    case 'Approuvée':
+                    case 'En Cours':
+                      return 'blue';
+                    case 'Validée':
                       return 'green';
-                    case 'Non approuvée':
+                    case 'Rejetée':
                       return 'red';
                     default:
                       return 'orange'; // Default color (you can change this)
@@ -113,9 +169,11 @@ export default function ColumnPinningDynamicRowHeight() {
                   switch (params.value) {
                     case 'En attente':
                       return 'orange';
-                    case 'Approuvée':
+                    case 'En Cours':
+                      return 'blue';
+                    case 'Validée':
                       return 'green';
-                    case 'Non approuvée':
+                    case 'Rejetée':
                       return 'red';
                     default:
                       return 'orange'; // Default color (you can change this)
@@ -131,7 +189,7 @@ export default function ColumnPinningDynamicRowHeight() {
         ),
       },
       { field: 'createdAt', headerName: 'Date Demande', width: 210, type: 'Date',editable: false },
-      { field: 'updatedAt', headerName: 'Derniere modification',width: 210, type: 'Date', editable: true },
+      // { field: 'updatedAt', headerName: 'Derniere modification',width: 210, type: 'Date', editable: true },
       
       
       {
@@ -149,7 +207,29 @@ export default function ColumnPinningDynamicRowHeight() {
             //   onClick={() => handlePrintClick(params.row)}
             onClick={() => handlePreviewClick(params.row)}
             >
-              Preview
+              Détails
+            </Button>
+
+            <Button
+              variant="outlined"
+              size="small"
+              startIcon={<RemoveRedEyeIcon />}
+              disabled={params.row.statut !== 'En Cours'}
+            //   onClick={() => handlePrintClick(params.row)}
+            onClick={() => handleValiderClick(params.row)}
+            >
+              Valider
+            </Button>
+
+            <Button
+              variant="outlined"
+              size="small"
+              startIcon={<RemoveRedEyeIcon />}
+              disabled={params.row.statut !== 'En Cours'}
+            //   onClick={() => handlePrintClick(params.row)}
+            onClick={() => handleRejeterClick(params.row)}
+            >
+              Rejeter
             </Button>
           </Stack>
         ),
@@ -163,14 +243,47 @@ export default function ColumnPinningDynamicRowHeight() {
   
   const fetchDemandes = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:4000/demandes/enAttenteDemands` // Replace with your actual API endpoint
-      );
-      setDemandes(response.data);
+      const response = await axios.get(`http://localhost:4000/demandes/enAttenteDemands`);
+      const demandData = response.data;
+  
+      // Fetch and store professor names based on the demand's professor ID
+      const professorNames = {};
+      for (const demand of demandData) {
+        try {
+          const professorResponse = await axios.get(`http://localhost:4000/agent/agents/${demand.professeur}`);
+          professorNames[demand.professeur] = professorResponse.data.nom.split('|')[0] + " " + professorResponse.data.prenom.split('|')[0]; // Replace 'nom' with the actual professor name field
+        } catch (error) {
+          console.error('Error fetching professor name:', error);
+        }
+      }
+  
+      // Attach professor names to demand objects
+      const demandsWithProfessorNames = demandData.map((demand) => ({
+        ...demand,
+        professorName: professorNames[demand.professeur] || 'N/A', // Provide a default value if name not found
+      }));
+  
+      setDemandes(demandsWithProfessorNames);
+      console.log(demandsWithProfessorNames)
     } catch (error) {
       console.error('Error fetching demandes:', error);
     }
   };
+  
+
+  // const fetchProfessorNames = async () => {
+  //   const names = {};
+  //   // Fetch professor names for each demand
+  //   for (const demand of demandes) {
+  //     try {
+  //       const response = await axios.get(`http://localhost:4000/agent/agents/${demand.professeur}`);
+  //       names[demand._id] = response.data.nom.split('|')[0] + " " + response.data.prenom.split('|')[0] ; // Assuming the professor name field is 'nom'
+  //     } catch (error) {
+  //       console.error('Error fetching professor name:', error);
+  //     }
+  //   }
+  //   setProfessorNames(names);
+  // };
 
   useEffect(() => {
     // Fetch the title from the backend API
@@ -180,20 +293,15 @@ export default function ColumnPinningDynamicRowHeight() {
 
   return (
     <div style={{ width: '100%' }}>
-      {/* <Button sx={{ mb: 1 }} onClick={handleToggleClick}>
-        Toggle edit & delete
-      </Button> */}
+      <Fab sx={fabStyle} color="primary" aria-label="add" onClick={handleFabClick} title="Click to view history">
+      <HistoryIcon />
+    </Fab>
       <div style={{ height: 500 }}>
         <DataGrid
           rows={demandes}
           columns={columns}
           getRowId={(row) => row._id}
           getRowHeight={() => 'auto'}
-          // onCellClick={(params) => {
-          //   if (params.field === 'actions') {
-          //     handlePrintClick(params.row);
-          //   }
-          // }}
           initialState={{ pinnedColumns: { left: ['name'], right: ['actions'] } }}
         />
       </div>
@@ -250,21 +358,17 @@ export default function ColumnPinningDynamicRowHeight() {
                 </FormControl>
                 
                 
-                <Grid container spacing={2} style={{marginTop:"2%"}}>
-                <Grid item xs={2} >
-                <b></b>
+                
+                
+                <center>
+                <Grid item xs={1}>
+                <Button type="submit" onClick={handleApprouverClick} sx={{backgroundColor:"#000080", color:"white",  '&:hover': {
+            backgroundColor: '#0000FF ', // Change text color on hover
+          },}}>Imprimer</Button>
                 </Grid>
-                <Grid item xs={5} >
-                <Button type="submit" onClick={handleApprouverClick} sx={{backgroundColor:"#196F3D ", color:"white",  '&:hover': {
-            backgroundColor: '#196F3D ', // Change text color on hover
-          },}}>Approuver</Button>
-                </Grid>
-                <Grid item xs={5} >
-                <Button type="submit" onClick={handleRefuserClick} sx={{backgroundColor:"#A93226", color:"white", '&:hover': {
-            backgroundColor: '#A93226', // Change text color on hover
-          },}}>Refuser</Button>
-                </Grid>
-                </Grid>
+                </center>
+               
+                
               </Stack>
             </form>
           </ModalDialog>
@@ -311,27 +415,61 @@ export default function ColumnPinningDynamicRowHeight() {
                   disabled
                   />
                 </FormControl>
-                
-                
-                <Grid container spacing={2} style={{marginTop:"2%"}}>
-                <Grid item xs={2} >
-                <b></b>
+                <center>
+                <Grid item xs={1}>
+                <Button type="submit" onClick={handleApprouverClick} sx={{backgroundColor:"#000080", color:"white",  '&:hover': {
+            backgroundColor: '#0000FF ', // Change text color on hover
+          },}}>Imprimer</Button>
                 </Grid>
-                <Grid item xs={5} >
-                <Button type="submit" onClick={handleApprouverClick} sx={{backgroundColor:"#196F3D ", color:"white",  '&:hover': {
-            backgroundColor: '#196F3D ', // Change text color on hover
-          },}}>Approuver</Button>
-                </Grid>
-                <Grid item xs={5} >
-                <Button type="submit" onClick={handleRefuserClick} sx={{backgroundColor:"#A93226", color:"white", '&:hover': {
-            backgroundColor: '#A93226', // Change text color on hover
-          },}}>Refuser</Button>
-                </Grid>
-                </Grid>
+                </center>
               </Stack>
             </form>
           </ModalDialog>
-        ):<></>}
+        ):(selectedDemand.__t === 'DemandeAttestationTravail')?(
+          <ModalDialog>
+          <DialogTitle>  شهادة عمل
+</DialogTitle>
+          <DialogContent>Attestation de travail</DialogContent>
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              setOpenModal(false);
+            }}
+          >
+            <Stack spacing={2}>
+            <FormControl>
+            <Grid container spacing={2} style={{marginTop:"2%"}}>
+            <Grid item xs={6} >
+                <FormLabel>Demandeur :</FormLabel>
+                <Input autoFocus required defaultValue={agent.prenom.split('|')[0] + " " + agent.nom.split('|')[0]} disabled/>
+              </Grid>
+              <Grid item xs={6} >
+                <FormLabel>مقدم الطلب :</FormLabel>
+                <Input autoFocus required defaultValue={agent.prenom.split('|')[1] + " " + agent.nom.split('|')[1]} disabled/>
+              </Grid>
+              </Grid>
+              
+              </FormControl>
+              <FormControl>
+                <FormLabel>Description : وصف</FormLabel>
+                <Textarea 
+                required 
+                minRows={3}
+                defaultValue={selectedDemand.description}
+                disabled
+                />
+              </FormControl>
+              <center>
+              <Grid item xs={1}>
+              <Button type="submit" onClick={handleApprouverClick} sx={{backgroundColor:"#000080", color:"white",  '&:hover': {
+          backgroundColor: '#0000FF ', // Change text color on hover
+        },}}>Imprimer</Button>
+              </Grid>
+              </center>
+            </Stack>
+          </form>
+        </ModalDialog>
+      ):<></>}
         
       </Modal>
 ):<></>}

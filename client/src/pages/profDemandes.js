@@ -64,7 +64,7 @@ useEffect(() => {
 
     return(
         <Box sx={{ display: 'flex' }}>
-        <Drawer role='Professeur'/>
+        <Drawer role='Professeur' pageTitle={"Demandes"}/>
         
         <Box
   component="main"

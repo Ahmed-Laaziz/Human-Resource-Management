@@ -8,5 +8,5 @@ const demandeController = require("../../controllers/demande/demandesController"
 router.get('/profDemandes/:professeurId', demandeController.getDemandesForProfesseur);
 router.get('/allDemandes', demandeController.getDemands);
 router.put('/updateStatut/:demandId', demandeController.updateStatut);
-router.get('/enAttenteDemands', demandeController.getEnAttenteDemands);
+router.get('/enAttenteDemands', demandeController.getEnAttenteAndEnCoursDemands);
 module.exports = router;

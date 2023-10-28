@@ -99,7 +99,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 
 
-export default function MiniDrawer({role}) {
+export default function MiniDrawer({role, pageTitle}) {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -151,7 +151,7 @@ export default function MiniDrawer({role}) {
       <MenuIcon />
     </IconButton>
     <Typography variant="h6" noWrap component="div">
-      Mini variant drawer
+      {pageTitle}
     </Typography>
     
     {/* Add custom styling to the Avatar to move it to the far right */}

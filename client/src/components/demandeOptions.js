@@ -57,11 +57,13 @@ export default function FAQCard({prof}) {
     // Add more universities here
   ];
   const [selectedOption, setSelectedOption] = React.useState('att1'); // Initial selected option
+  const [openAtt1, setOpenAtt1] = React.useState(false);
   const [openAtt2, setOpenAtt2] = React.useState(false);
   const [openAtt3, setOpenAtt3] = React.useState(false);
   const [openAtt4, setOpenAtt4] = React.useState(false);
   const [description, setDescription] = React.useState('');
   const [descriptionConge, setDescriptionConge] = React.useState('');
+  const [descriptionAttestationTravail, setDescriptionAttestationTravail] = React.useState('');
   const [selectedDate1, setSelectedDate1] = useState(null);
   const [selectedDate2, setSelectedDate2] = useState(null);
   const [selectedDateConge1, setSelectedDateConge1] = useState(null);
@@ -86,8 +88,9 @@ export default function FAQCard({prof}) {
   
 const handleValidate = () => {
   if(selectedOption==='att1'){
-    console.log("in att1")
-    navigate('/attestationTravail', { state: {input1:prof.prenom.split('|')[0] , input2:prof.nom.split('|')[0], input3:'Grade B', input4:prof.num_loyer, input5:prof.date_entre_ecole}})
+    // console.log("in att1")
+    // navigate('/attestationTravail', { state: {input1:prof.prenom.split('|')[0] , input2:prof.nom.split('|')[0], input3:'Grade B', input4:prof.num_loyer, input5:prof.date_entre_ecole}})
+    setOpenAtt1(true);
 }
     else if(selectedOption==='att2'){
         setOpenAtt2(true);
@@ -104,6 +107,29 @@ const handleDescriptionChange = (event) => {
 };
 const handleDescriptionCongeChange = (event) => {
   setDescriptionConge(event.target.value);
+};
+const handleDescriptionAttestationTravailChange = (event) => {
+  setDescriptionAttestationTravail(event.target.value);
+};
+
+const addDemande1 = async () => {
+  try {
+    // Show the spinner while the backend request is in progress
+    // setIsLoading(true);
+    const url = "http://localhost:4000/demandeAttestationTravail/add-demande-attestation-travail"; // URL for the backend API
+    const requestData = {
+      professeur: prof._id, // Send the user input as a parameter in the request body
+    };
+
+    // Make a POST request to your backend API
+    const response = await axios.post(url, requestData);
+    navigate('/prof-demandes')
+  } catch (error) {
+    console.error("Error fetching abstract:", error);
+  } finally {
+    // Hide the spinner after the backend request is completed
+    // setIsLoading(false);
+  }
 };
 
 
@@ -235,7 +261,8 @@ const addDemande3 = async () => {
     mx: 'auto',
   }}
 >
-  {selectedOption === 'att1' ? 'Imprimer' : 'Valider'}
+  {/* {selectedOption === 'att1' ? 'Imprimer' : 'Valider'} */}
+  Valider
 </Button>
 
 <Modal open={openAtt2} onClose={() => setOpenAtt2(false)}>
@@ -299,6 +326,33 @@ const addDemande3 = async () => {
           </form>
         </ModalDialog>
       </Modal>
+
+      <Modal open={openAtt1} onClose={() => setOpenAtt3(false)}>
+        <ModalDialog>
+          <DialogTitle>شهادة عمل</DialogTitle>
+          <DialogContent>Attestation de travail</DialogContent>
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              setOpenAtt2(false);
+            }}
+          >
+             <FormControl>
+                <FormLabel>Description : وصف</FormLabel>
+                <Textarea 
+                required 
+                minRows={3}
+                value={descriptionAttestationTravail} // Bind the value to the description state
+                onChange={handleDescriptionAttestationTravailChange}
+                />
+              </FormControl>
+            <Stack spacing={2}>
+              <Button type="submit" onClick={addDemande1}>Valider</Button>
+            </Stack>
+          </form>
+        </ModalDialog>
+      </Modal>
+
 
 
       <Modal open={openAtt3} onClose={() => setOpenAtt3(false)}>

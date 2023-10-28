@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import DemandesTable from '../components/demandsHistory';
 import Drawer from '../components/drawer';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Breadcrumb from '../components/breadcrumb';
-import DemandeOptions from '../components/demandeOptions';
-import ErrorPage from './404';
-import axios from'axios';
 import jwt_decode from 'jwt-decode';
-export default function Options(){
+import axios from'axios';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+export default function ProfDemandes(){
+
   const [token, setToken] = useState('');
     console.log(token);
-  // Function to extract user ID from the JWT token
+// Function to extract user ID from the JWT token
 const getUserIdFromToken = (token) => {
   try {
     const decoded = jwt_decode(token);
@@ -42,7 +42,11 @@ useEffect(() => {
 }, [agentId]);
 
 
-const navigate = useNavigate();
+// if (!agent) {
+//   return <div>Loading...</div>;
+// }
+
+  const navigate = useNavigate();
 
     useEffect(() => {
         // Retrieve the token from localStorage
@@ -51,62 +55,36 @@ const navigate = useNavigate();
           // Set the token in your component state
           setToken(storedToken);
         }
+        // } else {
+        //   // If no token is found, navigate to the login page
+        //   navigate('/');
+        // }
       }, [navigate]);
 
 
     return(
-//         <Box sx={{ display: 'flex' }}>
-//         <Drawer role='Professeur'/>
-//         <Box
-//   component="main"
-//   sx={{
-//     flexGrow: 1,
-//     p: 3,
-//     marginTop: "8%",
-//     marginLeft: "5%",
-//     marginRight: "5%",
-//     // boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Add the boxShadow property
-//   }}
-// >
-// <Breadcrumb />
-// <>&nbsp;</>
-//   <DemandeOptions />
-// </Box>
-
-//       </Box>
-
-<div>
-      {token ? (
-        // Render content for logged-in users
         <Box sx={{ display: 'flex' }}>
-          {(agent && agent.__t === 'Professeur') ? (
-            <>
-            <Drawer role={agent.__t} pageTitle={"Demandes"}/>
-            <Box
+        <Drawer role='Admin' pageTitle={"Demandes"}/>
+        
+        <Box
   component="main"
   sx={{
     flexGrow: 1,
     p: 3,
-    marginTop: "5%",
+    marginTop: "8%",
     marginLeft: "5%",
     marginRight: "5%",
     // boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Add the boxShadow property
   }}
 >
- <Breadcrumb />
- <>&nbsp;</>
-   <DemandeOptions prof={agent}/>
-            </Box>
-            </>
-          ):<h1 style={{margin:"auto", marginTop:"10%"}}>Ooops! Espace reservée pour les professeurs</h1>}
-        
-        
+<Breadcrumb />
+<>&nbsp;</>
+{agent?(
+  <DemandesTable sx={{marginTop:'10%'}} prof={agent}/>
+):null}
+  
+</Box>
 
       </Box>
-      ) : (
-        // Render content for users not logged in
-        <ErrorPage/>
-      )}
-    </div>
     )
 }

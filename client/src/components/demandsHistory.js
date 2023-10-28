@@ -25,6 +25,11 @@ export default function ColumnPinningDynamicRowHeight({prof}) {
 
   const columns = React.useMemo(
     () => [
+        {
+            field: 'professorName',
+            headerName: 'Professeur',
+            width: 210,
+          },
       { field: '__t', headerName: 'Type', width: 210, editable: false },
       {
         field: 'statut',
@@ -79,37 +84,37 @@ export default function ColumnPinningDynamicRowHeight({prof}) {
       { field: 'updatedAt', headerName: 'Derniere modification',width: 210, type: 'Date', editable: true },
       
       
-      {
-        field: 'actions',
-        headerName: 'Actions',
-        width: 210,
-        renderCell: (params) => (
-          <Stack spacing={1} sx={{ width: 1, py: 1 }}>
-            {showEditDelete && (
-              <React.Fragment>
-                <Button 
-                variant="outlined" 
-                disabled={params.row.statut !== 'En attente'}
-                size="small" startIcon={<EditIcon />}>
-                  Edit
-                </Button>
-                <Button variant="outlined" size="small" startIcon={<DeleteIcon />}>
-                  Delete
-                </Button>
-              </React.Fragment>
-            )}
-            {/* <Button
-              variant="outlined"
-              size="small"
-              startIcon={<PrintIcon />}
-              disabled={params.row.statut !== 'Approuvée'}
-              onClick={() => handlePrintClick(params.row)}
-            >
-              Print
-            </Button> */}
-          </Stack>
-        ),
-      },
+    //   {
+    //     field: 'actions',
+    //     headerName: 'Actions',
+    //     width: 210,
+    //     renderCell: (params) => (
+    //       <Stack spacing={1} sx={{ width: 1, py: 1 }}>
+    //         {showEditDelete && (
+    //           <React.Fragment>
+    //             <Button 
+    //             variant="outlined" 
+    //             disabled={params.row.statut !== 'En attente'}
+    //             size="small" startIcon={<EditIcon />}>
+    //               Edit
+    //             </Button>
+    //             <Button variant="outlined" size="small" startIcon={<DeleteIcon />}>
+    //               Delete
+    //             </Button>
+    //           </React.Fragment>
+    //         )}
+    //         {/* <Button
+    //           variant="outlined"
+    //           size="small"
+    //           startIcon={<PrintIcon />}
+    //           disabled={params.row.statut !== 'Approuvée'}
+    //           onClick={() => handlePrintClick(params.row)}
+    //         >
+    //           Print
+    //         </Button> */}
+    //       </Stack>
+    //     ),
+    //   },
       
     ],
     // [showEditDelete],
@@ -120,9 +125,31 @@ export default function ColumnPinningDynamicRowHeight({prof}) {
   const fetchDemandes = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/demandes/profDemandes/${prof._id}` // Replace with your actual API endpoint
+        `http://localhost:4000/demandes/allDemandes` // Replace with your actual API endpoint
       );
       setDemandes(response.data);
+      const demandData = response.data;
+
+
+      // Fetch and store professor names based on the demand's professor ID
+      const professorNames = {};
+      for (const demand of demandData) {
+        try {
+          const professorResponse = await axios.get(`http://localhost:4000/agent/agents/${demand.professeur}`);
+          professorNames[demand.professeur] = professorResponse.data.nom.split('|')[0] + " " + professorResponse.data.prenom.split('|')[0]; // Replace 'nom' with the actual professor name field
+        } catch (error) {
+          console.error('Error fetching professor name:', error);
+        }
+      }
+  
+      // Attach professor names to demand objects
+      const demandsWithProfessorNames = demandData.map((demand) => ({
+        ...demand,
+        professorName: professorNames[demand.professeur] || 'N/A', // Provide a default value if name not found
+      }));
+  
+      setDemandes(demandsWithProfessorNames);
+      console.log(demandsWithProfessorNames)
     } catch (error) {
       console.error('Error fetching demandes:', error);
     }
