@@ -242,7 +242,7 @@ const addDemande3 = async () => {
             Avez vous besoin d'un document administratif?
           </Typography>
           <Typography fontSize="sm" sx={{ mt: 0.5 }}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+            Choisissez votre document de besoin et remplire le formulaire avec les données appropriées
           </Typography>
           <Select defaultValue="att1" onChange={handleChange}>
   <Option value="att1">Attestation de travail - شهادة عمل</Option>
@@ -341,11 +341,15 @@ const addDemande3 = async () => {
                 <FormLabel>Description : وصف</FormLabel>
                 <Textarea 
                 required 
-                minRows={3}
+                minRows={5}
+                width="150%"
                 value={descriptionAttestationTravail} // Bind the value to the description state
                 onChange={handleDescriptionAttestationTravailChange}
                 />
               </FormControl>
+              <Grid>
+                &nbsp;
+              </Grid>
             <Stack spacing={2}>
               <Button type="submit" onClick={addDemande1}>Valider</Button>
             </Stack>
