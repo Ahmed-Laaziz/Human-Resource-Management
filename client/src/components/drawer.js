@@ -33,6 +33,7 @@ import { useNavigate } from 'react-router-dom';
 import HistoryIcon from '@mui/icons-material/History';
 import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 import RuleFolderIcon from '@mui/icons-material/RuleFolder';
+import { useProf } from '../context/ProfContext';
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -116,7 +117,7 @@ export default function MiniDrawer({role, pageTitle, notifs, id}) {
   };
 
   
-  
+  const { prof } = useProf();
 
   const handleDrawerClose = () => {
     setOpen(false);
@@ -136,7 +137,7 @@ export default function MiniDrawer({role, pageTitle, notifs, id}) {
   const handleNotifClose = async () => {
     
     try{
-      const res = await axios.post('http://localhost:4000/notifs/update-notif', { "prof": id });
+      const res = await axios.put('http://localhost:4000/notifs/update-notif', {"prof": prof._id});
     } catch (error) {
       console.error('Error fetching agent data:', error);
     }

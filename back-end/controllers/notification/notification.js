@@ -72,7 +72,7 @@ exports.addNotif =  async (req, res, next) => {
 exports.updateNotifs = async (req, res, next) => {
   try {
     // Update all notifications for the professor with the given ID to "Viewed"
-    console.log('prof', req.body.prof);
+    console.log('prof', req.body);
 const result = await Notification.updateMany({ professeur: req.body.prof, statut: "Unviewed" }, { statut: "Viewed" });
 console.log('Result:', result);
 
