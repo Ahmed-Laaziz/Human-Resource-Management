@@ -25,6 +25,7 @@ const getUserIdFromToken = (token) => {
 // Get the user ID from the token
 const agentId = getUserIdFromToken(token);
 const [agent, setAgent] = useState(null);
+const [notifs, setNotifs] = useState(null);
 console.log('userId : ' + agentId);
 useEffect(() => {
   const fetchAgentData = async () => {
@@ -36,10 +37,28 @@ useEffect(() => {
     }
   };
 
+  const fetchAgentNotifs = async () => {
+    try {
+      const res = await axios.post('http://localhost:4000/notifs/prof-notif', { "prof": agentId });
+      
+      setNotifs(res.data);
+      
+      
+    } catch (error) {
+      console.error('Error fetching agent data:', error);
+    }
+  };
+
   if (agentId) {
     fetchAgentData();
+    fetchAgentNotifs();
+
   }
 }, [agentId]);
+
+useEffect(() => {
+  console.log("notifs:", notifs);
+}, [notifs]);
 
 
 // if (!agent) {
@@ -67,7 +86,7 @@ useEffect(() => {
         // Render content for logged-in users
         <Box sx={{ display: 'flex' }}>
           {agent ? (
-            <Drawer role={agent.__t} pageTitle={"Page d'accueil"}/>
+            <Drawer role={agent.__t} pageTitle={"Page d'accueil"} notifs={notifs} prof={agentId}/>
           ):null}
         
         <Box

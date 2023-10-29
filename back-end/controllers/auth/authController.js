@@ -6,8 +6,9 @@ const JWT_SECRET = "RandomJWTSecretKey123"
 
 // <<<<<<< HEAD
 const URI = "mongodb+srv://ahmed:ahmed123@cluster0.i5myq.mongodb.net/?retryWrites=true&w=majority"
+const URI2 = "mongodb://127.0.0.1:27017/test"
 
-mongoose.connect(URI).then(() => console.log('connect to db...')).catch(err => console.log('failed to connect to db : ', err));
+mongoose.connect(URI2).then(() => console.log('connect to db...')).catch(err => console.log('failed to connect to db : ', err));
 const DB_USER = 'root';
 const DB_PASSWORD = 'example';
 const DB_PORT = 27017

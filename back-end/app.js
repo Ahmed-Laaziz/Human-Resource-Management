@@ -17,6 +17,7 @@ var demandeRouter = require('./routes/demande/quitterTerritoire');
 var demandeAttestationTravail = require('./routes/demande/attestationTravail');
 var demandeCongeRouter = require('./routes/demande/conge');
 var profDemandeRouter = require('./routes/demande/demandes');
+var notifRouter = require('./routes/notifications/notification');
 
 var app = express();
 
@@ -44,6 +45,7 @@ app.use('/demande', demandeRouter)
 app.use('/demandeConge', demandeCongeRouter)
 app.use('/demandeAttestationTravail', demandeAttestationTravail)
 app.use('/demandes', profDemandeRouter)
+app.use('/notifs', notifRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

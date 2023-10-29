@@ -35,6 +35,21 @@ export default function ColumnPinningDynamicRowHeight() {
   const [selectedDemand, setSelectedDemand] = useState(null);
     const [agent, setAgent] = useState(null);
     const [professorNames, setProfessorNames] = useState({});
+
+    function formatDateToDatetime(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      const seconds = String(date.getSeconds()).padStart(2, '0');
+    
+      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    }
+    
+    const currentDate = new Date(); // Create a Date object with the current date and time
+    const currentDatetime = formatDateToDatetime(currentDate);
+
   const handlePreviewClick = async (demand) => {
     setSelectedDemand(demand);
     try {
@@ -89,6 +104,9 @@ export default function ColumnPinningDynamicRowHeight() {
         const response = await axios.put(`http://localhost:4000/demandes/updateStatut/${demand._id}`, {
           statut: 'Validée', // Set the new statut here
         });
+
+        const res = await axios.post('http://localhost:4000/notifs/add-notification', { "prof": demand.professeur , "title": demand.__t.replace(/([A-Z])/g, ' $1').trim()+" Accepté", "message": "Nous tenons à vous informer que votre "+demand.__t.replace(/([A-Z])/g, ' $1').trim()+" a été accepté et que vous pouvez le récupérer à l'administration. Merci !", "date": currentDatetime});
+        console.log("accepted")
         // Handle the response as needed (e.g., update UI, show a notification, etc.)
         console.log('Statut updated successfully:', response.data);
 
@@ -111,6 +129,9 @@ export default function ColumnPinningDynamicRowHeight() {
         const response = await axios.put(`http://localhost:4000/demandes/updateStatut/${demand._id}`, {
           statut: 'Rejetée', // Set the new statut here
         });
+
+        const res = await axios.post('http://localhost:4000/notifs/add-notification', { "prof": demand.professeur , "title": demand.__t.replace(/([A-Z])/g, ' $1').trim()+" Refusé", "message": "Nous tenons à vous informer que votre "+demand.__t.replace(/([A-Z])/g, ' $1').trim()+" a été refusé. Merci !", "date": currentDatetime});
+        console.log("rejected")
         // Handle the response as needed (e.g., update UI, show a notification, etc.)
         console.log('Statut updated successfully:', response.data);
 

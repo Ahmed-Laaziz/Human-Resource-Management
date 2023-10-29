@@ -187,9 +187,47 @@ export default function UserCard({ agent }) {
           >
             <Stack spacing={2}>
             <FormControl>
-
+            <Grid container spacing={2} style={{marginTop:"2%"}}>
+              <Grid item xs={6} >
+                <FormLabel>Nom : </FormLabel>
+                <TextField variant="outlined" value={agent ? agent.nom.split('|')[0] : 'Loading...'}/>
+              </Grid>
+              <Grid item xs={6} >
+                <FormLabel>Prenom : </FormLabel>
+                <TextField variant="outlined" value={agent ? agent.prenom.split('|')[0] : 'Loading...'}/>
+              </Grid>
+              </Grid>
+              <Grid container spacing={2} style={{marginTop:"2%"}}>
+              <Grid item xs={6} >
+                <FormLabel>النسب :</FormLabel>
+                <TextField variant="outlined" value={agent ? agent.nom.split('|')[1] : 'Loading...'}/>
+              </Grid>
+              <Grid item xs={6} >
+                <FormLabel>الأسم :</FormLabel>
+                <TextField variant="outlined" value={agent ? agent.prenom.split('|')[1] : 'Loading...'}/>
+              </Grid>
+              </Grid>
+              <Grid container spacing={2} style={{marginTop:"2%"}}>
+              <Grid item xs={6} >
+                <FormLabel> CIN (رقم ب.ت.وطنية) :</FormLabel>
+                <TextField variant="outlined" value={agent ? agent.cin : 'Loading...'}/>
+              </Grid>
+              <Grid item xs={6} >
+                <FormLabel>Numéro téléphone (رقم الهاتف) :</FormLabel>
+                <TextField variant="outlined" value={agent ? agent.tel : 'Loading...'}/>
+              </Grid>
+              </Grid>
+              <Grid container style={{marginTop:"4%"}} xs={12}>
+                <FormLabel> Email (البريد الإلكتروني) :</FormLabel>
+                <TextField variant="outlined" value={agent ? agent.email : 'Loading...'} fullWidth/>
+              </Grid>
               </FormControl>
             </Stack>
+            <Box sx={{ display: 'flex', gap: 1.5, '& > button': { flex: 1 } }} style={{marginTop:"12%"}}>
+            <Button variant="solid" color="primary">
+              Valider
+            </Button>
+          </Box>
           </form>
         </ModalDialog>
       </Modal>

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
+import axios from 'axios';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
@@ -24,6 +25,8 @@ import HomeIcon from '@mui/icons-material/Home';
 import ArticleIcon from '@mui/icons-material/Article';
 import { Link } from 'react-router-dom';
 import Avatar from '@mui/joy/Avatar';
+import Badge from '@mui/material/Badge';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { useNavigate } from 'react-router-dom';
@@ -99,9 +102,10 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 
 
-export default function MiniDrawer({role, pageTitle}) {
+export default function MiniDrawer({role, pageTitle, notifs, id}) {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorNotifEl, setAnchorNotifEl] = React.useState(null);
 
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -111,6 +115,9 @@ export default function MiniDrawer({role, pageTitle}) {
     setOpen(true);
   };
 
+  
+  
+
   const handleDrawerClose = () => {
     setOpen(false);
   };
@@ -118,19 +125,50 @@ export default function MiniDrawer({role, pageTitle}) {
     setAnchorEl(event.currentTarget);
   };
 
+  const handleNotif = (event) => {
+    setAnchorNotifEl(event.currentTarget);
+  };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
 
+  const handleNotifClose = async () => {
+    
+    try{
+      const res = await axios.post('http://localhost:4000/notifs/update-notif', { "prof": id });
+    } catch (error) {
+      console.error('Error fetching agent data:', error);
+    }
+    setAnchorNotifEl(null);
+  };
+
   const LogOut = () => {
     console.log("logout");
+    
     
     localStorage.setItem('user', {})
     localStorage.setItem('token', "")
     window.history.pushState({}, document.title, window.location.pathname);
 
     navigate("/");
+
+
   };
+
+  function formatDate(date) {
+    const options = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      timeZoneName: 'short',
+    };
+  
+    return new Date(date).toLocaleString('en-US', options);
+  }
 
 
   return (
@@ -155,40 +193,115 @@ export default function MiniDrawer({role, pageTitle}) {
       {pageTitle}
 
     </Typography>
+
+    
     
     {/* Add custom styling to the Avatar to move it to the far right */}
-    <>
-    <Avatar
-      color="neutral"
-      size="sm"
-      variant="soft"
-      src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
-      aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-      sx={{
-        marginLeft: 'auto', // Move the Avatar to the right
-      }}
-    />
-    <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={LogOut}>Logout</MenuItem>
-              </Menu>
-    </>
+    <Box
+  display="flex"
+  alignItems="center"
+  sx={{
+    marginLeft: 'auto',
+    '& > *': {
+      marginLeft: '1em',  // Add 8px of spacing between items
+    },
+  }}
+>
+{ userRole === 'Professeur' ? (
+  <>
+  <IconButton
+    size="large"
+    aria-label="show 17 new notifications"
+    color="inherit"
+    aria-controls="notif-appbar"
+    onClick={handleNotif}
+  >
+    {notifs !== undefined && Array.isArray(notifs) && notifs.length > 0  ?(
+  <Badge badgeContent={notifs.length} color="error">
+    <NotificationsIcon />
+  </Badge>
+  
+  ) : (
+    <Badge badgeContent={0} color="error">
+    <NotificationsIcon />
+  </Badge>
+  )}
+
+  </IconButton>
+  </>
+) : null}
+  <Avatar
+    color="neutral"
+    size="sm"
+    variant="soft"
+    src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
+    aria-controls="menu-appbar"
+    aria-haspopup="true"
+    onClick={handleMenu}
+  />
+  <Menu
+    id="menu-appbar"
+    anchorEl={anchorEl}
+    anchorOrigin={{
+      vertical: 'top',
+      horizontal: 'right',
+    }}
+    keepMounted
+    transformOrigin={{
+      vertical: 'top',
+      horizontal: 'right',
+    }}
+    open={Boolean(anchorEl)}
+    onClose={handleClose}
+  >
+    <MenuItem onClick={handleClose}>Profile</MenuItem>
+    <MenuItem onClick={LogOut}>Logout</MenuItem>
+  </Menu>
+  <Menu
+  id="notif-appbar"
+  anchorEl={anchorNotifEl}
+  anchorOrigin={{
+    vertical: 'bottom',
+    horizontal: 'right',
+  }}
+  keepMounted
+  transformOrigin={{
+    vertical: 'top',
+    horizontal: 'right',
+  }}
+  open={Boolean(anchorNotifEl)}
+  onClose={handleNotifClose}
+  PaperProps={{ style: { width: '30vw' } }} // Set the width on the Paper component
+>
+{notifs !== undefined && Array.isArray(notifs) && notifs.length > 0 ? (
+  notifs.map((notification, index) => (
+    <MenuItem key={index} onClick={handleNotifClose} style={{
+      borderBottom: index < notifs.length - 1 ? '1px solid #ccc' : 'none',
+    }}>
+      {/* Add a blue dot to indicate a fresh notification */}
+      <div style={{ width: '12px', height: '12px', background: 'blue', borderRadius: '50%', marginRight: '8px' }}></div>
+
+      <div style={{ width: '100%', whiteSpace: 'normal', wordWrap: 'break-word' }}>
+        <div style={{ marginBottom: '1vh' }}><b>{notification.title}</b></div>
+        <div>{notification.message}</div>
+        <div>
+  <small>{formatDate(notification.date)}</small>
+</div>
+      </div>
+      <br/>
+    </MenuItem>
+  ))
+) : (
+  <MenuItem onClick={handleNotifClose}>No notifications available</MenuItem>
+)}
+
+</Menu>
+
+
+
+</Box>
+
+    
   </Toolbar>
 </AppBar>
 
