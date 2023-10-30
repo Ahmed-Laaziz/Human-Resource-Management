@@ -14,6 +14,7 @@ import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { useNavigate } from 'react-router-dom';
+import DoneIcon from '@mui/icons-material/Done';
 // import Dialog from '@mui/material/Dialog';
 // import DialogTitle from '@mui/material/DialogTitle';
 // import DialogContent from '@mui/material/DialogContent';
@@ -23,6 +24,7 @@ import ModalDialog from '@mui/joy/ModalDialog';
 import DialogTitle from '@mui/joy/DialogTitle';
 import DialogContent from '@mui/joy/DialogContent';
 import HistoryIcon from '@mui/icons-material/History';
+import CloseIcon from '@mui/icons-material/Close';
 import Fab from '@mui/material/Fab';
 const fabStyle = {
     position: 'absolute',
@@ -234,7 +236,7 @@ export default function ColumnPinningDynamicRowHeight() {
             <Button
               variant="outlined"
               size="small"
-              startIcon={<RemoveRedEyeIcon />}
+              startIcon={<DoneIcon />}
               disabled={params.row.statut !== 'En Cours'}
             //   onClick={() => handlePrintClick(params.row)}
             onClick={() => handleValiderClick(params.row)}
@@ -245,7 +247,7 @@ export default function ColumnPinningDynamicRowHeight() {
             <Button
               variant="outlined"
               size="small"
-              startIcon={<RemoveRedEyeIcon />}
+              startIcon={<CloseIcon />}
               disabled={params.row.statut !== 'En Cours'}
             //   onClick={() => handlePrintClick(params.row)}
             onClick={() => handleRejeterClick(params.row)}
