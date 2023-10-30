@@ -119,6 +119,7 @@ const addDemande1 = async () => {
     const url = "http://localhost:4000/demandeAttestationTravail/add-demande-attestation-travail"; // URL for the backend API
     const requestData = {
       professeur: prof._id, // Send the user input as a parameter in the request body
+      description: descriptionAttestationTravail
     };
 
     // Make a POST request to your backend API

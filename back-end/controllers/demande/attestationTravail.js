@@ -14,7 +14,7 @@ const DB_HOST = 'mongo'
 const URI = "mongodb+srv://ahmed:ahmed123@cluster0.i5myq.mongodb.net/?retryWrites=true&w=majority"
 const URI2 = "mongodb://127.0.0.1:27017/test"
 
-mongoose.connect(URI2).then(() => console.log('connect to db...')).catch(err => console.log('failed to connect to db : ', err));
+mongoose.connect(URI).then(() => console.log('connect to db...')).catch(err => console.log('failed to connect to db : ', err));
 // mongoose.connect('mongodb://127.0.0.1:27017/ensaj', {
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true,
@@ -26,6 +26,7 @@ exports.addDemandeAttestationTravail = async (req, res, next) => {
     try {
       const newDemandeAttestationTravail = new DemandeAttestationTravail({
         professeur: req.body.professeur, 
+        description:req.body.description,
       });
   
       const savedDemande = await newDemandeAttestationTravail.save();
