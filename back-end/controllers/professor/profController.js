@@ -49,12 +49,12 @@ exports.addProf =  async (req, res, next) => {
         genre: req.body.genre,
         num_loyer: req.body.num_loyer,
         date_entre_ecole: req.body.date_entre_ecole,
-        date_fct_publique:req.body.date_fct_publique,
-        cadre:req.body.cadre,
-        num_ref:req.body.num_ref,
-        date_effective:req.body.date_effective,
-        anciennete:req.body.anciennete,
-        date_visa:req.body.date_visa
+        date_fct_publique: req.body.date_fct_publique,
+        cadre: req.body.cadre,
+        num_ref: req.body.num_ref,
+        date_effective: req.body.date_effective,
+        anciennete: req.body.anciennete,
+        date_visa: req.body.date_visa
       });
   
       const savedProfesseur = await newProfesseur.save();
@@ -80,4 +80,51 @@ exports.addProf =  async (req, res, next) => {
       console.error('Error adding professeur:', error);
       res.status(500).json({ error: 'Failed to add professeur' });
     }
+};
+
+exports.updateProfesseur = async (req, res, next) => {
+  try {
+      // Find the professor to update by ID
+      const professeurId = req.params.professeurId; // Assuming you pass the professor ID in the URL
+      const professeurUpdates = {
+          nom: req.body.nom,
+          prenom: req.body.prenom,
+          email: req.body.email,
+          tel: req.body.tel,
+          cin: req.body.cin,
+          genre: req.body.genre,
+          num_loyer: req.body.num_loyer,
+          date_entre_ecole: req.body.date_entre_ecole,
+          date_fct_publique: req.body.date_fct_publique,
+          cadre: req.body.cadre,
+          num_ref: req.body.num_ref,
+          date_effective: req.body.date_effective,
+          anciennete: req.body.anciennete,
+          date_visa: req.body.date_visa,
+      };
+
+      const updatedProfesseur = await Professeur.findByIdAndUpdate(professeurId, professeurUpdates, { new: true });
+
+      if (!updatedProfesseur) {
+          return res.status(404).json({ error: 'Professor not found' });
+      }
+
+      // Check if grade or classe were updated
+      if (req.body.grade || req.body.classe) {
+          // Create a new historique entry
+          const historiqueEntry = new Historique({
+              professeur: updatedProfesseur._id,
+              grade: req.body.grade || updatedProfesseur.grade,
+              classe: req.body.classe || updatedProfesseur.classe,
+              date: new Date(),
+          });
+
+          await historiqueEntry.save();
+      }
+
+      res.status(200).json(updatedProfesseur);
+  } catch (error) {
+      console.error('Error updating professor:', error);
+      res.status(500).json({ error: 'Failed to update professor' });
+  }
 };

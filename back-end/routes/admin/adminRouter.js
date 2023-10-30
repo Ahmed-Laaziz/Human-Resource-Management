@@ -7,5 +7,7 @@ router.get('/admins', adminController.getAdmins);
 
 router.post('/add-admin', adminController.addAdmin);
 
+router.put('/update-admin', adminController.updateAdmin);
+
 
 module.exports = router;
