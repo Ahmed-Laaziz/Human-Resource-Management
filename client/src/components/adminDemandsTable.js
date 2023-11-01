@@ -263,13 +263,16 @@ export default function ColumnPinningDynamicRowHeight() {
   );
 
   const [demandes, setDemandes] = useState([]);
+  // Function to add spaces before capital letters
+  function separateByCapitalLetters(str) {
+    // Remove "Demande" from the beginning of the string and then separate the remaining text by capital letters
+    return str.replace(/^Demande/, '').replace(/([a-z])([A-Z])/g, '$1 $2');
+  }
   
   const fetchDemandes = async () => {
     try {
       const response = await axios.get(`http://localhost:4000/demandes/enAttenteDemands`);
       const demandData = response.data;
-  
-      // Fetch and store professor names based on the demand's professor ID
       const professorNames = {};
       for (const demand of demandData) {
         try {
@@ -284,6 +287,7 @@ export default function ColumnPinningDynamicRowHeight() {
       const demandsWithProfessorNames = demandData.map((demand) => ({
         ...demand,
         professorName: professorNames[demand.professeur] || 'N/A', // Provide a default value if name not found
+        __t: separateByCapitalLetters(demand.__t),
       }));
   
       setDemandes(demandsWithProfessorNames);
@@ -293,21 +297,6 @@ export default function ColumnPinningDynamicRowHeight() {
     }
   };
   
-
-  // const fetchProfessorNames = async () => {
-  //   const names = {};
-  //   // Fetch professor names for each demand
-  //   for (const demand of demandes) {
-  //     try {
-  //       const response = await axios.get(`http://localhost:4000/agent/agents/${demand.professeur}`);
-  //       names[demand._id] = response.data.nom.split('|')[0] + " " + response.data.prenom.split('|')[0] ; // Assuming the professor name field is 'nom'
-  //     } catch (error) {
-  //       console.error('Error fetching professor name:', error);
-  //     }
-  //   }
-  //   setProfessorNames(names);
-  // };
-
   useEffect(() => {
     // Fetch the title from the backend API
 

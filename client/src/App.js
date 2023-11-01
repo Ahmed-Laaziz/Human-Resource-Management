@@ -17,6 +17,7 @@ import Proffile from "./pages/profProfile";
 import DemandsHistory from "./pages/demandsHistory";
 export default function App() {
   return (
+    <div>
     <TokenProvider>
       <ProfProvider>
     <BrowserRouter>
@@ -39,6 +40,7 @@ export default function App() {
     </BrowserRouter>
     </ProfProvider>
     </TokenProvider>
+    </div>
   );
 }
 
