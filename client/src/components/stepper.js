@@ -329,7 +329,7 @@ const [phoneNumber, setPhoneNumber] = React.useState('');
         email: email,
         tel: phoneNumber,
         cin: cin,
-        genre: "Male",
+        genre: selectedGenre,
         num_loyer: loyerValue,
         date_entre_ecole: selectedDateSchool,
         date_fct_publique:selectedDateFct,

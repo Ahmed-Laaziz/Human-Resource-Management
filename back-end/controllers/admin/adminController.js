@@ -57,3 +57,29 @@ exports.addAdmin = async (req, res, next) => {
       res.status(500).json({ error: 'Failed to add administrator' });
     }
   };
+
+  exports.updateAdmin = async (req, res, next) => {
+    try {
+        // Find the admin to update by ID
+        const adminId = req.body.adminId; // Assuming you pass the admin ID in the URL
+        const adminUpdates = {
+            nom: req.body.nom,
+            prenom: req.body.prenom,
+            email: req.body.email,
+            tel: req.body.tel,
+            cin: req.body.cin,
+            genre: req.body.genre
+        };
+
+        const updatedAdmin = await Admin.findByIdAndUpdate(adminId, adminUpdates, { new: true });
+
+        if (!updatedAdmin) {
+            return res.status(404).json({ error: 'Admin not found' });
+        }
+
+        res.status(200).json(updatedAdmin);
+    } catch (error) {
+        console.error('Error updating administrator:', error);
+        res.status(500).json({ error: 'Failed to update administrator' });
+    }
+};
