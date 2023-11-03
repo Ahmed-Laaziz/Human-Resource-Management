@@ -30,7 +30,7 @@ console.log('userId : ' + agentId);
 useEffect(() => {
   const fetchAgentData = async () => {
     try {
-      const response = await axios.get(`https://human-resource-management-frontend.vercel.app/agent/agents/${agentId}`);
+      const response = await axios.get(`https://human-resource-management-backend.vercel.app/agent/agents/${agentId}`);
       setAgent(response.data);
     } catch (error) {
       console.error('Error fetching agent data:', error);
