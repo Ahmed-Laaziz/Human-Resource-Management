@@ -248,7 +248,7 @@ const addDemande3 = async () => {
           <Select defaultValue="att1" onChange={handleChange}>
   <Option value="att1">Attestation de travail - شهادة عمل</Option>
   <Option value="att2">Autorisation de quitter le territoire - الإذن بمغادرة التراب الوطني</Option>
-  <Option value="att3">décision de congé administratif - إجازة إدارية</Option>
+  <Option value="att3">Décision de congé administratif - إجازة إدارية</Option>
   <Option value="att4">Attestation de reprise de travail - شهادةاستئناف العمل</Option>
 </Select>
 <Button
