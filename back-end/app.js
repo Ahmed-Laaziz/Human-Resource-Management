@@ -22,15 +22,15 @@ var notifRouter = require('./routes/notifications/notification');
 var app = express();
 
 // view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'jade');
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
 
 // Enable CORS middleware
 app.use(cors(
   {
-    origin: ["https://deploy-mern-frontend.vercel.app"],
-    methods: ["POST", "GET"],
-    credentials: true
+    // origin: ["https://deploy-mern-frontend.vercel.app"],
+    // methods: ["POST", "GET"],
+    // credentials: true
 }
 ));
 
