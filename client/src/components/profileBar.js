@@ -345,7 +345,7 @@ const updateAdmin = async () => {
   try {
     // Show the spinner while the backend request is in progress
     // setIsLoading(true);
-    const url = "http://localhost:4000/admin/update-admin"; // URL for the backend API
+    const url = "https://human-resource-management-frontend.vercel.app/admin/update-admin"; // URL for the backend API
     const requestData = {
       adminId: idValue,
       nom: nomValue+"|"+nisbaValue, // Send the user input as a parameter in the request body

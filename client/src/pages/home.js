@@ -30,7 +30,7 @@ console.log('userId : ' + agentId);
 useEffect(() => {
   const fetchAgentData = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/agent/agents/${agentId}`);
+      const response = await axios.get(`https://human-resource-management-frontend.vercel.app/agent/agents/${agentId}`);
       setAgent(response.data);
     } catch (error) {
       console.error('Error fetching agent data:', error);
@@ -39,7 +39,7 @@ useEffect(() => {
 
   const fetchAgentNotifs = async () => {
     try {
-      const res = await axios.post('http://localhost:4000/notifs/prof-notif', { "prof": agentId });
+      const res = await axios.post('https://human-resource-management-frontend.vercel.app/notifs/prof-notif', { "prof": agentId });
       
       setNotifs(res.data);
       
