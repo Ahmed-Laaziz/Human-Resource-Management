@@ -322,7 +322,7 @@ const [phoneNumber, setPhoneNumber] = React.useState('');
     try {
       // Show the spinner while the backend request is in progress
       // setIsLoading(true);
-      const url = "http://localhost:4000/prof/add-professeur"; // URL for the backend API
+      const url = "http://human-resource-management-backend.vercel.app/prof/add-professeur"; // URL for the backend API
       const requestData = {
         nom: lastName+"|"+lnArinputValue, // Send the user input as a parameter in the request body
         prenom: firstName+"|"+fnArinputValue,

@@ -125,7 +125,7 @@ export default function ColumnPinningDynamicRowHeight({prof}) {
   const fetchDemandes = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/demandes/allDemandes` // Replace with your actual API endpoint
+        `http://human-resource-management-backend.vercel.app:4000/demandes/allDemandes` // Replace with your actual API endpoint
       );
       setDemandes(response.data);
       const demandData = response.data;
@@ -135,7 +135,7 @@ export default function ColumnPinningDynamicRowHeight({prof}) {
       const professorNames = {};
       for (const demand of demandData) {
         try {
-          const professorResponse = await axios.get(`http://localhost:4000/agent/agents/${demand.professeur}`);
+          const professorResponse = await axios.get(`http://human-resource-management-backend.vercel.app:4000/agent/agents/${demand.professeur}`);
           professorNames[demand.professeur] = professorResponse.data.nom.split('|')[0] + " " + professorResponse.data.prenom.split('|')[0]; // Replace 'nom' with the actual professor name field
         } catch (error) {
           console.error('Error fetching professor name:', error);

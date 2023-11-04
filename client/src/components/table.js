@@ -127,7 +127,7 @@ export default function DataGridDemo() {
   const fetchProfessor = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/prof/professeurs` // Replace with your actual API endpoint
+        `http://human-resource-management-backend.vercel.app/prof/professeurs` // Replace with your actual API endpoint
       );
       setProfesseurs(response.data);
     } catch (error) {
