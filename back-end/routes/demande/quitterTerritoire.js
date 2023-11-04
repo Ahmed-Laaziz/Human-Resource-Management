@@ -4,6 +4,6 @@ const demandeController = require("../../controllers/demande/quitterTerritoireCo
 
 
 router.post('/add-demande-quitter-territoire', demandeController.addDemandeQuitterTerritoire);
-
+router.get('/enAttenteDemands', demandeController.getEnAttenteDemandeQuitter);
 
 module.exports = router;

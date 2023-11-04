@@ -39,3 +39,14 @@ exports.addDemandeQuitterTerritoire = async (req, res, next) => {
       res.status(500).json({ error: 'Failed to add demande' });
     }
   };
+
+  exports.getEnAttenteDemandeQuitter = async (req, res) => {
+    try {
+      // Use Mongoose to find demands with 'statut' equal to either "En attente" or "En cours"
+      const enAttenteDemands = await DemandeQuitterTerritoire.find({ statut: { $in: ['En attente'] } });
+      res.json(enAttenteDemands);
+    } catch (error) {
+      console.error('Error fetching "En attente" demands:', error);
+      res.status(500).json({ error: 'Server error' });
+    }
+  };

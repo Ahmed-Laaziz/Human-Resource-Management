@@ -32,18 +32,20 @@ exports.getDemands = async (req, res, next) => {
 
 // Define a route to get agent data by ID
 exports.getDemandesForProfesseur = async (req, res) => {
-    try {
-      const professeurId = req.params.professeurId;
-  
-      // Use Mongoose to find all demandes with the matching professeur ID
-      const demandes = await Demande.find({ professeur: professeurId });
-  
-      res.json(demandes);
-    } catch (error) {
-      console.error('Error fetching demandes:', error);
-      res.status(500).json({ error: 'Server error' });
-    }
-  };
+  try {
+    const professeurId = req.params.professeurId;
+
+    // Use Mongoose to find all demandes with the matching professeur ID and sort them by createdAt in descending order (newest to oldest)
+    const demandes = await Demande.find({ professeur: professeurId })
+      .sort({ createdAt: -1 });
+
+    res.json(demandes);
+  } catch (error) {
+    console.error('Error fetching demandes:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
 
   exports.updateStatut = async (req, res) => {
     try {

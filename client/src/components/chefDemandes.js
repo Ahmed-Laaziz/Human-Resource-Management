@@ -54,9 +54,11 @@ export default function ColumnPinningDynamicRowHeight() {
 
   const handlePreviewClick = async (demand) => {
     setSelectedDemand(demand);
+    // console.log("clicked...")
     try {
         const response = await axios.get(`http://localhost:4000/agent/agents/${demand.professeur}`);
         setAgent(response.data);
+        console.log("selected demand : " + selectedDemand.__t)
       } catch (error) {
         console.error('Error fetching agent data:', error);
       }
@@ -73,18 +75,6 @@ export default function ColumnPinningDynamicRowHeight() {
         const response = await axios.put(`http://localhost:4000/demandes/updateStatut/${selectedDemand._id}`, {
           statut: 'En Cours', // Set the new statut here
         });
-          if (selectedDemand.__t === 'Quitter Territoire'){
-           navigate('/autorisationQuitterTerritoire', { state: {input1:`${agent.prenom.split('|')[0]} ${agent.nom.split('|')[0]}`, input2:`${agent.cadre}` , input3:`${selectedDemand.de_date}`, input4:`${selectedDemand.a_date}`, input5:`${agent.prenom.split('|')[0]} ${agent.nom.split('|')[0]}`, input6:`${agent.cadre}`, input7:`${selectedDemand.universite}`}})
-          }
-          else if (selectedDemand.__t === 'Conge')
-           {
-             navigate('/decisionConge', { state: {input1:`${agent.prenom.split('|')[0]} ${agent.nom.split('|')[0]}`, input2:`${agent.cadre}` , input3:`${selectedDemand.de_date}`, input4:`${selectedDemand.a_date}`, input5:`${selectedDemand.doti}`, input6:`${agent.cadre}`,}})
-           }
-           else if (selectedDemand.__t == 'Attestation Travail')
-           {
-            navigate('/attestationTravail', { state: {input1:agent.prenom.split('|')[0] , input2:agent.nom.split('|')[0], input3:'Grade B', input4:agent.num_loyer, input5:agent.date_entre_ecole}})
-           }
-         
         // Handle the response as needed (e.g., update UI, show a notification, etc.)
         console.log('Statut updated successfully:', response.data);
 
@@ -107,7 +97,7 @@ export default function ColumnPinningDynamicRowHeight() {
           statut: 'Validée', // Set the new statut here
         });
 
-        const res = await axios.post('http://localhost:4000/notifs/add-notification', { "prof": demand.professeur , "title": demand.__t.replace(/([A-Z])/g, ' $1').trim()+" Accepté", "message": "Nous tenons à vous informer que votre demande "+demand.__t.replace(/([A-Z])/g, ' $1').trim()+" a été accepté et que vous pouvez le récupérer à l'administration. Merci !", "date": currentDatetime});
+        const res = await axios.post('http://localhost:4000/notifs/add-notification', { "prof": demand.professeur , "title": demand.__t.replace(/([A-Z])/g, ' $1').trim()+" Accepté", "message": "Nous tenons à vous informer que votre "+demand.__t.replace(/([A-Z])/g, ' $1').trim()+" a été accepté et que vous pouvez le récupérer à l'administration. Merci !", "date": currentDatetime});
         console.log("accepted")
         // Handle the response as needed (e.g., update UI, show a notification, etc.)
         console.log('Statut updated successfully:', response.data);
@@ -128,11 +118,11 @@ export default function ColumnPinningDynamicRowHeight() {
     setSelectedDemand(demand);
       try {
         console.log("in handle valider");
-        const response = await axios.put(`http://localhost:4000/demandes/updateStatut/${demand._id}`, {
+        const response = await axios.put(`http://localhost:4000/demandes/updateStatut/${selectedDemand._id}`, {
           statut: 'Rejetée', // Set the new statut here
         });
 
-        const res = await axios.post('http://localhost:4000/notifs/add-notification', { "prof": demand.professeur , "title": demand.__t.replace(/([A-Z])/g, ' $1').trim()+" Refusé", "message": "Nous tenons à vous informer que votre demande "+demand.__t.replace(/([A-Z])/g, ' $1').trim()+" a été refusé. Merci !", "date": currentDatetime});
+        const res = await axios.post('http://localhost:4000/notifs/add-notification', { "prof": selectedDemand.professeur , "title": selectedDemand.__t.replace(/([A-Z])/g, ' $1').trim()+" Refusé", "message": "Nous tenons à vous informer que votre demande "+selectedDemand.__t.replace(/([A-Z])/g, ' $1').trim()+" a été refusé. Merci !", "date": currentDatetime});
         console.log("rejected")
         // Handle the response as needed (e.g., update UI, show a notification, etc.)
         console.log('Statut updated successfully:', response.data);
@@ -226,33 +216,11 @@ export default function ColumnPinningDynamicRowHeight() {
               variant="outlined"
               size="small"
               startIcon={<RemoveRedEyeIcon />}
-              disabled={params.row.__t == 'Quitter Territoire' && params.row.statut == 'En attente'}
+            //   disabled={params.row.statut !== 'Approuvée'}
             //   onClick={() => handlePrintClick(params.row)}
             onClick={() => handlePreviewClick(params.row)}
             >
               Détails
-            </Button>
-
-            <Button
-              variant="outlined"
-              size="small"
-              startIcon={<DoneIcon />}
-              disabled={params.row.statut !== 'En Cours'}
-            //   onClick={() => handlePrintClick(params.row)}
-            onClick={() => handleValiderClick(params.row)}
-            >
-              Valider
-            </Button>
-
-            <Button
-              variant="outlined"
-              size="small"
-              startIcon={<CloseIcon />}
-              disabled={params.row.statut !== 'En Cours' || (params.row.__t == 'Quitter Territoire' && params.row.statut !== 'En attente')}
-            //   onClick={() => handlePrintClick(params.row)}
-            onClick={() => handleRejeterClick(params.row)}
-            >
-              Rejeter
             </Button>
           </Stack>
         ),
@@ -271,7 +239,7 @@ export default function ColumnPinningDynamicRowHeight() {
   
   const fetchDemandes = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/demandes/enAttenteDemands`);
+      const response = await axios.get(`http://localhost:4000/demande/enAttenteDemands`);
       const demandData = response.data;
       const professorNames = {};
       for (const demand of demandData) {
@@ -373,115 +341,52 @@ export default function ColumnPinningDynamicRowHeight() {
                 
                 
                 <center>
-                <Grid item xs={1}>
-                <Button type="submit" onClick={handleApprouverClick} sx={{backgroundColor:"#000080", color:"white",  '&:hover': {
-            backgroundColor: '#0000FF ', // Change text color on hover
-          },}}>Imprimer</Button>
-                </Grid>
-                </center>
+  <Stack direction="row" spacing={28}>
+    
+    
+    <Grid item xs={6}>
+      <Button
+        type="submit"
+        onClick={handleRejeterClick}
+        sx={{
+          backgroundColor: "#A93226",
+          color: "white",
+          '&:hover': {
+            backgroundColor: '#80271E',
+          },
+          // Add margin to create space between the buttons
+          margin: '0 10px',
+        }}
+      >
+        Refuser
+      </Button>
+    </Grid>
+    <Grid item xs={6}>
+      <Button
+        type="submit"
+        onClick={handleApprouverClick}
+        sx={{
+          backgroundColor: "#2980B6",
+          color: "white",
+          '&:hover': {
+            backgroundColor: '#1D597E',
+          },
+          // Add margin to create space between the buttons
+          margin: '0 10px',
+        }}
+      >
+        Approuver
+      </Button>
+    </Grid>
+  </Stack>
+</center>
+
                
                 
               </Stack>
             </form>
           </ModalDialog>
-        ):(selectedDemand.__t === 'Conge')?(
-            <ModalDialog>
-            <DialogTitle>  إجازة إدارية
-  </DialogTitle>
-            <DialogContent>Décision de congé administratif</DialogContent>
-            <form
-              onSubmit={(event) => {
-                event.preventDefault();
-                setOpenModal(false);
-              }}
-            >
-              <Stack spacing={2}>
-              <FormControl>
-              <Grid container spacing={2} style={{marginTop:"2%"}}>
-              <Grid item xs={6} >
-                  <FormLabel>Demandeur :</FormLabel>
-                  <Input autoFocus required defaultValue={agent.prenom.split('|')[0] + " " + agent.nom.split('|')[0]} disabled/>
-                </Grid>
-                <Grid item xs={6} >
-                  <FormLabel>مقدم الطلب :</FormLabel>
-                  <Input autoFocus required defaultValue={agent.prenom.split('|')[1] + " " + agent.nom.split('|')[1]} disabled/>
-                </Grid>
-                </Grid>
-                <Grid container spacing={2} style={{marginTop:"2%"}}>
-                <Grid item xs={6} >
-                  <FormLabel>De : من</FormLabel>
-                  <Input autoFocus required defaultValue={selectedDemand.de_date} disabled/>
-                </Grid>
-                <Grid item xs={6} >
-                  <FormLabel>À : الى</FormLabel>
-                  <Input autoFocus required defaultValue={selectedDemand.a_date} disabled/>
-                </Grid>
-                </Grid>
-                </FormControl>
-                <FormControl>
-                  <FormLabel>Description : وصف</FormLabel>
-                  <Textarea 
-                  required 
-                  minRows={3}
-                  defaultValue={selectedDemand.description}
-                  disabled
-                  />
-                </FormControl>
-                <center>
-                <Grid item xs={1}>
-                <Button type="submit" onClick={handleApprouverClick} sx={{backgroundColor:"#000080", color:"white",  '&:hover': {
-            backgroundColor: '#0000FF ', // Change text color on hover
-          },}}>Imprimer</Button>
-                </Grid>
-                </center>
-              </Stack>
-            </form>
-          </ModalDialog>
-        ):(selectedDemand.__t === 'Attestation Travail')?(
-          <ModalDialog>
-          <DialogTitle>  شهادة عمل
-</DialogTitle>
-          <DialogContent>Attestation de travail</DialogContent>
-          <form
-            onSubmit={(event) => {
-              event.preventDefault();
-              setOpenModal(false);
-            }}
-          >
-            <Stack spacing={2}>
-            <FormControl>
-            <Grid container spacing={2} style={{marginTop:"2%"}}>
-            <Grid item xs={6} >
-                <FormLabel>Demandeur :</FormLabel>
-                <Input autoFocus required defaultValue={agent.prenom.split('|')[0] + " " + agent.nom.split('|')[0]} disabled/>
-              </Grid>
-              <Grid item xs={6} >
-                <FormLabel>مقدم الطلب :</FormLabel>
-                <Input autoFocus required defaultValue={agent.prenom.split('|')[1] + " " + agent.nom.split('|')[1]} disabled/>
-              </Grid>
-              </Grid>
-              
-              </FormControl>
-              <FormControl>
-                <FormLabel>Description : وصف</FormLabel>
-                <Textarea 
-                required 
-                minRows={3}
-                defaultValue={selectedDemand.description}
-                disabled
-                />
-              </FormControl>
-              <center>
-              <Grid item xs={1}>
-              <Button type="submit" onClick={handleApprouverClick} sx={{backgroundColor:"#000080", color:"white",  '&:hover': {
-          backgroundColor: '#0000FF ', // Change text color on hover
-        },}}>Imprimer</Button>
-              </Grid>
-              </center>
-            </Stack>
-          </form>
-        </ModalDialog>
-      ):<></>}
+        ):<></>}
         
       </Modal>
 ):<></>}

@@ -11,6 +11,7 @@ import AutorisationQuitterTerritoire from "./documents/AutorisationDeQuitterLeTe
 import DecisionConge from "./documents/DecisionDeCongeAdministratif"
 import ProfDemandes from "./pages/profDemandes";
 import AdminDemandes from "./pages/adminDemandes";
+import ChefDemandes from "./pages/chefDemandes";
 import Hists from "./pages/profHistoriques";
 import { ProfProvider } from "./context/ProfContext";
 import Proffile from "./pages/profProfile";
@@ -33,6 +34,7 @@ export default function App() {
         <Route path="prof-demandes" element={<ProfDemandes/>} />
         <Route path="demands-history" element={<DemandsHistory/>} />
         <Route path="admin-demandes" element={<AdminDemandes/>} />
+        <Route path="chef-demandes" element={<ChefDemandes/>} />
         <Route path="historiques" element={<Hists/>} />
         <Route path="prof-profile" element={<Proffile/>} />
         {/* </Route> */}

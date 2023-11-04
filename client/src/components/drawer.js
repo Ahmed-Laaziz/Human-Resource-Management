@@ -440,7 +440,57 @@ export default function MiniDrawer({role, pageTitle, notifs, id}) {
       </ListItemButton>
     </Link>
   </ListItem>
-) : null}
+) : userRole === 'Chef' ?(
+  <>
+    <ListItem disablePadding sx={{ display: 'block' }}>
+      {/* Use the Link component to specify the "to" prop */}
+      <Link to="/all-professors" style={{ textDecoration: 'none' }}>
+        <ListItemButton
+          sx={{
+            minHeight: 48,
+            justifyContent: open ? 'initial' : 'center',
+            px: 2.5,
+          }}
+        >
+          <ListItemIcon
+            sx={{
+              minWidth: 0,
+              mr: open ? 3 : 'auto',
+              justifyContent: 'center',
+            }}
+          >
+            <GroupIcon/>
+          </ListItemIcon>
+          <ListItemText primary="add professor" sx={{ opacity: open ? 1 : 0 }} />
+        </ListItemButton>
+      </Link>
+    </ListItem>
+
+    <ListItem disablePadding sx={{ display: 'block' }}>
+      {/* Use the Link component to specify the "to" prop */}
+      <Link to="/chef-demandes" style={{ textDecoration: 'none' }}>
+        <ListItemButton
+          sx={{
+            minHeight: 48,
+            justifyContent: open ? 'initial' : 'center',
+            px: 2.5,
+          }}
+        >
+          <ListItemIcon
+            sx={{
+              minWidth: 0,
+              mr: open ? 3 : 'auto',
+              justifyContent: 'center',
+            }}
+          >
+            <RuleFolderIcon/>
+          </ListItemIcon>
+          <ListItemText primary="Demandes" sx={{ opacity: open ? 1 : 0 }} />
+        </ListItemButton>
+      </Link>
+    </ListItem>
+  </>
+):<></>}
 
  {/* <<<<<<< HEAD */}
  
