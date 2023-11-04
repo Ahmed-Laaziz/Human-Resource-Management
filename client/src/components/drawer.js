@@ -137,7 +137,7 @@ export default function MiniDrawer({role, pageTitle, notifs, id}) {
   const handleNotifClose = async () => {
     
     try{
-      const res = await axios.put('http://human-resource-management-backend.vercel.app/notifs/update-notif', {"prof": prof._id});
+      const res = await axios.put('https://human-resource-management-backend.vercel.app/notifs/update-notif', {"prof": prof._id});
     } catch (error) {
       console.error('Error fetching agent data:', error);
     }

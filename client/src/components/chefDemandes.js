@@ -56,7 +56,7 @@ export default function ColumnPinningDynamicRowHeight() {
     setSelectedDemand(demand);
     // console.log("clicked...")
     try {
-        const response = await axios.get(`http://human-resource-management-backend.vercel.app/agent/agents/${demand.professeur}`);
+        const response = await axios.get(`https://human-resource-management-backend.vercel.app/agent/agents/${demand.professeur}`);
         setAgent(response.data);
         console.log("selected demand : " + selectedDemand.__t)
       } catch (error) {
@@ -72,7 +72,7 @@ export default function ColumnPinningDynamicRowHeight() {
     setSelectedDemand(demand);
     if (selectedDemand) {
       try {
-        const response = await axios.put(`http://human-resource-management-backend.vercel.app/demandes/updateStatut/${selectedDemand._id}`, {
+        const response = await axios.put(`https://human-resource-management-backend.vercel.app/demandes/updateStatut/${selectedDemand._id}`, {
           statut: 'En Cours', // Set the new statut here
         });
         // Handle the response as needed (e.g., update UI, show a notification, etc.)
@@ -93,11 +93,11 @@ export default function ColumnPinningDynamicRowHeight() {
     setSelectedDemand(demand);
       try {
         console.log("in handle valider");
-        const response = await axios.put(`http://human-resource-management-backend.vercel.app/demandes/updateStatut/${demand._id}`, {
+        const response = await axios.put(`https://human-resource-management-backend.vercel.app/demandes/updateStatut/${demand._id}`, {
           statut: 'Validée', // Set the new statut here
         });
 
-        const res = await axios.post('http://human-resource-management-backend.vercel.app/notifs/add-notification', { "prof": demand.professeur , "title": demand.__t.replace(/([A-Z])/g, ' $1').trim()+" Accepté", "message": "Nous tenons à vous informer que votre "+demand.__t.replace(/([A-Z])/g, ' $1').trim()+" a été accepté et que vous pouvez le récupérer à l'administration. Merci !", "date": currentDatetime});
+        const res = await axios.post('https://human-resource-management-backend.vercel.app/notifs/add-notification', { "prof": demand.professeur , "title": demand.__t.replace(/([A-Z])/g, ' $1').trim()+" Accepté", "message": "Nous tenons à vous informer que votre "+demand.__t.replace(/([A-Z])/g, ' $1').trim()+" a été accepté et que vous pouvez le récupérer à l'administration. Merci !", "date": currentDatetime});
         console.log("accepted")
         // Handle the response as needed (e.g., update UI, show a notification, etc.)
         console.log('Statut updated successfully:', response.data);
@@ -118,11 +118,11 @@ export default function ColumnPinningDynamicRowHeight() {
     setSelectedDemand(demand);
       try {
         console.log("in handle valider");
-        const response = await axios.put(`http://human-resource-management-backend.vercel.app/demandes/updateStatut/${selectedDemand._id}`, {
+        const response = await axios.put(`https://human-resource-management-backend.vercel.app/demandes/updateStatut/${selectedDemand._id}`, {
           statut: 'Rejetée', // Set the new statut here
         });
 
-        const res = await axios.post('http://human-resource-management-backend.vercel.app/notifs/add-notification', { "prof": selectedDemand.professeur , "title": selectedDemand.__t.replace(/([A-Z])/g, ' $1').trim()+" Refusé", "message": "Nous tenons à vous informer que votre demande "+selectedDemand.__t.replace(/([A-Z])/g, ' $1').trim()+" a été refusé. Merci !", "date": currentDatetime});
+        const res = await axios.post('https://human-resource-management-backend.vercel.app/notifs/add-notification', { "prof": selectedDemand.professeur , "title": selectedDemand.__t.replace(/([A-Z])/g, ' $1').trim()+" Refusé", "message": "Nous tenons à vous informer que votre demande "+selectedDemand.__t.replace(/([A-Z])/g, ' $1').trim()+" a été refusé. Merci !", "date": currentDatetime});
         console.log("rejected")
         // Handle the response as needed (e.g., update UI, show a notification, etc.)
         console.log('Statut updated successfully:', response.data);
@@ -239,12 +239,12 @@ export default function ColumnPinningDynamicRowHeight() {
   
   const fetchDemandes = async () => {
     try {
-      const response = await axios.get(`http://human-resource-management-backend.vercel.app/demande/enAttenteDemands`);
+      const response = await axios.get(`https://human-resource-management-backend.vercel.app/demande/enAttenteDemands`);
       const demandData = response.data;
       const professorNames = {};
       for (const demand of demandData) {
         try {
-          const professorResponse = await axios.get(`http://human-resource-management-backend.vercel.app/agent/agents/${demand.professeur}`);
+          const professorResponse = await axios.get(`https://human-resource-management-backend.vercel.app/agent/agents/${demand.professeur}`);
           professorNames[demand.professeur] = professorResponse.data.nom.split('|')[0] + " " + professorResponse.data.prenom.split('|')[0]; // Replace 'nom' with the actual professor name field
         } catch (error) {
           console.error('Error fetching professor name:', error);

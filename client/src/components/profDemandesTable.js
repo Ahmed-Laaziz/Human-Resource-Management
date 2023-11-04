@@ -120,7 +120,7 @@ export default function ColumnPinningDynamicRowHeight({prof}) {
   const fetchDemandes = async () => {
     try {
       const response = await axios.get(
-        `http://human-resource-management-backend.vercel.app/demandes/profDemandes/${prof._id}` // Replace with your actual API endpoint
+        `https://human-resource-management-backend.vercel.app/demandes/profDemandes/${prof._id}` // Replace with your actual API endpoint
       );
       setDemandes(response.data);
     } catch (error) {

@@ -42,7 +42,7 @@ export function DataHist() {
   const fetchHist = async () => {
     try {
       const response = await axios.post(
-        `http://human-resource-management-backend.vercel.app/hist/prof-hist`, {"prof": prof._id} // Replace with your actual API endpoint
+        `https://human-resource-management-backend.vercel.app/hist/prof-hist`, {"prof": prof._id} // Replace with your actual API endpoint
       );
       setHistoriques(response.data);
     } catch (error) {
