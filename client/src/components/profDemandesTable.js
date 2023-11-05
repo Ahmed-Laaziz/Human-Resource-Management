@@ -122,7 +122,15 @@ export default function ColumnPinningDynamicRowHeight({prof}) {
       const response = await axios.get(
         `https://human-resource-management-backend.vercel.app/demandes/profDemandes/${prof._id}` // Replace with your actual API endpoint
       );
-      setDemandes(response.data);
+
+      demandData = response.data
+      // Attach professor names to demand objects
+      const demandsWithProfessorNames = demandData.map((demand) => ({
+        ...demand,
+        __t: separateByCapitalLetters(demand.__t),
+      }));
+  
+      setDemandes(demandsWithProfessorNames);
     } catch (error) {
       console.error('Error fetching demandes:', error);
     }
