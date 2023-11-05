@@ -117,7 +117,6 @@ export default function ColumnPinningDynamicRowHeight({prof}) {
 
   const [demandes, setDemandes] = useState([]);
   function separateByCapitalLetters(str) {
-    // Remove "Demande" from the beginning of the string and then separate the remaining text by capital letters
     return str.replace(/^Demande/, '').replace(/([a-z])([A-Z])/g, '$1 $2');
   }
   
