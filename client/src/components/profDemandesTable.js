@@ -140,8 +140,6 @@ export default function ColumnPinningDynamicRowHeight({prof}) {
   };
 
   useEffect(() => {
-    // Fetch the title from the backend API
-
     fetchDemandes(); // Call the fetchTitle function when the component mounts
   }, []);
 
@@ -156,11 +154,6 @@ export default function ColumnPinningDynamicRowHeight({prof}) {
           columns={columns}
           getRowId={(row) => row._id}
           getRowHeight={() => 'auto'}
-          // onCellClick={(params) => {
-          //   if (params.field === 'actions') {
-          //     handlePrintClick(params.row);
-          //   }
-          // }}
           initialState={{ pinnedColumns: { left: ['name'], right: ['actions'] } }}
         />
       </div>
