@@ -68,7 +68,7 @@ useEffect(() => {
     <Box sx={{ display: "flex" }}>
       {/* <Drawer role={prof._t} /> */}
       {agent?(
-        <Drawer role={agent.__t} />
+        <Drawer role={agent.__t} pageTitle={"Historique"}/>
       ):null}
           
       
