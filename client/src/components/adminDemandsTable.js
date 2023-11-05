@@ -70,7 +70,7 @@ export default function ColumnPinningDynamicRowHeight() {
     setSelectedDemand(demand);
     if (selectedDemand) {
       try {
-        const response = await axios.put(`https://human-resource-management-backend.vercel.app:4000/demandes/updateStatut/${selectedDemand._id}`, {
+        const response = await axios.put(`https://human-resource-management-backend.vercel.app/demandes/updateStatut/${selectedDemand._id}`, {
           statut: 'En Cours', // Set the new statut here
         });
           if (selectedDemand.__t === 'Quitter Territoire'){
@@ -103,7 +103,7 @@ export default function ColumnPinningDynamicRowHeight() {
     setSelectedDemand(demand);
       try {
         console.log("in handle valider");
-        const response = await axios.put(`https://human-resource-management-backend.vercel.app:4000/demandes/updateStatut/${demand._id}`, {
+        const response = await axios.put(`https://human-resource-management-backend.vercel.app/demandes/updateStatut/${demand._id}`, {
           statut: 'Validée', // Set the new statut here
         });
 
@@ -275,12 +275,12 @@ export default function ColumnPinningDynamicRowHeight() {
   
   const fetchDemandes = async () => {
     try {
-      const response = await axios.get(`https://human-resource-management-backend.vercel.app:4000/demandes/enAttenteDemands`);
+      const response = await axios.get(`https://human-resource-management-backend.vercel.app/demandes/enAttenteDemands`);
       const demandData = response.data;
       const professorNames = {};
       for (const demand of demandData) {
         try {
-          const professorResponse = await axios.get(`https://human-resource-management-backend.vercel.app:4000/agent/agents/${demand.professeur}`);
+          const professorResponse = await axios.get(`https://human-resource-management-backend.vercel.app/agent/agents/${demand.professeur}`);
           professorNames[demand.professeur] = professorResponse.data.nom.split('|')[0] + " " + professorResponse.data.prenom.split('|')[0]; // Replace 'nom' with the actual professor name field
         } catch (error) {
           console.error('Error fetching professor name:', error);
