@@ -126,7 +126,7 @@ export default function ColumnPinningDynamicRowHeight({prof}) {
         `https://human-resource-management-backend.vercel.app/demandes/profDemandes/${prof._id}` // Replace with your actual API endpoint
       );
 
-      demandData = response.data
+      const demandData = response.data
       // Attach professor names to demand objects
       const demandsWithProfessorNames = demandData.map((demand) => ({
         ...demand,

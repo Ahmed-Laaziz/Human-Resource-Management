@@ -29,12 +29,33 @@ const cadreGradeMapping = {
 };
 
 // Define the mapping of grade to classeOptions
-const gradeClasseMapping = {
-  'Grade D': ['930-01', '960-02', '990-03', '1020-04'],
-  'Grade C': ['812-01', '840-02', '870-03', '900-04'],
-  'Grade B': ['639-01', '704-02', '746-03', '779-04'],
-  'Grade A': ['509-01', '542-02', '574-03', '606-04'],
-  // Define classeOptions for other grades
+const gradeClasseMapping = (selectedCadre) => {
+  // Define the mapping of grade to classeOptions based on the selected cadre
+  
+  if (selectedCadre) {
+    if (selectedCadre === "Professeur de l'enseignement superieur") {
+      return {
+        'Grade D': ['1095-01', '1125-02', '1155-03', '1185-04', '1215-05'],
+        'Grade C': ['975-01', '1005-02', '1035-03', '1065-04'],
+        'Grade B': ['860-01', '885-02', '915-03', '945-04'],
+        'Grade A': ['760-01', '785-02', '810-03', '835-04'],
+      };
+    } else if (selectedCadre === "Professeur habilité") {
+      return {
+        'Grade C': ['900-01', '930-02', '960-03', '990-04', '1020-05'],
+        'Grade B': ['779-01', '812-02', '840-03', '870-04'],
+        'Grade A': ['580-01', '620-02', '660-03', '720-04'],
+      };
+    } else if (selectedCadre === "Professeur assistant") {
+      return {
+        'Grade D': ['930-01', '960-02', '990-03', '1020-04'],
+        'Grade C': ['812-01', '840-02', '870-03', '900-04'],
+        'Grade B': ['639-01', '704-02', '746-03', '779-04'],
+        'Grade A': ['509-01', '542-02', '574-03', '606-04'],
+      };
+    }
+}
+return {};
 };
 const style = {
   position: 'absolute',
@@ -621,7 +642,6 @@ const [phoneNumber, setPhoneNumber] = React.useState('');
                 </Typography>
                 <Autocomplete
                   id="cadre-autocomplete"
-                  
                   options={selectedCadre ? cadreGradeMapping[selectedCadre] : []}
                   value={selectedGrade}
                   onChange={handleGradeChange}
@@ -636,12 +656,12 @@ const [phoneNumber, setPhoneNumber] = React.useState('');
                 Indice-Échelon (الرتبة)
                 </Typography>
                 <Autocomplete
-                  id="cadre-autocomplete"
-                  options={selectedGrade ? gradeClasseMapping[selectedGrade] : []}
-                  value={selectedClasse}
-                  onChange={handleClasseChange}
-                  renderInput={(params) => <TextField {...params} variant="outlined" />}
-                />
+                    id="classe-autocomplete"
+                    options={selectedGrade ? gradeClasseMapping(selectedCadre)[selectedGrade] : []}
+                    value={selectedClasse}
+                    onChange={handleClasseChange}
+                    renderInput={(params) => <TextField {...params} variant="outlined" />}
+                  />
               </div>
             </Grid>
             <Grid item xs={5}>
@@ -712,7 +732,7 @@ const [phoneNumber, setPhoneNumber] = React.useState('');
         ) : (
           <React.Fragment>
             <Typography sx={{ mt: 2, mb: 1, py: 1 }}>
-              Step {activeStep + 1}
+              Etape {activeStep + 1}
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
               <Button
@@ -721,22 +741,22 @@ const [phoneNumber, setPhoneNumber] = React.useState('');
                 onClick={handleBack}
                 sx={{ mr: 1 }}
               >
-                Back
+                Retour
               </Button>
               <Box sx={{ flex: '1 1 auto' }} />
               <Button onClick={handleNext} sx={{ mr: 1 }}>
-                Next
+                Suivant
               </Button>
               {activeStep !== steps.length &&
                 (completed[activeStep] ? (
                   <Typography variant="caption" sx={{ display: 'inline-block' }}>
-                    Step {activeStep + 1} already completed
+                    Etape {activeStep + 1} déja accomplie
                   </Typography>
                 ) : (
                   <Button onClick={handleComplete}>
                     {completedSteps() === totalSteps() - 1
-                      ? 'Finish'
-                      : 'Complete Step'}
+                      ? 'Terminer'
+                      : 'Etape accompie'}
                   </Button>
                 ))}
             </Box>
