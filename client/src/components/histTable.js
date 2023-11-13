@@ -13,20 +13,26 @@ const columns = [
   {
     field: 'grade',
     headerName: 'Grade',
-    width: 300,
+    width: 250,
     editable: true,
   },
   {
     field: 'classe',
     headerName: 'Classe',
-    width: 300,
+    width: 250,
+    editable: false,
+  },
+  {
+    field: 'cadre',
+    headerName: 'Cadre',
+    width: 250,
     editable: false,
   },
   {
     field: 'date',
     headerName: 'Date',
     type: 'Date',
-    width: 400,
+    width: 300,
     editable: false,
   },
 ];
@@ -45,9 +51,32 @@ export function DataHist() {
         `https://human-resource-management-backend.vercel.app/hist/prof-hist`, {"prof": prof._id} // Replace with your actual API endpoint
       );
       setHistoriques(response.data);
+      const histData = response.data;
+
+      if (histData){
+        try {
+          const professorResponse = await axios.get(`https://human-resource-management-backend.vercel.app/agent/agents/${prof._id}`);
+          const professorCadre = professorResponse.data.cadre; // Replace 'nom' with the actual professor name field
+          const histWithProfessorCadre = histData.map((hist) => ({
+            ...hist,
+            cadre: professorCadre || 'N/A', // Provide a default value if name not found
+          })
+          );
+          setHistoriques(histWithProfessorCadre)
+        } catch (error) {
+          console.error('Error fetching professor cadre:', error);
+        }
+      }
+
+      
+
+     
+
     } catch (error) {
       console.error('Error fetching title:', error);
     }
+
+    
   };
 
   useEffect(() => {
