@@ -11,6 +11,12 @@ import { useProf } from '../context/ProfContext';
 
 const columns = [
   {
+    field: 'cadre',
+    headerName: 'Cadre',
+    width: 250,
+    editable: false,
+  },
+  {
     field: 'grade',
     headerName: 'Grade',
     width: 250,
@@ -22,12 +28,7 @@ const columns = [
     width: 250,
     editable: false,
   },
-  {
-    field: 'cadre',
-    headerName: 'Cadre',
-    width: 250,
-    editable: false,
-  },
+  
   {
     field: 'date',
     headerName: 'Date',
