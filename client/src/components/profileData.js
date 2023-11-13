@@ -31,7 +31,7 @@ export default function ProfileData({ agent }) {
       }}
     >
       <Typography level="title-lg" startDecorator={<InfoOutlined />}>
-      {isAdmin ? 'Additional admin data' : 'Additional professor data'} 
+      {isAdmin ? 'Informations' : 'Informations'} 
       </Typography>
       <Divider inset="none" />
       

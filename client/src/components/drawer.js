@@ -333,7 +333,7 @@ export default function MiniDrawer({role, pageTitle, notifs, id}) {
           >
             <HomeIcon/>
           </ListItemIcon>
-          <ListItemText primary="Home" sx={{ opacity: open ? 1 : 0 }} />
+          <ListItemText primary="Accueil" sx={{ opacity: open ? 1 : 0 }} />
         </ListItemButton>
       </Link>
     </ListItem>
@@ -362,7 +362,7 @@ export default function MiniDrawer({role, pageTitle, notifs, id}) {
           >
             <GroupIcon/>
           </ListItemIcon>
-          <ListItemText primary="add professor" sx={{ opacity: open ? 1 : 0 }} />
+          <ListItemText primary="Ajouter professeur" sx={{ opacity: open ? 1 : 0 }} />
         </ListItemButton>
       </Link>
     </ListItem>
@@ -386,7 +386,7 @@ export default function MiniDrawer({role, pageTitle, notifs, id}) {
           >
             <PersonAddIcon/>
           </ListItemIcon>
-          <ListItemText primary="all professors" sx={{ opacity: open ? 1 : 0 }} />
+          <ListItemText primary="Professeurs" sx={{ opacity: open ? 1 : 0 }} />
         </ListItemButton>
       </Link>
     </ListItem>
@@ -556,7 +556,7 @@ export default function MiniDrawer({role, pageTitle, notifs, id}) {
           
         </List>
         <Divider />
-        <List>
+        {/* <List>
           {['All mail', 'Trash', 'Drafts'].map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
@@ -579,7 +579,7 @@ export default function MiniDrawer({role, pageTitle, notifs, id}) {
               </ListItemButton>
             </ListItem>
           ))}
-        </List>
+        </List> */}
       </Drawer>
       
     </Box>

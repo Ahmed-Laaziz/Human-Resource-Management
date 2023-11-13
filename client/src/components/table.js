@@ -13,13 +13,13 @@ import { useProf } from '../context/ProfContext';
 const columns = [
   {
     field: 'prenom',
-    headerName: 'First name',
+    headerName: 'Prénom',
     width: 150,
     editable: true,
   },
   {
     field: 'nom',
-    headerName: 'Last name',
+    headerName: 'Nom',
     width: 150,
     editable: false,
   },
@@ -59,7 +59,7 @@ const columns = [
   },
   {
     field: 'moreActions',
-    headerName: 'More Actions',
+    headerName: 'Autres Actions',
     sortable: false,
     width: 120,
     renderCell: (params) => {
