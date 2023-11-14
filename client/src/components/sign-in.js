@@ -165,7 +165,7 @@ const [passwordError, setPasswordError] = useState('');
   margin="normal"
   required
   fullWidth
-  name="Mot de passe"
+  name="password"
   label="Mot de passe"
   type="password"
   id="password"
