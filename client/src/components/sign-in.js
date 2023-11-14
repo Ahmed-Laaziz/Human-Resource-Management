@@ -23,7 +23,7 @@ function Copyright(props) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Ensaj
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -60,12 +60,12 @@ const [passwordError, setPasswordError] = useState('');
 
   if (!email) {
     // Display an error message if email or password is empty
-    setEmailError('Email is required');
+    setEmailError('Email requis');
     // return;
   }
   if (!password) {
     // Display an error message if email or password is empty
-    setPasswordError('Password is required');
+    setPasswordError('Mot de passe requis');
     // return;
   }
   
@@ -95,10 +95,10 @@ const [passwordError, setPasswordError] = useState('');
       // Redirect the user or perform any necessary actions upon successful login
     } catch (error) {
       if (error.response.status === 401 && password !== ''){
-        setPasswordError('Incorrect password');
+        setPasswordError('Mot de passe incorrect');
       }
       else if (error.response.status === 404 && email !== ''){
-        setEmailError('Incorrect Email');
+        setEmailError('Email incorrect');
       }
       // Handle authentication errors
       if (error.response) {
@@ -146,7 +146,7 @@ const [passwordError, setPasswordError] = useState('');
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Authentification
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
             <TextField
@@ -154,7 +154,7 @@ const [passwordError, setPasswordError] = useState('');
   required
   fullWidth
   id="email"
-  label="Email Address"
+  label="Email"
   name="email"
   autoComplete="email"
   autoFocus
@@ -165,8 +165,8 @@ const [passwordError, setPasswordError] = useState('');
   margin="normal"
   required
   fullWidth
-  name="password"
-  label="Password"
+  name="Mot de passe"
+  label="Mot de passe"
   type="password"
   id="password"
   autoComplete="current-password"
@@ -175,7 +175,7 @@ const [passwordError, setPasswordError] = useState('');
 
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
+                label="se souvenir de moi"
               />
               <Button
                 type="submit"
@@ -183,18 +183,18 @@ const [passwordError, setPasswordError] = useState('');
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+                Authentification
               </Button>
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2">
-                    Forgot password?
+                    Mot de passe oublié?
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  {/* <Link href="#" variant="body2">
                     {"Don't have an account? Sign Up"}
-                  </Link>
+                  </Link> */}
                 </Grid>
               </Grid>
               <Copyright sx={{ mt: 5 }} />
