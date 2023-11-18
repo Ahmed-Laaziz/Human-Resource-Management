@@ -12,7 +12,15 @@ import Button from '@mui/joy/Button';
 import InfoOutlined from '@mui/icons-material/InfoOutlined';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 
+import { useProf } from '../context/ProfContext';
+
+const backLink = process.env.REACT_APP_BACK_LINK;
+
 export default function ProfileData({ agent }) {
+
+  const { hist } = useProf();
+  console.log('in the professor profile the hist is :')
+  console.log(hist)
 
   const isAdmin = agent && agent.__t === 'Admin';
   const isProfesseur = agent && agent.__t === 'Professeur';
@@ -46,11 +54,11 @@ export default function ProfileData({ agent }) {
   
   <FormControl>
     <FormLabel>Grade (الرتبة)</FormLabel>
-    <Input endDecorator={<CreditCardIcon /> } defaultValue={isProfesseur ? 'Grade 1' : 'Loading...'} disabled sx={{fontFamily:'bold'}}/>
+    <Input endDecorator={<CreditCardIcon /> } defaultValue={isProfesseur ? hist[0].grade : 'Loading...'} disabled sx={{fontFamily:'bold'}}/>
   </FormControl>
   <FormControl>
     <FormLabel>Classe (الدرجة)</FormLabel>
-    <Input endDecorator={<CreditCardIcon /> } defaultValue={isProfesseur ? 'Classe 1' : 'Loading...'} disabled sx={{fontFamily:'bold'}}/>
+    <Input endDecorator={<CreditCardIcon /> } defaultValue={isProfesseur ? hist[0].classe : 'Loading...'} disabled sx={{fontFamily:'bold'}}/>
   </FormControl>
 
   <FormControl>

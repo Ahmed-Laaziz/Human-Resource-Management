@@ -8,6 +8,9 @@ import jwt_decode from 'jwt-decode';
 import axios from'axios';
 // import { useToken } from '../auth/TokenContext';
 import ErrorPage from './404';
+
+const backLink = process.env.REACT_APP_BACK_LINK;
+
 export default function Home(){
     const [token, setToken] = useState('');
     console.log(token);
@@ -30,7 +33,7 @@ console.log('userId : ' + agentId);
 useEffect(() => {
   const fetchAgentData = async () => {
     try {
-      const response = await axios.get(`https://human-resource-management-backend.vercel.app/agent/agents/${agentId}`);
+      const response = await axios.get(backLink+`/agent/agents/${agentId}`);
       setAgent(response.data);
     } catch (error) {
       console.error('Error fetching agent data:', error);
@@ -39,7 +42,7 @@ useEffect(() => {
 
   const fetchAgentNotifs = async () => {
     try {
-      const res = await axios.post('https://human-resource-management-backend.vercel.app/notifs/prof-notif', { "prof": agentId });
+      const res = await axios.post(backLink+'/notifs/prof-notif', { "prof": agentId });
       
       setNotifs(res.data);
       

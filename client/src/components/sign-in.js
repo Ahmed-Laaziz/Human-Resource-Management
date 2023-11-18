@@ -18,6 +18,10 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useToken } from '../auth/TokenContext';
 import { useProf } from '../context/ProfContext';
+
+
+const backLink = process.env.REACT_APP_BACK_LINK;
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -38,7 +42,8 @@ const defaultTheme = createTheme();
 
 export default function SignInSide() {
 
-  const { updateProf } = useProf();
+  const { updateProf, hist, updateHist} = useProf();
+
 
   const navigate = useNavigate();
   const { setToken } = useToken();
@@ -52,7 +57,7 @@ const [passwordError, setPasswordError] = useState('');
 
     
 
-    
+    console.log(backLink)
 
     // Reset previous error messages
   setEmailError('');
@@ -73,13 +78,25 @@ const [passwordError, setPasswordError] = useState('');
       console.log('in try')
       // Send a POST request to the /login endpoint with user credentials
       // const response = await axios.post('https://human-resource-management-backend.vercel.app/auth/login', { email, password });
-      const response = await axios.post('https://human-resource-management-backend.vercel.app/auth/login', { email, password });
+      const response = await axios.post(backLink+'/auth/login', { email, password });
       // If authentication is successful, you will receive a JWT token in the response
       const token = response.data.token;
 
       updateProf(response.data.user);
       localStorage.setItem('user', response.data.user)
       localStorage.setItem('type', response.data.user.__t)
+
+      if(response.data.user.__t === "Professeur"){
+
+      const hists = await axios.post(
+        backLink+`/hist/prof-hist`, {"prof": response.data.user._id} // Replace with your actual API endpoint
+      );
+      
+      updateHist(hists.data);
+
+      console.log("the historiques are : ")
+      console.log(hist)
+    }
 
       
       console.log("the profession is : ")

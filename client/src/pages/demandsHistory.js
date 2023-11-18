@@ -7,6 +7,7 @@ import jwt_decode from 'jwt-decode';
 import axios from'axios';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+const backLink = process.env.REACT_APP_BACK_LINK;
 export default function ProfDemandes(){
 
   const [token, setToken] = useState('');
@@ -29,7 +30,7 @@ console.log('userId : ' + agentId);
 useEffect(() => {
   const fetchAgentData = async () => {
     try {
-      const response = await axios.get(`https://human-resource-management-backend.vercel.app/agent/agents/${agentId}`);
+      const response = await axios.get(backLink+`/agent/agents/${agentId}`);
       setAgent(response.data);
     } catch (error) {
       console.error('Error fetching agent data:', error);

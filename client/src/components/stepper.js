@@ -16,6 +16,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+const backLink = process.env.REACT_APP_BACK_LINK;
 const steps = ['données personnelles', 'données professionnelles', 'données supplémentaires'];
 const genreOptions = ['Homme', 'Femme']
 const cadreOptions = ["Professeur de l'enseignement superieur", 'Professeur habilité', 'Professeur assistant'];
@@ -343,7 +344,7 @@ const [phoneNumber, setPhoneNumber] = React.useState('');
     try {
       // Show the spinner while the backend request is in progress
       // setIsLoading(true);
-      const url = "https://human-resource-management-backend.vercel.app/prof/add-professeur"; // URL for the backend API
+      const url = backLink+"/prof/add-professeur"; // URL for the backend API
       const requestData = {
         nom: lastName+"|"+lnArinputValue, // Send the user input as a parameter in the request body
         prenom: firstName+"|"+fnArinputValue,

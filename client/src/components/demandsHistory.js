@@ -8,6 +8,7 @@ import { DataGrid} from '@mui/x-data-grid';
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+const backLink = process.env.REACT_APP_BACK_LINK;
 
 export default function ColumnPinningDynamicRowHeight({prof}) {
 
@@ -125,7 +126,7 @@ export default function ColumnPinningDynamicRowHeight({prof}) {
   const fetchDemandes = async () => {
     try {
       const response = await axios.get(
-        `https://human-resource-management-backend.vercel.app/demandes/allDemandes` // Replace with your actual API endpoint
+        backLink+`/demandes/allDemandes` // Replace with your actual API endpoint
       );
       setDemandes(response.data);
       const demandData = response.data;
@@ -135,7 +136,7 @@ export default function ColumnPinningDynamicRowHeight({prof}) {
       const professorNames = {};
       for (const demand of demandData) {
         try {
-          const professorResponse = await axios.get(`https://human-resource-management-backend.vercel.app/agent/agents/${demand.professeur}`);
+          const professorResponse = await axios.get(backLink+`/agent/agents/${demand.professeur}`);
           professorNames[demand.professeur] = professorResponse.data.nom.split('|')[0] + " " + professorResponse.data.prenom.split('|')[0]; // Replace 'nom' with the actual professor name field
         } catch (error) {
           console.error('Error fetching professor name:', error);

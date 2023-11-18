@@ -25,6 +25,7 @@ import Autocomplete from '@mui/joy/Autocomplete';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+const backLink = process.env.REACT_APP_BACK_LINK;
 
 export default function FAQCard({prof}) {
   const navigate = useNavigate();
@@ -116,7 +117,7 @@ const addDemande1 = async () => {
   try {
     // Show the spinner while the backend request is in progress
     // setIsLoading(true);
-    const url = "https://human-resource-management-backend.vercel.app/demandeAttestationTravail/add-demande-attestation-travail"; // URL for the backend API
+    const url = backLink+"/demandeAttestationTravail/add-demande-attestation-travail"; // URL for the backend API
     const requestData = {
       professeur: prof._id, // Send the user input as a parameter in the request body
       description: descriptionAttestationTravail
@@ -138,7 +139,7 @@ const addDemande2 = async () => {
   try {
     // Show the spinner while the backend request is in progress
     // setIsLoading(true);
-    const url = "https://human-resource-management-backend.vercel.app/demande/add-demande-quitter-territoire"; // URL for the backend API
+    const url = backLink+"/demande/add-demande-quitter-territoire"; // URL for the backend API
     const requestData = {
       professeur: prof._id, // Send the user input as a parameter in the request body
       description: description,
@@ -163,7 +164,7 @@ const addDemande3 = async () => {
   try {
     // Show the spinner while the backend request is in progress
     // setIsLoading(true);
-    const url = "https://human-resource-management-backend.vercel.app/demandeConge/add-demande-conge"; // URL for the backend API
+    const url = backLink+"/demandeConge/add-demande-conge"; // URL for the backend API
     const requestData = {
       professeur: prof._id, // Send the user input as a parameter in the request body
       description: descriptionConge,

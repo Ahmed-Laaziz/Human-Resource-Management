@@ -26,12 +26,15 @@ import { StepContent } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { useProf } from '../context/ProfContext';
 
-
+const backLink = process.env.REACT_APP_BACK_LINK;
 
 export default function UserCard({ agent }) {
   const isAdmin = agent && agent.__t === 'Admin';
   const isProfesseur = agent && agent.__t === 'Professeur';
+
+  const { hist } = useProf();
 
   const cadreOptions = ["Professeur de l'enseignement superieur", 'Professeur habilité', 'Professeur assistant'];
   const genreOptions = ['Homme', 'Femme'];
@@ -113,9 +116,9 @@ export default function UserCard({ agent }) {
     setSelectedGenre(agent ? agent.genre : null);
 
     //For professor only
-    setSelectedCadre(agent.cadre ? agent.cadre : '');
-    /*setSelectedGrade(agent ? agent.cin : '');
-    setSelectedClasse(agent ? agent.cin : '');*/
+    setSelectedCadre(hist ? hist[0].cadre : '');
+    setSelectedGrade(hist ? hist[0].grade : '');
+    setSelectedClasse(hist ? hist[0].classe : '');
     setSelectedDateFct(agent.date_fct_publique ? dayjs(formatDate(agent.date_fct_publique)) : null);
     setSelectedDateSchool(agent.date_entre_ecole ? dayjs(formatDate(agent.date_entre_ecole)) : null);
     setLoyerValue(agent.num_loyer ? agent.num_loyer: '');
@@ -125,6 +128,43 @@ export default function UserCard({ agent }) {
     setSelectedDateEffective(agent.date_effective ? dayjs(formatDate(agent.date_effective)) : null);
 
     setOpenAtt2(true);
+  }
+
+  const handleSubmit = async () => {
+    const newProf = {
+      id: idValue,
+      num_loyer: loyerValue,
+      date_entre_ecole: selectedDateSchool,
+      date_fct_publique: selectedDateFct,
+      num_ref: 2121,
+      date_effective: selectedDateEffective,
+      anciennete: ancienneteValue,
+      date_visa: selectedDateVisa,
+      nom: nomValue+" | "+nisbaValue,
+      prenom: prenomValue+" | "+asmValue,
+      email: emailValue,
+      tel: telValue,
+      cin: cinValue,
+      genre: selectedGenre
+    } 
+
+    const newHist = {  
+      cadre : selectedCadre,    
+      grade: selectedGrade,
+      classe: selectedClasse,
+    }
+
+    console.log("The new prof is : ")
+    console.log(newProf)
+
+    console.log("The new hist is : ")
+    console.log(newHist)
+
+    const updatedProf = await axios.put(
+      backLink+`/prof/update-professeur`, {"prof": newProf, "hist": newHist} // Replace with your actual API endpoint
+    );
+
+    handleClose();
   }
 
   const handleClose = () => {
@@ -345,7 +385,7 @@ const updateAdmin = async () => {
   try {
     // Show the spinner while the backend request is in progress
     // setIsLoading(true);
-    const url = "https://human-resource-management-backend.vercel.app/admin/update-admin"; // URL for the backend API
+    const url = backLink+"/admin/update-admin"; // URL for the backend API
     const requestData = {
       adminId: idValue,
       nom: nomValue+"|"+nisbaValue, // Send the user input as a parameter in the request body
@@ -832,7 +872,7 @@ const updateAdmin = async () => {
               <Button disabled={activeStep === 0} onClick={handleBack} variant="outlined" color="primary">
                 Back
               </Button>
-              <Button variant="solid" color="primary" onClick={handleNext}>
+              <Button variant="solid" color="primary" onClick={handleSubmit}>
                 Valider
               </Button>
               </Box>

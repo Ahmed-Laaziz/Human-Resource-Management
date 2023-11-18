@@ -9,7 +9,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
 import { useProf } from '../context/ProfContext';
-
+const backLink = process.env.REACT_APP_BACK_LINK;
 const columns = [
   {
     field: 'prenom',
@@ -71,7 +71,7 @@ const columns = [
 
 function MoreActionsCell({ rowParams }) {
   const navigate = useNavigate();
-  const { updateProf } = useProf();
+  const { updateProf, updateHist } = useProf();
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -83,15 +83,25 @@ function MoreActionsCell({ rowParams }) {
     setAnchorEl(null);
   };
 
-  const handleHistoriqueClick = () => {
-    updateProf(rowParams.row);
+  const handleHistoriqueClick = async () => {
+    const hists = await axios.post(
+      backLink+`/hist/prof-hist`, {"prof": rowParams.row._id} // Replace with your actual API endpoint
+    );
+    
+    updateHist(hists.data);
     
     navigate("/historiques");
     handleMenuClose();
   };
 
-  const handleProfileClick = () => {
+  const handleProfileClick = async () => {
     updateProf(rowParams.row);
+
+    const hists = await axios.post(
+      backLink+`/hist/prof-hist`, {"prof": rowParams.row._id} // Replace with your actual API endpoint
+    );
+    
+    updateHist(hists.data);
     
     navigate("/prof-profile");
     handleMenuClose();
@@ -127,7 +137,7 @@ export default function DataGridDemo() {
   const fetchProfessor = async () => {
     try {
       const response = await axios.get(
-        `https://human-resource-management-backend.vercel.app/prof/professeurs` // Replace with your actual API endpoint
+        backLink+`/prof/professeurs` // Replace with your actual API endpoint
       );
       setProfesseurs(response.data);
     } catch (error) {

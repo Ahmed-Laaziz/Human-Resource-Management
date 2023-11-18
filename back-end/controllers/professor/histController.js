@@ -37,22 +37,23 @@ exports.addHist =  async (req, res, next) => {
     }
   };
 
-  exports.getHist =  async (req, res, next) => {
+  exports.getHist = async (req, res, next) => {
     try {
       const profId = req.body.prof;
   
       // Find the agent by ID in your Agent collection
-      const hist = await Historique.find({"professeur": profId});
+      const hist = await Historique.find({ "professeur": profId }).sort({ date: -1 });
   
       if (!hist) {
         return res.status(404).json({ error: 'Hist not found' });
       }
   
-      // Return the hist data as JSON
+      // Return the sorted hist data as JSON
       res.status(200).json(hist);
     } catch (error) {
       console.error('Error fetching hist by prof ID:', error);
       res.status(500).json({ error: 'Internal server error' });
     }
   };
+  
 

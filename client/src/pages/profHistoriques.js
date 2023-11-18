@@ -7,8 +7,11 @@ import { useProf } from "../context/ProfContext";
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+
+const backLink = process.env.REACT_APP_BACK_LINK;
+
 export default function Home() {
-  const { prof } = useProf();
+  const { prof, hist } = useProf();
 
 
   const [token, setToken] = useState('');
@@ -45,7 +48,7 @@ const navigate = useNavigate();
 useEffect(() => {
   const fetchAgentData = async () => {
     try {
-      const response = await axios.get(`https://human-resource-management-backend.vercel.app/agent/agents/${agentId}`);
+      const response = await axios.get(backLink+`/agent/agents/${agentId}`);
       setAgent(response.data);
     } catch (error) {
       console.error('Error fetching agent data:', error);
