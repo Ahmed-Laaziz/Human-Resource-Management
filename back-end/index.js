@@ -28,9 +28,9 @@ app.set('view engine', 'jade');
 // Enable CORS middleware
 app.use(cors(
   {
-    // origin: ["https://human-resource-management-frontend.vercel.app"],
-    // methods: ["POST", "GET"],
-    // credentials: true
+    origin: ["https://human-resource-management-frontend.vercel.app"],
+    methods: ["POST", "GET"],
+    credentials: true
 }
 ));
 app.use("/files", express.static("files"));
