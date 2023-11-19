@@ -28,7 +28,6 @@ var app = express();
 // Enable CORS middleware
 app.use(cors(
   {
-    // origin: ["https://human-resource-management-frontend.vercel.app"],
     origin: ["https://human-resource-management-frontend.vercel.app"],
     methods: ["POST", "GET"],
     credentials: true

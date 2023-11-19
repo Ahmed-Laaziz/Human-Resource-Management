@@ -35,6 +35,7 @@ import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 import RuleFolderIcon from '@mui/icons-material/RuleFolder';
 import { useProf } from '../context/ProfContext';
 import SendAndArchiveIcon from '@mui/icons-material/SendAndArchive';
+import SendIcon from '@mui/icons-material/Send';
 const drawerWidth = 240;
 const backLink = process.env.REACT_APP_BACK_LINK;
 
@@ -435,9 +436,9 @@ export default function MiniDrawer({role, pageTitle, notifs, id}) {
               justifyContent: 'center',
             }}
           >
-            <RuleFolderIcon/>
+            <SendIcon/>
           </ListItemIcon>
-          <ListItemText primary="Fichiers" sx={{ opacity: open ? 1 : 0 }} />
+          <ListItemText primary="Documents" sx={{ opacity: open ? 1 : 0 }} />
         </ListItemButton>
       </Link>
     </ListItem>
