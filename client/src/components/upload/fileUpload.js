@@ -98,8 +98,9 @@ useEffect(() => {
       <img
             alt=""
             src={uploadImg}
-            width={"80%"}
+            width={"30%"}
           />
+          <h4><b>Gestion des documents</b></h4>
         </center>
       <FormControl fullWidth>
   <InputLabel id="select-professor-label">Selectionner un professeur</InputLabel>
