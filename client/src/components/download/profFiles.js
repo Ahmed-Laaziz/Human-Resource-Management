@@ -10,7 +10,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-const backLink = process.env.REACT_APP_BACK_LINK;
+const backLink = "https://human-resource-management-backend.vercel.app";
 
 export default function ColumnPinningDynamicRowHeight({prof}) {
 

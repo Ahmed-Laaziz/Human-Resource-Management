@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-// import { pdfjs } from "react-pdf";
 import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { Button, Input, Typography } from '@mui/material';
@@ -12,7 +11,7 @@ import SendIcon from '@mui/icons-material/Send';
 // ).toString();
 
 function App() {
-    const backLink = process.env.REACT_APP_BACK_LINK;
+    const backLink = "https://human-resource-management-backend.vercel.app";
   const [title, setTitle] = useState("");
   const [file, setFile] = useState("");
   const [allImage, setAllImage] = useState(null);
