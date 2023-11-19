@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 import { Button, Input, Typography } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import SendIcon from '@mui/icons-material/Send';
+import uploadImg from "../../images/fileUpload.gif"
 // pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 //   "pdfjs-dist/build/pdf.worker.min.js",
 //   import.meta.url
@@ -93,6 +94,10 @@ useEffect(() => {
   return (
     <div className="App">
       <form className="formStyle" onSubmit={submitImage}>
+      <img
+            alt=""
+            src={uploadImg}
+          />
         
       <FormControl fullWidth>
   <InputLabel id="select-professor-label">Selectionner un professeur</InputLabel>
@@ -107,7 +112,7 @@ useEffect(() => {
     <MenuItem value="">Selectionner un professeur</MenuItem>
     {professors.map((prof) => (
       <MenuItem key={prof._id} value={prof._id}>
-        {prof.nom}
+        {prof ? prof.prenom.split('|')[0]  + " " + prof.nom.split('|')[0] + "   |   " +  prof.prenom.split('|')[1]  + " " + prof.nom.split('|')[1] : 'Loading...'} 
       </MenuItem>
     ))}
   </Select>
