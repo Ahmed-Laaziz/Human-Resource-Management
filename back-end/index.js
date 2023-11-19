@@ -22,7 +22,7 @@ var fileRouter = require('./routes/file/fileRouter');
 var app = express();
 
 // view engine setup
-// app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
 
 // Enable CORS middleware
