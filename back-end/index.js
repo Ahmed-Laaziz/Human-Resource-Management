@@ -23,11 +23,12 @@ var app = express();
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+// app.set('view engine', 'jade');
 
 // Enable CORS middleware
 app.use(cors(
   {
+    // origin: ["https://human-resource-management-frontend.vercel.app"],
     origin: ["https://human-resource-management-frontend.vercel.app"],
     methods: ["POST", "GET"],
     credentials: true
