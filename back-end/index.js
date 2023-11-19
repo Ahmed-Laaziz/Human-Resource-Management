@@ -29,7 +29,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(cors(
   {
     origin: ["https://human-resource-management-frontend.vercel.app"],
-    methods: ["POST", "GET"],
+    methods: ["POST", "GET", "PUT"],
     credentials: true
 }
 ));

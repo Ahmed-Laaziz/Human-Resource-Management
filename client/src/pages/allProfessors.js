@@ -65,9 +65,9 @@ useEffect(() => {
         <Box sx={{ display: 'flex' }}>
            {agent ? (
             (agent.__t === "Admin" && agent.fonction === "Chef de Département") ? (
-              <Drawer role='Chef' />
+              <Drawer role='Chef' pageTitle={"Professeurs"}/>
             ) : (agent.__t === "Admin")?(
-              <Drawer role='Admin' />
+              <Drawer role='Admin' pageTitle={"Professeurs"}/>
             ):null
           ) : null}
         
