@@ -11,19 +11,34 @@ import Typography from '@mui/joy/Typography';
 import Button from '@mui/joy/Button';
 import InfoOutlined from '@mui/icons-material/InfoOutlined';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
-
+import axios from 'axios'; // Import Axios
+import { useNavigate } from 'react-router-dom';
 import { useProf } from '../context/ProfContext';
 
 const backLink = process.env.REACT_APP_BACK_LINK;
 
 export default function ProfileData({ agent }) {
+  const navigate = useNavigate();
 
   const { hist } = useProf();
-  console.log('in the professor profile the hist is :')
-  console.log(hist)
 
   const isAdmin = agent && agent.__t === 'Admin';
   const isProfesseur = agent && agent.__t === 'Professeur';
+
+
+  const { updateProf, updateHist } = useProf();
+
+  const handleHistoriqueClick = async () => {
+    console.log("prof id : " + hist[0].professeur)
+    const hists = await axios.post(
+      backLink+`/hist/prof-hist`, {"prof": hist[0].professeur} // Replace with your actual API endpoint
+    );
+    
+    updateHist(hists.data);
+    
+    navigate("/historiques");
+    // handleMenuClose();
+  };
 
   return (
     <Card
@@ -79,6 +94,7 @@ export default function ProfileData({ agent }) {
     <Input endDecorator={<InfoOutlined />} defaultValue={isProfesseur ? agent.date_fct_publique : 'Loading...'} disabled sx={{fontFamily:'bold'}}/>
   </FormControl>
   <Checkbox label="Change password" sx={{ gridColumn: '1/-1', my: 1 }} />
+<Button onClick={handleHistoriqueClick}>Voir Historique</Button>
 </CardContent>
 ) : isAdmin ? (
   <CardContent

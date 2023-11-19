@@ -18,12 +18,12 @@ var demandeAttestationTravail = require('./routes/demande/attestationTravail');
 var demandeCongeRouter = require('./routes/demande/conge');
 var profDemandeRouter = require('./routes/demande/demandes');
 var notifRouter = require('./routes/notifications/notification');
-
+var fileRouter = require('./routes/file/fileRouter');
 var app = express();
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'jade');
+app.set('view engine', 'jade');
 
 // Enable CORS middleware
 app.use(cors(
@@ -33,7 +33,7 @@ app.use(cors(
     // credentials: true
 }
 ));
-
+app.use("/files", express.static("files"));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -52,7 +52,7 @@ app.use('/demandeConge', demandeCongeRouter)
 app.use('/demandeAttestationTravail', demandeAttestationTravail)
 app.use('/demandes', profDemandeRouter)
 app.use('/notifs', notifRouter)
-
+app.use('/FilesManagement', fileRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

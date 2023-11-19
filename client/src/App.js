@@ -16,6 +16,8 @@ import Hists from "./pages/profHistoriques";
 import { ProfProvider } from "./context/ProfContext";
 import Proffile from "./pages/profProfile";
 import DemandsHistory from "./pages/demandsHistory";
+import FileUpload from "./pages/uploadFile";
+import FilesDownload from "./pages/profFiles";
 export default function App() {
   return (
     <div>
@@ -37,6 +39,8 @@ export default function App() {
         <Route path="chef-demandes" element={<ChefDemandes/>} />
         <Route path="historiques" element={<Hists/>} />
         <Route path="prof-profile" element={<Proffile/>} />
+        <Route path="file-upload" element={<FileUpload/>} />
+        <Route path="files-download" element={<FilesDownload/>} />
         {/* </Route> */}
       </Routes>
     </BrowserRouter>

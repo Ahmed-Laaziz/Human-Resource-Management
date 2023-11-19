@@ -34,6 +34,7 @@ import HistoryIcon from '@mui/icons-material/History';
 import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 import RuleFolderIcon from '@mui/icons-material/RuleFolder';
 import { useProf } from '../context/ProfContext';
+import SendAndArchiveIcon from '@mui/icons-material/SendAndArchive';
 const drawerWidth = 240;
 const backLink = process.env.REACT_APP_BACK_LINK;
 
@@ -415,9 +416,35 @@ export default function MiniDrawer({role, pageTitle, notifs, id}) {
         </ListItemButton>
       </Link>
     </ListItem>
+
+
+    <ListItem disablePadding sx={{ display: 'block' }}>
+      {/* Use the Link component to specify the "to" prop */}
+      <Link to="/file-upload" style={{ textDecoration: 'none' }}>
+        <ListItemButton
+          sx={{
+            minHeight: 48,
+            justifyContent: open ? 'initial' : 'center',
+            px: 2.5,
+          }}
+        >
+          <ListItemIcon
+            sx={{
+              minWidth: 0,
+              mr: open ? 3 : 'auto',
+              justifyContent: 'center',
+            }}
+          >
+            <RuleFolderIcon/>
+          </ListItemIcon>
+          <ListItemText primary="Fichiers" sx={{ opacity: open ? 1 : 0 }} />
+        </ListItemButton>
+      </Link>
+    </ListItem>
   </>
 ) : localStorage.getItem('type') === 'Professeur' ? (
   /* Content for Professors */
+  <>
   <ListItem disablePadding sx={{ display: 'block' }}>
     {/* Use the Link component to specify the "to" prop */}
     <Link to="/demandes" style={{ textDecoration: 'none' }}>
@@ -441,6 +468,33 @@ export default function MiniDrawer({role, pageTitle, notifs, id}) {
       </ListItemButton>
     </Link>
   </ListItem>
+
+
+  <ListItem disablePadding sx={{ display: 'block' }}>
+    {/* Use the Link component to specify the "to" prop */}
+    <Link to="/files-download" style={{ textDecoration: 'none' }}>
+      <ListItemButton
+        sx={{
+          minHeight: 48,
+          justifyContent: open ? 'initial' : 'center',
+          px: 2.5,
+        }}
+      >
+        <ListItemIcon
+          sx={{
+            minWidth: 0,
+            mr: open ? 3 : 'auto',
+            justifyContent: 'center',
+          }}
+        >
+          <SendAndArchiveIcon />
+        </ListItemIcon>
+        <ListItemText primary="Documents" sx={{ opacity: open ? 1 : 0 }} />
+      </ListItemButton>
+    </Link>
+  </ListItem>
+  </>
+
 ) : userRole === 'Chef' ?(
   <>
     <ListItem disablePadding sx={{ display: 'block' }}>
