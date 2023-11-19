@@ -25,7 +25,7 @@ import Autocomplete from '@mui/joy/Autocomplete';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-const backLink = process.env.REACT_APP_BACK_LINK;
+const backLink = "https://human-resource-management-backend.vercel.app";
 
 export default function FAQCard({prof}) {
   const navigate = useNavigate();

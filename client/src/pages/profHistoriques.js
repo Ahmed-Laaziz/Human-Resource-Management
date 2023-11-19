@@ -8,7 +8,7 @@ import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const backLink = process.env.REACT_APP_BACK_LINK;
+const backLink = "https://human-resource-management-backend.vercel.app";
 
 export default function Home() {
   const { prof, hist } = useProf();
