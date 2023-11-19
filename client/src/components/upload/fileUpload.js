@@ -94,11 +94,13 @@ useEffect(() => {
   return (
     <div className="App">
       <form className="formStyle" onSubmit={submitImage}>
+        <center>
       <img
             alt=""
             src={uploadImg}
+            width={"80%"}
           />
-        
+        </center>
       <FormControl fullWidth>
   <InputLabel id="select-professor-label">Selectionner un professeur</InputLabel>
   <Select
