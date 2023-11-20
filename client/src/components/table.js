@@ -28,6 +28,7 @@ const columns = [
     headerName: 'Cadre',
     sortable: true,
     width: 100,
+    valueGetter: () => 'Professeur assistant'
   },
   {
     field: 'num_loyer',
@@ -139,30 +140,30 @@ export default function DataGridDemo() {
       const response = await axios.get(
         backLink+`/prof/professeurs` // Replace with your actual API endpoint
       );
-      const professeurs = response.data;
-
-      const professorsCadre = {};
-      for (const professeur of professeurs) {
-        try {
-          const response = await axios.post(
-            backLink+`/hist/prof-hist`, {"prof": professeur._id} // Replace with your actual API endpoint
-          );
-          professorsCadre[professeur._id] = response.data[0].cadre; // Replace 'nom' with the actual professor name field
-        } catch (error) {
-          console.error('Error fetching professor name:', error);
-        }
-      }
+      // const professeurs = response.data;
+      setProfesseurs(response.data);
+      // const professorsCadre = {};
+      // for (const professeur of professeurs) {
+      //   try {
+      //     const response = await axios.post(
+      //       backLink+`/hist/prof-hist`, {"prof": professeur._id} // Replace with your actual API endpoint
+      //     );
+      //     professorsCadre[professeur._id] = response.data[0].cadre; // Replace 'nom' with the actual professor name field
+      //   } catch (error) {
+      //     console.error('Error fetching professor name:', error);
+      //   }
+      // }
     } catch (error) {
       console.error('Error fetching title:', error);
     }
   };
 
   // Attach professor names to demand objects
-  const demandsWithProfessorNames = professeurs.map((professeur) => ({
-    ...professeur,
-    cadre: 'professeur assistant', // Provide a default value if name not found
-  }));
-  setProfesseurs(demandsWithProfessorNames);
+  // const demandsWithProfessorNames = professeurs.map((professeur) => ({
+  //   ...professeur,
+  //   cadre: 'professeur assistant', // Provide a default value if name not found
+  // }));
+  
   
   console.log(professeurs)
 
