@@ -93,6 +93,7 @@ useEffect(() => {
   };
   return (
     <div className="App">
+        <center><h3>Envoi des documents</h3></center>
       <form className="formStyle" onSubmit={submitImage}>
       <FormControl fullWidth>
   <InputLabel id="select-professor-label">Selectionner un professeur</InputLabel>
