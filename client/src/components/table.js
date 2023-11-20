@@ -160,7 +160,7 @@ export default function DataGridDemo() {
   // Attach professor names to demand objects
   const demandsWithProfessorNames = professeurs.map((professeur) => ({
     ...professeur,
-    cadre: professorsCadre[professeur._id] || 'N/A', // Provide a default value if name not found
+    cadre: 'professeur assistant', // Provide a default value if name not found
   }));
   setProfesseurs(demandsWithProfessorNames);
   
