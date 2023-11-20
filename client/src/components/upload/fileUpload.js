@@ -38,7 +38,7 @@ function formatDateToDatetime(date) {
 useEffect(() => {
     async function fetchProfessors() {
       try {
-        const response = await axios.get('http://localhost:4000/prof/professeurs');
+        const response = await axios.get(backLink+'/prof/professeurs');
         setProfessors(response.data); // Assuming response.data is an array of professors with names and IDs
       } catch (error) {
         console.error('Error fetching professors:', error);
@@ -72,7 +72,7 @@ useEffect(() => {
     console.log(title, file);
 
     const result = await axios.post(
-      "http://localhost:4000/FilesManagement/upload-files",
+        backLink+"/FilesManagement/upload-files",
       formData,
       {
         headers: { "Content-Type": "multipart/form-data" },
@@ -88,7 +88,7 @@ useEffect(() => {
     }
   };
   const showPdf = (pdf) => {
-    const pdfUrl = `http://localhost:4000/files/${pdf}`;
+    const pdfUrl = backLink+`/files/${pdf}`;
   window.open(pdfUrl, '_blank');
   };
   return (
