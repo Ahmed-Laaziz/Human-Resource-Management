@@ -163,6 +163,8 @@ export default function DataGridDemo() {
     cadre: professorsCadre[professeur._id] || 'N/A', // Provide a default value if name not found
   }));
   setProfesseurs(demandsWithProfessorNames);
+  
+  console.log(professeurs)
 
   useEffect(() => {
     // Fetch the title from the backend API
