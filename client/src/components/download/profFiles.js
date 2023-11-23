@@ -34,7 +34,7 @@ export default function ColumnPinningDynamicRowHeight({prof}) {
                   size="small" 
                   startIcon={<RemoveRedEyeIcon />}
                   component={Link}
-                  to={`http://localhost:4000/files/${params.row.pdf}`} // Assuming 'pdf' is the column name for PDF name
+                  to={`https://human-resource-management-backend.vercel.app/files/${params.row.pdf}`} // Assuming 'pdf' is the column name for PDF name
                   target="_blank"
                 >
                   Voir

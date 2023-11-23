@@ -58,7 +58,7 @@ useEffect(() => {
 //   }, []);
 //   const getPdf = async () => {
 //     console.log("in get pdf")
-//     const result = await axios.get("http://localhost:4000/FilesManagement/get-files");
+//     const result = await axios.get("https://human-resource-management-backend.vercel.app/FilesManagement/get-files");
 //     console.log(result.data.data);
 //     setAllImage(result.data.data);
 //   };
