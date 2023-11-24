@@ -598,7 +598,7 @@ export default function MiniDrawer({role, pageTitle, notifs, id}) {
         >
           <CollectionsBookmarkIcon />
         </ListItemIcon>
-        <ListItemText primary="All Demandes" sx={{ opacity: open ? 1 : 0 }} />
+        <ListItemText primary="Tous les demandes" sx={{ opacity: open ? 1 : 0 }} />
       </ListItemButton>
     </Link>
   </ListItem>
