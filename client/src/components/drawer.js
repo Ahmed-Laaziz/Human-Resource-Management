@@ -517,7 +517,7 @@ export default function MiniDrawer({role, pageTitle, notifs, id}) {
           >
             <GroupIcon/>
           </ListItemIcon>
-          <ListItemText primary="add professor" sx={{ opacity: open ? 1 : 0 }} />
+          <ListItemText primary="Ajouter professeur" sx={{ opacity: open ? 1 : 0 }} />
         </ListItemButton>
       </Link>
     </ListItem>

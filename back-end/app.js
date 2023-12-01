@@ -26,16 +26,16 @@ app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
 
 // Enable CORS middleware production
-app.use(cors(
-  {
-    origin: ["https://human-resource-management-frontend.vercel.app"],
-    methods: ["POST", "GET", "PUT"],
-    credentials: true
-}
-));
+// app.use(cors(
+//   {
+//     origin: ["https://human-resource-management-frontend.vercel.app"],
+//     methods: ["POST", "GET", "PUT"],
+//     credentials: true
+// }
+// ));
 
 // Enable CORS middleware developement
-// app.use(cors())
+app.use(cors())
 app.use("/files", express.static("files"));
 app.use(logger('dev'));
 app.use(express.json());

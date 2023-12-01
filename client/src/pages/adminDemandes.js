@@ -73,13 +73,13 @@ export default function AdminDemandes(){
   sx={{
     flexGrow: 1,
     p: 3,
-    marginTop: "8%",
+    marginTop: "5%",
     marginLeft: "5%",
     marginRight: "5%",
     // boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Add the boxShadow property
   }}
 >
-<Breadcrumb />
+
 <>&nbsp;</>
 
   <DemandesTable sx={{marginTop:'10%'}}/>

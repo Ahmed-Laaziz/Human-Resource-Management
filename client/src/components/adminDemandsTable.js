@@ -32,7 +32,8 @@ const fabStyle = {
     right: 24,
   };
 
-const backLink = process.env.REACT_APP_BACK_LINK;
+// const backLink = process.env.REACT_APP_BACK_LINK;
+const backLink = "https://grh-ensaj-backend.adaptable.app"
 export default function ColumnPinningDynamicRowHeight() {
   const navigate = useNavigate();
     const [openModal, setOpenModal] = useState(false);
@@ -232,7 +233,7 @@ export default function ColumnPinningDynamicRowHeight() {
               variant="outlined"
               size="small"
               startIcon={<RemoveRedEyeIcon />}
-              disabled={params.row.__t == 'Quitter Territoire' && params.row.statut == 'En attente'}
+              disabled={(params.row.__t == 'Quitter Territoire' || params.row.__t == 'Conge') && params.row.statut == 'En attente'}
             //   onClick={() => handlePrintClick(params.row)}
             onClick={() => handlePreviewClick(params.row)}
             >
@@ -314,7 +315,7 @@ export default function ColumnPinningDynamicRowHeight() {
       <Fab sx={fabStyle} color="primary" aria-label="add" onClick={handleFabClick} title="Click to view history">
       <HistoryIcon />
     </Fab>
-      <div style={{ height: 500 }}>
+      <div style={{ height: 600 }}>
         <DataGrid
           rows={demandes}
           columns={columns}

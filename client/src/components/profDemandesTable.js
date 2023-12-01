@@ -149,7 +149,7 @@ export default function ColumnPinningDynamicRowHeight({prof}) {
       {/* <Button sx={{ mb: 1 }} onClick={handleToggleClick}>
         Toggle edit & delete
       </Button> */}
-      <div style={{ height: 500 }}>
+      <div style={{ height: 600 }}>
         <DataGrid
           rows={demandes}
           columns={columns}

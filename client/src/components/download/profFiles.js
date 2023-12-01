@@ -70,6 +70,10 @@ export default function ColumnPinningDynamicRowHeight({prof}) {
       {/* <Button sx={{ mb: 1 }} onClick={handleToggleClick}>
         Toggle edit & delete
       </Button> */}
+      <h5>
+  Tous les documents envoyés au professeur : {prof && prof.prenom && prof.prenom.split('|')[0]} {prof && prof.nom && prof.nom.split('|')[0]}
+</h5>
+
       <div style={{ height: 500 }}>
         <DataGrid
           rows={demandes}

@@ -9,4 +9,5 @@ router.get('/profDemandes/:professeurId', demandeController.getDemandesForProfes
 router.get('/allDemandes', demandeController.getDemands);
 router.put('/updateStatut/:demandId', demandeController.updateStatut);
 router.get('/enAttenteDemands', demandeController.getEnAttenteAndEnCoursDemands);
+router.get('/chefDemands', demandeController.getChefDemands)
 module.exports = router;

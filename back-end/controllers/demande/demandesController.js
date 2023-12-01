@@ -79,3 +79,19 @@ exports.getDemandesForProfesseur = async (req, res) => {
       res.status(500).json({ error: 'Server error' });
     }
   };
+
+  exports.getChefDemands = async (req, res) => {
+    try {
+      // Use Mongoose to find demands with 'statut' equal to either "En attente" or "En cours"
+      // and '__t' equal to either "DemandConge" or "DemandQuitterTerritoire"
+      const enAttenteAndEnCoursDemands = await Demande.find({
+        statut: { $in: ['En attente'] },
+        __t: { $in: ['DemandeConge', 'DemandeQuitterTerritoire'] }
+      });
+      res.json(enAttenteAndEnCoursDemands);
+    } catch (error) {
+      console.error('Error fetching "En attente" and "En cours" demands:', error);
+      res.status(500).json({ error: 'Server error' });
+    }
+  };
+  

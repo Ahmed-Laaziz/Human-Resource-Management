@@ -70,9 +70,23 @@ useEffect(() => {
   return (
     <Box sx={{ display: "flex" }}>
       {/* <Drawer role={prof._t} /> */}
-      {agent?(
+      {/* {agent?(
         <Drawer role={agent.__t} pageTitle={"Historique"}/>
-      ):null}
+      ):null} */}
+
+
+{
+  agent ? (
+    agent.__t === "Admin" && agent.fonction === "Chef de Département" ? (
+      <Drawer role='Chef' pageTitle={"Historique"} />
+    ) : agent.__t === "Admin" ? (
+      <Drawer role='Admin' pageTitle={"Historique"} />
+    ) : agent.__t === "Professeur" ? (
+      <Drawer role='Professeur' pageTitle={"Historique"} />
+    ) : null
+  ) : null
+}
+
           
       
       <Box
@@ -86,7 +100,6 @@ useEffect(() => {
           // boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Add the boxShadow property
         }}
       >
-        <Breadcrumb/>
         <>&nbsp;</>
         <DataHist sx={{ marginTop: "10%" }} />
       </Box>

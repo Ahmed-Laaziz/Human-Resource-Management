@@ -90,13 +90,12 @@ const navigate = useNavigate();
   sx={{
     flexGrow: 1,
     p: 3,
-    marginTop: "5%",
+    marginTop: "6%",
     marginLeft: "5%",
     marginRight: "5%",
     // boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Add the boxShadow property
   }}
 >
- <Breadcrumb />
  <>&nbsp;</>
    <DemandeOptions prof={agent}/>
             </Box>

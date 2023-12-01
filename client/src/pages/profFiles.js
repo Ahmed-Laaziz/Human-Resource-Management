@@ -7,10 +7,15 @@ import jwt_decode from 'jwt-decode';
 import axios from'axios';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useProf } from '../context/ProfContext';
+
 
 const backLink = "https://grh-ensaj-backend.adaptable.app";
 
 export default function ProfDemandes(){
+
+  const { prof, hist } = useProf();
+  console.log("hist variable contains : " + prof._id)
 
   const [token, setToken] = useState('');
     console.log(token);
@@ -67,24 +72,45 @@ useEffect(() => {
 
     return(
         <Box sx={{ display: 'flex' }}>
-        <Drawer role='Professeur' pageTitle={"Documents"}/>
+        {/* {agent?(
+        <Drawer role={agent.__t} pageTitle={"Documents"}/>
+      ):null} */}
+
+
+{
+  agent ? (
+    agent.__t === "Admin" && agent.fonction === "Chef de Département" ? (
+      <Drawer role='Chef' pageTitle={"Documents"} />
+    ) : agent.__t === "Admin" ? (
+      <Drawer role='Admin' pageTitle={"Documents"} />
+    ) : agent.__t === "Professeur" ? (
+      <Drawer role='Professeur' pageTitle={"Documents"} />
+    ) : null
+  ) : null
+}
         
         <Box
   component="main"
   sx={{
     flexGrow: 1,
     p: 3,
-    marginTop: "8%",
+    marginTop: "1%",
     marginLeft: "5%",
     marginRight: "5%",
     // boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Add the boxShadow property
   }}
 >
-<Breadcrumb />
+{/* <Breadcrumb /> */}
 <>&nbsp;</>
-{agent?(
+{/* {agent?(
   <FilesTable sx={{marginTop:'10%'}} prof={agent}/>
-):null}
+):null} */}
+
+{agent ? (
+            (agent.__t=="Admin")?(
+              <FilesTable sx={{marginTop:'10%'}} prof={prof}/>
+            ):<FilesTable sx={{marginTop:'10%'}} prof={agent}/>
+          ):null}
   
 </Box>
 
