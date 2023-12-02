@@ -365,7 +365,7 @@ export default function MiniDrawer({role, pageTitle, notifs, id}) {
           >
             <GroupIcon/>
           </ListItemIcon>
-          <ListItemText primary="Ajouter professeur" sx={{ opacity: open ? 1 : 0 }} />
+          <ListItemText primary="Professeurs" sx={{ opacity: open ? 1 : 0 }} />
         </ListItemButton>
       </Link>
     </ListItem>
@@ -389,7 +389,7 @@ export default function MiniDrawer({role, pageTitle, notifs, id}) {
           >
             <PersonAddIcon/>
           </ListItemIcon>
-          <ListItemText primary="Professeurs" sx={{ opacity: open ? 1 : 0 }} />
+          <ListItemText primary="Ajouter professeur" sx={{ opacity: open ? 1 : 0 }} />
         </ListItemButton>
       </Link>
     </ListItem>
@@ -517,7 +517,7 @@ export default function MiniDrawer({role, pageTitle, notifs, id}) {
           >
             <GroupIcon/>
           </ListItemIcon>
-          <ListItemText primary="Ajouter professeur" sx={{ opacity: open ? 1 : 0 }} />
+          <ListItemText primary="Professeurs" sx={{ opacity: open ? 1 : 0 }} />
         </ListItemButton>
       </Link>
     </ListItem>
