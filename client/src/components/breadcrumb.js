@@ -5,7 +5,7 @@ import Chip from '@mui/material/Chip';
 import HomeIcon from '@mui/icons-material/Home';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-const StyledBreadcrumb = styled(Chip)(({ theme }) => {
+const StyledBreadcrumb = styled(Chip)(({ theme}) => {
   const backgroundColor =
     theme.palette.mode === 'light'
       ? theme.palette.grey[100]
@@ -30,22 +30,17 @@ function handleClick(event) {
   console.info('You clicked a breadcrumb.');
 }
 
-export default function CustomizedBreadcrumbs() {
+export default function CustomizedBreadcrumbs({pageLabel}) {
   return (
     <div role="presentation" onClick={handleClick}>
       <Breadcrumbs aria-label="breadcrumb">
         <StyledBreadcrumb
           component="a"
           href="#"
-          label="Home"
+          label="Accueil"
           icon={<HomeIcon fontSize="small" />}
         />
-        <StyledBreadcrumb component="a" href="#" label="Catalog" />
-        <StyledBreadcrumb
-          label="Accessories"
-          deleteIcon={<ExpandMoreIcon />}
-          onDelete={handleClick}
-        />
+        <StyledBreadcrumb component="a" href="#" label={pageLabel} />
       </Breadcrumbs>
     </div>
   );

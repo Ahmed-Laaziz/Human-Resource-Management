@@ -76,8 +76,14 @@ export default function ColumnPinningDynamicRowHeight({prof}) {
           </Stack>
         ),
       },
-      { field: 'createdAt', headerName: 'Date Demande', width: 210, type: 'Date',editable: false },
-      { field: 'updatedAt', headerName: 'Derniere modification',width: 210, type: 'Date', editable: true },
+      { field: 'createdAt', headerName: 'Date Demande', width: 210, type: 'Date',valueFormatter: (params) => {
+        const date = new Date(params.value);
+        return date.toLocaleDateString('en-US');
+      },editable: false },
+      { field: 'updatedAt', headerName: 'Derniere modification',width: 210, type: 'Date', valueFormatter: (params) => {
+        const date = new Date(params.value);
+        return date.toLocaleDateString('en-US');
+      },editable: true },
       
       
       {

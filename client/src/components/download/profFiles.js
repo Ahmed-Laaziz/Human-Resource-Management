@@ -10,7 +10,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-const backLink = "https://grh-ensaj-backend.adaptable.app";
+const backLink = "https://grh-ensaj-backend.adaptable.app"
 
 export default function ColumnPinningDynamicRowHeight({prof}) {
 
@@ -19,7 +19,10 @@ export default function ColumnPinningDynamicRowHeight({prof}) {
   const columns = React.useMemo(
     () => [
       { field: 'fileType', headerName: 'Type de Fichier', width: 250, editable: false },
-      { field: 'createdAt', headerName: "Date d'envoi", width: 250, type: 'Date',editable: false },
+      { field: 'createdAt', headerName: "Date d'envoi", width: 250, type: 'Date',valueFormatter: (params) => {
+        const date = new Date(params.value);
+        return date.toLocaleDateString('en-US');
+      },editable: false },
       { field: 'title', headerName: 'Titre',width: 250, type: 'String'},
       {
         field: 'actions',
@@ -71,7 +74,7 @@ export default function ColumnPinningDynamicRowHeight({prof}) {
         Toggle edit & delete
       </Button> */}
       <h5>
-  Tous les documents envoyés au professeur : {prof && prof.prenom && prof.prenom.split('|')[0]} {prof && prof.nom && prof.nom.split('|')[0]}
+ <center> Tous les documents envoyés au professeur : {prof && prof.prenom && prof.prenom.split('|')[0]} {prof && prof.nom && prof.nom.split('|')[0]}</center>
 </h5>
 
       <div style={{ height: 500 }}>

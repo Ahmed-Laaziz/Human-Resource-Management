@@ -35,6 +35,10 @@ const columns = [
     headerName: 'Date',
     type: 'Date',
     width: 300,
+    valueFormatter: (params) => {
+      const date = new Date(params.value);
+      return date.toLocaleDateString('en-US');
+    },
     editable: false,
   },
 ];

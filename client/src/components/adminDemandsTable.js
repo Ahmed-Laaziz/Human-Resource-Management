@@ -31,8 +31,8 @@ const fabStyle = {
     high: 10,
     right: 24,
   };
-
-// const backLink = process.env.REACT_APP_BACK_LINK;
+  
+// const backLink = "https://grh-ensaj-backend.adaptable.app"
 const backLink = "https://grh-ensaj-backend.adaptable.app"
 export default function ColumnPinningDynamicRowHeight() {
   const navigate = useNavigate();
@@ -218,7 +218,10 @@ export default function ColumnPinningDynamicRowHeight() {
           </Stack>
         ),
       },
-      { field: 'createdAt', headerName: 'Date Demande', width: 210, type: 'Date',editable: false },
+      { field: 'createdAt', headerName: 'Date Demande', width: 190,align: 'center', type: 'Date',valueFormatter: (params) => {
+        const date = new Date(params.value);
+        return date.toLocaleDateString('en-US');
+      },editable: false },
       // { field: 'updatedAt', headerName: 'Derniere modification',width: 210, type: 'Date', editable: true },
       
       

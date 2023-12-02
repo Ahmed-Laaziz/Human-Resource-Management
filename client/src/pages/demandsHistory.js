@@ -65,24 +65,35 @@ useEffect(() => {
 
     return(
         <Box sx={{ display: 'flex' }}>
-        <Drawer role='Admin' pageTitle={"Demandes"}/>
+        {
+  agent ? (
+    agent.__t === "Admin" && agent.fonction === "Chef de Département" ? (
+      <Drawer role='Chef' pageTitle={"Demandes"} />
+    ) : agent.__t === "Admin" ? (
+      <Drawer role='Admin' pageTitle={"Demandes"} />
+    ) : agent.__t === "Professeur" ? (
+      <></>
+    ) : null
+  ) : null
+}
         
         <Box
   component="main"
   sx={{
     flexGrow: 1,
     p: 3,
-    marginTop: "8%",
-    marginLeft: "5%",
-    marginRight: "5%",
+    marginTop: "5%",
+    marginLeft: "0%",
+    marginRight: "0%",
     // boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Add the boxShadow property
   }}
 >
-<Breadcrumb />
+<Breadcrumb pageLabel="Historique des demandes"/>
 <>&nbsp;</>
 {agent?(
   <DemandesTable sx={{marginTop:'10%'}} prof={agent}/>
 ):null}
+
   
 </Box>
 

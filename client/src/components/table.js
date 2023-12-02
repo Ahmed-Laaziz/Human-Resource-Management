@@ -48,14 +48,22 @@ const columns = [
     field: 'date_visa',
     headerName: 'Date du visa',
     type: 'Date',
-    width: 160,
+    width: 140,
+    valueFormatter: (params) => {
+      const date = new Date(params.value);
+      return date.toLocaleDateString('en-US');
+    },
     editable: false,
   },
   {
     field: 'date_effective',
     headerName: 'Date effective',
     type: 'Date',
-    width: 160,
+    valueFormatter: (params) => {
+      const date = new Date(params.value);
+      return date.toLocaleDateString('en-US');
+    },
+    width: 140,
     editable: false,
   },
   {
