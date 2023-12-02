@@ -486,7 +486,7 @@ const updateAdmin = async () => {
           <Box sx={{ display: 'flex', gap: 1.5, '& > button': { flex: 1 } }}>
             <Button variant="solid" color="primary"
             onClick={handleValidate}>
-              Edit
+              Modifier
             </Button>
           </Box>
           ) : localStorage.getItem('type') === 'Professeur' ? (
