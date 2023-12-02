@@ -15,10 +15,6 @@ import axios from 'axios';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { useNavigate } from 'react-router-dom';
 import DoneIcon from '@mui/icons-material/Done';
-// import Dialog from '@mui/material/Dialog';
-// import DialogTitle from '@mui/material/DialogTitle';
-// import DialogContent from '@mui/material/DialogContent';
-
 import Modal from '@mui/joy/Modal';
 import ModalDialog from '@mui/joy/ModalDialog';
 import DialogTitle from '@mui/joy/DialogTitle';
