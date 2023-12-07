@@ -9,6 +9,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import Button from '@mui/joy/Button';
 import { useNavigate } from 'react-router-dom';
 import { useProf } from '../context/ProfContext';
 const backLink = process.env.REACT_APP_BACK_LINK
@@ -71,6 +72,43 @@ const columns = [
   },
 ];
 
+function CustomMenu({ onHistoriqueClick, onProfileClick }) {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <div>
+      <Button
+        variant="soft"
+        aria-label="profile"
+        aria-controls="profile-menu"
+        aria-haspopup="true"
+        onClick={onProfileClick}
+        style={{ marginRight: '0.5vw' }}
+      >
+        Profile
+      </Button>
+      <Button
+        variant="soft"
+        aria-label="historique"
+        aria-controls="historique-menu"
+        aria-haspopup="true"
+        onClick={onHistoriqueClick}
+      >
+        Historique
+      </Button>
+    </div>
+  );
+}
+
+
 
 function MoreActionsCell({ rowParams }) {
   const navigate = useNavigate();
@@ -111,25 +149,10 @@ function MoreActionsCell({ rowParams }) {
   };
 
   return (
-    <div>
-      <IconButton
-        aria-label="more"
-        aria-controls="more-menu"
-        aria-haspopup="true"
-        onClick={handleMenuOpen}
-      >
-        <MoreVertIcon />
-      </IconButton>
-      <Menu
-        id="more-menu"
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleMenuClose}
-      >
-        <MenuItem onClick={handleHistoriqueClick}>Historique</MenuItem>
-        <MenuItem onClick={handleProfileClick}>Profile</MenuItem>
-      </Menu>
-    </div>
+    <CustomMenu
+  onHistoriqueClick={handleHistoriqueClick}
+  onProfileClick={handleProfileClick}
+/>
   );
 }
 
