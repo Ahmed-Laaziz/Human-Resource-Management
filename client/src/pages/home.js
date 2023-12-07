@@ -9,7 +9,7 @@ import axios from'axios';
 // import { useToken } from '../auth/TokenContext';
 import ErrorPage from './404';
 
-const backLink = "https://grh-ensaj-backend.adaptable.app";
+const backLink = process.env.REACT_APP_BACK_LINK
 
 export default function Home(){
     const [token, setToken] = useState('');

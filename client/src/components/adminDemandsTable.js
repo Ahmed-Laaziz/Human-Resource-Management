@@ -29,7 +29,7 @@ const fabStyle = {
   };
   
 // const backLink = "https://grh-ensaj-backend.adaptable.app"
-const backLink = "https://grh-ensaj-backend.adaptable.app"
+const backLink = process.env.REACT_APP_BACK_LINK
 export default function ColumnPinningDynamicRowHeight() {
   const navigate = useNavigate();
     const [openModal, setOpenModal] = useState(false);

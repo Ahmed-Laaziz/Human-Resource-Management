@@ -7,48 +7,44 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { useNavigate } from 'react-router-dom';
 import { useProf } from '../context/ProfContext';
-const backLink = "https://grh-ensaj-backend.adaptable.app";
+const backLink = process.env.REACT_APP_BACK_LINK
 const columns = [
   {
     field: 'prenom',
     headerName: 'Prénom',
-    width: 150,
     editable: true,
   },
   {
     field: 'nom',
     headerName: 'Nom',
-    width: 150,
     editable: false,
   },
   {
     field: 'cadre',
     headerName: 'Cadre',
     sortable: true,
-    width: 100,
     valueGetter: () => 'Professeur assistant'
   },
   {
     field: 'num_loyer',
     headerName: 'Numéro de loyer',
     type: 'number',
-    width: 160,
     editable: false,
   },
   {
     field: 'num_ref',
     headerName: 'Numéro de preuve',
     type: 'number',
-    width: 160,
     editable: false,
   },
   {
     field: 'date_visa',
     headerName: 'Date du visa',
     type: 'Date',
-    width: 140,
     valueFormatter: (params) => {
       const date = new Date(params.value);
       return date.toLocaleDateString('en-US');
@@ -63,14 +59,12 @@ const columns = [
       const date = new Date(params.value);
       return date.toLocaleDateString('en-US');
     },
-    width: 140,
     editable: false,
   },
   {
     field: 'moreActions',
     headerName: 'Autres Actions',
     sortable: false,
-    width: 120,
     renderCell: (params) => {
       return <MoreActionsCell rowParams={params} />;
     },
@@ -181,11 +175,21 @@ export default function DataGridDemo() {
     fetchProfessor(); // Call the fetchTitle function when the component mounts
   }, []);
 
+  const theme = useTheme();
+
+
+  // Adjust column widths based on screen size
+  const responsiveColumns = columns.map((column) => ({
+    ...column,
+    width: 'auto', // Set width to 'auto'
+    flex: 1, // Set flex property for each column
+  }));
+
   return (
-    <Box sx={{ height: 400, width: '100%' }}>
+    <Box sx={{ height: 400, width: '99%' }}>
       <DataGrid
         rows={professeurs} // Use the fetched data for rows
-        columns={columns}
+        columns={responsiveColumns}
         getRowId={(row) => row._id}
         initialState={{
           pagination: {

@@ -10,7 +10,7 @@ import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 export default function Home() {
-  const backLink = "https://grh-ensaj-backend.adaptable.app";
+  const backLink = process.env.REACT_APP_BACK_LINK
   const { prof } = useProf();
 
   const [token, setToken] = useState('');

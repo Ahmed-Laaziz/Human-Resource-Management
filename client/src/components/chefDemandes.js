@@ -31,7 +31,7 @@ const fabStyle = {
     high: 10,
     right: 24,
   };
-const backLink = "https://grh-ensaj-backend.adaptable.app";
+const backLink = process.env.REACT_APP_BACK_LINK
 export default function ColumnPinningDynamicRowHeight() {
   const navigate = useNavigate();
     const [openModal, setOpenModal] = useState(false);

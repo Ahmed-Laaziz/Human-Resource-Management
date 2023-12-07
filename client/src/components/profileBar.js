@@ -28,7 +28,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useProf } from '../context/ProfContext';
 
-const backLink = "https://grh-ensaj-backend.adaptable.app";
+const backLink = process.env.REACT_APP_BACK_LINK;
 
 export default function UserCard({ agent }) {
   const isAdmin = agent && agent.__t === 'Admin';

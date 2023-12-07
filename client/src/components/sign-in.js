@@ -20,7 +20,7 @@ import { useToken } from '../auth/TokenContext';
 import { useProf } from '../context/ProfContext';
 
 
-const backLink = "https://grh-ensaj-backend.adaptable.app";
+const backLink = process.env.REACT_APP_BACK_LINK;
 
 function Copyright(props) {
   return (

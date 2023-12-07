@@ -8,7 +8,7 @@ import { DataGrid} from '@mui/x-data-grid';
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-const backLink = "https://grh-ensaj-backend.adaptable.app";
+const backLink = process.env.REACT_APP_BACK_LINK;
 
 export default function ColumnPinningDynamicRowHeight({prof}) {
 

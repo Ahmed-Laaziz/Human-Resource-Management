@@ -8,25 +8,22 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useProf } from '../context/ProfContext';
-const backLink = "https://grh-ensaj-backend.adaptable.app";
+const backLink = process.env.REACT_APP_BACK_LINK;
 
 const columns = [
   {
     field: 'cadre',
     headerName: 'Cadre',
-    width: 250,
     editable: false,
   },
   {
     field: 'grade',
     headerName: 'Grade',
-    width: 250,
     editable: true,
   },
   {
     field: 'classe',
     headerName: 'Classe',
-    width: 250,
     editable: false,
   },
   
@@ -34,7 +31,6 @@ const columns = [
     field: 'date',
     headerName: 'Date',
     type: 'Date',
-    width: 300,
     valueFormatter: (params) => {
       const date = new Date(params.value);
       return date.toLocaleDateString('en-US');
@@ -92,11 +88,17 @@ export function DataHist() {
     fetchHist(); // Call the fetchTitle function when the component mounts
   }, []);
 
+  const responsiveColumns = columns.map((column) => ({
+    ...column,
+    width: 'auto', // Set width to 'auto'
+    flex: 1, // Set flex property for each column
+  }));
+
   return (
-    <Box sx={{ height: 400, width: '100%' }}>
+    <Box sx={{ height: 400, width: '99%' }}>
       <DataGrid
         rows={hist} // Use the fetched data for rows
-        columns={columns}
+        columns={responsiveColumns}
         getRowId={(row) => row._id}
         initialState={{
           pagination: {

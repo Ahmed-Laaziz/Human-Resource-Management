@@ -9,7 +9,7 @@ import ErrorPage from './404';
 import axios from'axios';
 import jwt_decode from 'jwt-decode';
 
-const backLink = "https://grh-ensaj-backend.adaptable.app";
+const backLink = process.env.REACT_APP_BACK_LINK
 
 export default function Options(){
   const [token, setToken] = useState('');

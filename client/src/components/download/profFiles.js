@@ -10,11 +10,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-<<<<<<< HEAD
 const backLink = process.env.REACT_APP_BACK_LINK;
-=======
-const backLink = "https://grh-ensaj-backend.adaptable.app"
->>>>>>> 208bbe0baedfa4ffa5cbff827ea997689817d2ad
 
 export default function ColumnPinningDynamicRowHeight({prof}) {
 
