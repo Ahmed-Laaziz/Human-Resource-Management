@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useProf } from '../context/ProfContext';
-const backLink = "https://human-resource-management-backend.vercel.app";
+const backLink = "https://grh-ensaj-backend.adaptable.app";
 
 const columns = [
   {
@@ -35,6 +35,10 @@ const columns = [
     headerName: 'Date',
     type: 'Date',
     width: 300,
+    valueFormatter: (params) => {
+      const date = new Date(params.value);
+      return date.toLocaleDateString('en-US');
+    },
     editable: false,
   },
 ];

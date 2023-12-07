@@ -8,7 +8,7 @@ import { DataGrid} from '@mui/x-data-grid';
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-const backLink = "https://human-resource-management-backend.vercel.app";
+const backLink = "https://grh-ensaj-backend.adaptable.app";
 
 export default function ColumnPinningDynamicRowHeight({prof}) {
 
@@ -76,8 +76,14 @@ export default function ColumnPinningDynamicRowHeight({prof}) {
           </Stack>
         ),
       },
-      { field: 'createdAt', headerName: 'Date Demande', width: 210, type: 'Date',editable: false },
-      { field: 'updatedAt', headerName: 'Derniere modification',width: 210, type: 'Date', editable: true },
+      { field: 'createdAt', headerName: 'Date Demande', width: 210, type: 'Date',valueFormatter: (params) => {
+        const date = new Date(params.value);
+        return date.toLocaleDateString('en-US');
+      },editable: false },
+      { field: 'updatedAt', headerName: 'Derniere modification',width: 210, type: 'Date', valueFormatter: (params) => {
+        const date = new Date(params.value);
+        return date.toLocaleDateString('en-US');
+      },editable: true },
       
       
       {
@@ -149,7 +155,7 @@ export default function ColumnPinningDynamicRowHeight({prof}) {
       {/* <Button sx={{ mb: 1 }} onClick={handleToggleClick}>
         Toggle edit & delete
       </Button> */}
-      <div style={{ height: 500 }}>
+      <div style={{ height: 600 }}>
         <DataGrid
           rows={demandes}
           columns={columns}

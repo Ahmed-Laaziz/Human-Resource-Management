@@ -31,7 +31,7 @@ const fabStyle = {
     high: 10,
     right: 24,
   };
-const backLink = "https://human-resource-management-backend.vercel.app";
+const backLink = "https://grh-ensaj-backend.adaptable.app";
 export default function ColumnPinningDynamicRowHeight() {
   const navigate = useNavigate();
     const [openModal, setOpenModal] = useState(false);
@@ -202,7 +202,10 @@ export default function ColumnPinningDynamicRowHeight() {
           </Stack>
         ),
       },
-      { field: 'createdAt', headerName: 'Date Demande', width: 210, type: 'Date',editable: false },
+      { field: 'createdAt', headerName: 'Date Demande', width: 210, type: 'Date',valueFormatter: (params) => {
+        const date = new Date(params.value);
+        return date.toLocaleDateString('en-US');
+      },editable: false },
       // { field: 'updatedAt', headerName: 'Derniere modification',width: 210, type: 'Date', editable: true },
       
       
@@ -240,7 +243,8 @@ export default function ColumnPinningDynamicRowHeight() {
   
   const fetchDemandes = async () => {
     try {
-      const response = await axios.get(backLink+`/demande/enAttenteDemands`);
+      // const response = await axios.get(backLink+`/demande/enAttenteDemands`);
+      const response = await axios.get(backLink+`/demandes/chefDemands`);
       const demandData = response.data;
       const professorNames = {};
       for (const demand of demandData) {
@@ -387,7 +391,95 @@ export default function ColumnPinningDynamicRowHeight() {
               </Stack>
             </form>
           </ModalDialog>
-        ):<></>}
+        ):(selectedDemand.__t === 'Conge')?(
+          <ModalDialog>
+          <DialogTitle>  إجازة إدارية
+</DialogTitle>
+          <DialogContent>Décision de congé administratif</DialogContent>
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              setOpenModal(false);
+            }}
+          >
+            <Stack spacing={2}>
+            <FormControl>
+            <Grid container spacing={2} style={{marginTop:"2%"}}>
+            <Grid item xs={6} >
+                <FormLabel>Demandeur :</FormLabel>
+                <Input autoFocus required defaultValue={agent.prenom.split('|')[0] + " " + agent.nom.split('|')[0]} disabled/>
+              </Grid>
+              <Grid item xs={6} >
+                <FormLabel>مقدم الطلب :</FormLabel>
+                <Input autoFocus required defaultValue={agent.prenom.split('|')[1] + " " + agent.nom.split('|')[1]} disabled/>
+              </Grid>
+              </Grid>
+              <Grid container spacing={2} style={{marginTop:"2%"}}>
+              <Grid item xs={6} >
+                <FormLabel>De : من</FormLabel>
+                <Input autoFocus required defaultValue={selectedDemand.de_date} disabled/>
+              </Grid>
+              <Grid item xs={6} >
+                <FormLabel>À : الى</FormLabel>
+                <Input autoFocus required defaultValue={selectedDemand.a_date} disabled/>
+              </Grid>
+              </Grid>
+              </FormControl>
+              <FormControl>
+                <FormLabel>Description : وصف</FormLabel>
+                <Textarea 
+                required 
+                minRows={3}
+                defaultValue={selectedDemand.description}
+                disabled
+                />
+              </FormControl>
+              <Stack direction="row" spacing={28}>
+              <center>
+  <Stack direction="row" spacing={28}>
+    
+    
+    <Grid item xs={6}>
+      <Button
+        type="submit"
+        onClick={handleRejeterClick}
+        sx={{
+          backgroundColor: "#A93226",
+          color: "white",
+          '&:hover': {
+            backgroundColor: '#80271E',
+          },
+          // Add margin to create space between the buttons
+          margin: '0 10px',
+        }}
+      >
+        Refuser
+      </Button>
+    </Grid>
+    <Grid item xs={6}>
+      <Button
+        type="submit"
+        onClick={handleApprouverClick}
+        sx={{
+          backgroundColor: "#2980B6",
+          color: "white",
+          '&:hover': {
+            backgroundColor: '#1D597E',
+          },
+          // Add margin to create space between the buttons
+          margin: '0 10px',
+        }}
+      >
+        Approuver
+      </Button>
+    </Grid>
+  </Stack>
+</center>
+              </Stack>
+            </Stack>
+          </form>
+        </ModalDialog>
+      ):<></>}
         
       </Modal>
 ):<></>}

@@ -7,7 +7,7 @@ import jwt_decode from 'jwt-decode';
 import axios from'axios';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-const backLink = "https://human-resource-management-backend.vercel.app";
+const backLink = "https://grh-ensaj-backend.adaptable.app";
 export default function Home(){
 
     const [token, setToken] = useState('');
@@ -77,14 +77,15 @@ useEffect(() => {
   sx={{
     flexGrow: 1,
     p: 3,
-    marginTop: "8%",
-    marginLeft: "5%",
-    marginRight: "5%",
+    marginTop: "5%",
+    marginLeft: "0%",
+    marginRight: "0%",
     // boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Add the boxShadow property
   }}
 >
-<Breadcrumb />
+<Breadcrumb pageLabel="Tous les professeurs"/>
 <>&nbsp;</>
+
   <CustomeTable sx={{marginTop:'10%'}}/>
 </Box>
 

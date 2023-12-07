@@ -29,7 +29,7 @@ export default function AdminDemandes(){
 // useEffect(() => {
 //   const fetchAgentData = async () => {
 //     try {
-//       const response = await axios.get(`http://localhost:4000/agent/agents/${agentId}`);
+//       const response = await axios.get(`https://grh-ensaj-backend.adaptable.app/agent/agents/${agentId}`);
 //       setAgent(response.data);
 //     } catch (error) {
 //       console.error('Error fetching agent data:', error);
@@ -71,13 +71,13 @@ export default function AdminDemandes(){
   sx={{
     flexGrow: 1,
     p: 3,
-    marginTop: "8%",
-    marginLeft: "5%",
-    marginRight: "5%",
+    marginTop: "5%",
+    marginLeft: "0%",
+    marginRight: "0%",
     // boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Add the boxShadow property
   }}
 >
-<Breadcrumb />
+<Breadcrumb pageLabel="Demandes des professeurs"/>
 <>&nbsp;</>
 
   <DemandesTable sx={{marginTop:'10%'}}/>

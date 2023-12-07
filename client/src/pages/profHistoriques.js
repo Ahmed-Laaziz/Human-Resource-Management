@@ -8,7 +8,7 @@ import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const backLink = "https://human-resource-management-backend.vercel.app";
+const backLink = "https://grh-ensaj-backend.adaptable.app";
 
 export default function Home() {
   const { prof, hist } = useProf();
@@ -70,9 +70,23 @@ useEffect(() => {
   return (
     <Box sx={{ display: "flex" }}>
       {/* <Drawer role={prof._t} /> */}
-      {agent?(
+      {/* {agent?(
         <Drawer role={agent.__t} pageTitle={"Historique"}/>
-      ):null}
+      ):null} */}
+
+
+{
+  agent ? (
+    agent.__t === "Admin" && agent.fonction === "Chef de Département" ? (
+      <Drawer role='Chef' pageTitle={"Historique"} />
+    ) : agent.__t === "Admin" ? (
+      <Drawer role='Admin' pageTitle={"Historique"} />
+    ) : agent.__t === "Professeur" ? (
+      <Drawer role='Professeur' pageTitle={"Historique"} />
+    ) : null
+  ) : null
+}
+
           
       
       <Box
@@ -80,13 +94,13 @@ useEffect(() => {
         sx={{
           flexGrow: 1,
           p: 3,
-          marginTop: "8%",
-          marginLeft: "5%",
-          marginRight: "5%",
+          marginTop: "5%",
+          marginLeft: "0%",
+          marginRight: "0%",
           // boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Add the boxShadow property
         }}
       >
-        <Breadcrumb/>
+        <Breadcrumb pageLabel="Historique"/>
         <>&nbsp;</>
         <DataHist sx={{ marginTop: "10%" }} />
       </Box>

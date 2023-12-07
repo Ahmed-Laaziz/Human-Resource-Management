@@ -37,7 +37,7 @@ import { useProf } from '../context/ProfContext';
 import SendAndArchiveIcon from '@mui/icons-material/SendAndArchive';
 import SendIcon from '@mui/icons-material/Send';
 const drawerWidth = 240;
-const backLink = "https://human-resource-management-backend.vercel.app";
+const backLink = "https://grh-ensaj-backend.adaptable.app";
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -365,7 +365,7 @@ export default function MiniDrawer({role, pageTitle, notifs, id}) {
           >
             <GroupIcon/>
           </ListItemIcon>
-          <ListItemText primary="Ajouter professeur" sx={{ opacity: open ? 1 : 0 }} />
+          <ListItemText primary="Professeurs" sx={{ opacity: open ? 1 : 0 }} />
         </ListItemButton>
       </Link>
     </ListItem>
@@ -389,7 +389,7 @@ export default function MiniDrawer({role, pageTitle, notifs, id}) {
           >
             <PersonAddIcon/>
           </ListItemIcon>
-          <ListItemText primary="Professeurs" sx={{ opacity: open ? 1 : 0 }} />
+          <ListItemText primary="Ajouter professeur" sx={{ opacity: open ? 1 : 0 }} />
         </ListItemButton>
       </Link>
     </ListItem>
@@ -517,7 +517,7 @@ export default function MiniDrawer({role, pageTitle, notifs, id}) {
           >
             <GroupIcon/>
           </ListItemIcon>
-          <ListItemText primary="add professor" sx={{ opacity: open ? 1 : 0 }} />
+          <ListItemText primary="Professeurs" sx={{ opacity: open ? 1 : 0 }} />
         </ListItemButton>
       </Link>
     </ListItem>
@@ -598,7 +598,7 @@ export default function MiniDrawer({role, pageTitle, notifs, id}) {
         >
           <CollectionsBookmarkIcon />
         </ListItemIcon>
-        <ListItemText primary="All Demandes" sx={{ opacity: open ? 1 : 0 }} />
+        <ListItemText primary="Tous les demandes" sx={{ opacity: open ? 1 : 0 }} />
       </ListItemButton>
     </Link>
   </ListItem>

@@ -15,7 +15,7 @@ import axios from 'axios'; // Import Axios
 import { useNavigate } from 'react-router-dom';
 import { useProf } from '../context/ProfContext';
 
-const backLink = "https://human-resource-management-backend.vercel.app";
+const backLink = "https://grh-ensaj-backend.adaptable.app";
 
 export default function ProfileData({ agent }) {
   const navigate = useNavigate();
@@ -37,6 +37,17 @@ export default function ProfileData({ agent }) {
     updateHist(hists.data);
     
     navigate("/historiques");
+    // handleMenuClose();
+  };
+  const handleDocumentsClick = async () => {
+    console.log("prof id : " + hist[0].professeur)
+    const hists = await axios.get(
+      backLink+`/FilesManagement/profFiles/${hist[0].professeur}`// Replace with your actual API endpoint
+    );
+    
+    updateHist(hist[0].professeur);
+    
+    navigate("/files-download");
     // handleMenuClose();
   };
 
@@ -69,32 +80,33 @@ export default function ProfileData({ agent }) {
   
   <FormControl>
     <FormLabel>Grade (الرتبة)</FormLabel>
-    <Input endDecorator={<CreditCardIcon /> } defaultValue={isProfesseur ? hist[0].grade : 'Loading...'} disabled sx={{fontFamily:'bold'}}/>
+    <Input endDecorator={<CreditCardIcon /> } defaultValue={(isProfesseur && hist) ? hist[0].grade : 'Loading...'} disabled sx={{fontFamily:'bold'}}/>
   </FormControl>
   <FormControl>
     <FormLabel>Classe (الدرجة)</FormLabel>
-    <Input endDecorator={<CreditCardIcon /> } defaultValue={isProfesseur ? hist[0].classe : 'Loading...'} disabled sx={{fontFamily:'bold'}}/>
+    <Input endDecorator={<CreditCardIcon /> } defaultValue={(isProfesseur && hist) ? hist[0].classe : 'Loading...'} disabled sx={{fontFamily:'bold'}}/>
   </FormControl>
 
   <FormControl>
     <FormLabel>Numéro de loyer (رقم التأجير)</FormLabel>
-    <Input endDecorator={<CreditCardIcon /> } defaultValue={isProfesseur ? agent.num_loyer : 'Loading...'} disabled sx={{fontFamily:'bold'}}/>
+    <Input endDecorator={<CreditCardIcon /> } defaultValue={(isProfesseur && hist) ? agent.num_loyer : 'Loading...'} disabled sx={{fontFamily:'bold'}}/>
   </FormControl>
   <FormControl>
     <FormLabel>Numéro de preuve (الرقم الاستدلالي)</FormLabel>
-    <Input endDecorator={<InfoOutlined />} defaultValue={isProfesseur ? '425442' : 'Loading...'} disabled sx={{fontFamily:'bold'}}/>
+    <Input endDecorator={<InfoOutlined />} defaultValue={(isProfesseur && hist) ? '425442' : 'Loading...'} disabled sx={{fontFamily:'bold'}}/>
   </FormControl>
 
   <FormControl>
     <FormLabel>Date d'entrée dans la fonction publique (ت. و الوظيفة العمومية)</FormLabel>
-    <Input endDecorator={<CreditCardIcon /> } defaultValue={isProfesseur ? agent.date_entre_ecole : 'Loading...'} disabled sx={{fontFamily:'bold'}}/>
+    <Input endDecorator={<CreditCardIcon /> } defaultValue={(isProfesseur && hist) ? agent.date_entre_ecole : 'Loading...'} disabled sx={{fontFamily:'bold'}}/>
   </FormControl>
   <FormControl>
     <FormLabel>Date d'entrée dans l'établissement (ت.و. المؤسسة)</FormLabel>
-    <Input endDecorator={<InfoOutlined />} defaultValue={isProfesseur ? agent.date_fct_publique : 'Loading...'} disabled sx={{fontFamily:'bold'}}/>
+    <Input endDecorator={<InfoOutlined />} defaultValue={(isProfesseur && hist) ? agent.date_fct_publique : 'Loading...'} disabled sx={{fontFamily:'bold'}}/>
   </FormControl>
-  <Checkbox label="Change password" sx={{ gridColumn: '1/-1', my: 1 }} />
+  {/* <Checkbox label="Change password" sx={{ gridColumn: '1/-1', my: 1 }} /> */}
 <Button onClick={handleHistoriqueClick}>Voir Historique</Button>
+<Button onClick={handleDocumentsClick}>Voir Documents</Button>
 </CardContent>
 ) : isAdmin ? (
   <CardContent

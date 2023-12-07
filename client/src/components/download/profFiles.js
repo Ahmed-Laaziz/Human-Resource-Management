@@ -10,7 +10,11 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+<<<<<<< HEAD
 const backLink = process.env.REACT_APP_BACK_LINK;
+=======
+const backLink = "https://grh-ensaj-backend.adaptable.app"
+>>>>>>> 208bbe0baedfa4ffa5cbff827ea997689817d2ad
 
 export default function ColumnPinningDynamicRowHeight({prof}) {
 
@@ -19,7 +23,10 @@ export default function ColumnPinningDynamicRowHeight({prof}) {
   const columns = React.useMemo(
     () => [
       { field: 'fileType', headerName: 'Type de Fichier', width: 250, editable: false },
-      { field: 'createdAt', headerName: "Date d'envoi", width: 250, type: 'Date',editable: false },
+      { field: 'createdAt', headerName: "Date d'envoi", width: 250, type: 'Date',valueFormatter: (params) => {
+        const date = new Date(params.value);
+        return date.toLocaleDateString('en-US');
+      },editable: false },
       { field: 'title', headerName: 'Titre',width: 250, type: 'String'},
       {
         field: 'actions',
@@ -34,7 +41,7 @@ export default function ColumnPinningDynamicRowHeight({prof}) {
                   size="small" 
                   startIcon={<RemoveRedEyeIcon />}
                   component={Link}
-                  to={`http://localhost:4000/files/${params.row.pdf}`} // Assuming 'pdf' is the column name for PDF name
+                  to={`https://grh-ensaj-backend.adaptable.app/files/${params.row.pdf}`} // Assuming 'pdf' is the column name for PDF name
                   target="_blank"
                 >
                   Voir
@@ -70,6 +77,10 @@ export default function ColumnPinningDynamicRowHeight({prof}) {
       {/* <Button sx={{ mb: 1 }} onClick={handleToggleClick}>
         Toggle edit & delete
       </Button> */}
+      <h5>
+ <center> Tous les documents envoyés au professeur : {prof && prof.prenom && prof.prenom.split('|')[0]} {prof && prof.nom && prof.nom.split('|')[0]}</center>
+</h5>
+
       <div style={{ height: 500 }}>
         <DataGrid
           rows={demandes}

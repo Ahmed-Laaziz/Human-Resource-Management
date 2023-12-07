@@ -12,7 +12,7 @@ import uploadImg from "../../images/fileUpload.gif"
 // ).toString();
 
 function App() {
-    const backLink = "https://human-resource-management-backend.vercel.app";
+    const backLink = "https://grh-ensaj-backend.adaptable.app";
   const [title, setTitle] = useState("");
   const [file, setFile] = useState("");
   const [allImage, setAllImage] = useState(null);
@@ -58,7 +58,7 @@ useEffect(() => {
 //   }, []);
 //   const getPdf = async () => {
 //     console.log("in get pdf")
-//     const result = await axios.get("http://localhost:4000/FilesManagement/get-files");
+//     const result = await axios.get("https://grh-ensaj-backend.adaptable.app/FilesManagement/get-files");
 //     console.log(result.data.data);
 //     setAllImage(result.data.data);
 //   };
