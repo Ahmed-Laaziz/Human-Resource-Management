@@ -33,13 +33,18 @@ The provided figure showcases the robust and modern architecture adopted for a H
 - Visual Studio Code
 - Docker
 
+## Deployment
+
+The Human Resources Management (HRM) application is deployed and accessible online. You can access the application using the following link:
+
+[Human Resource Management - Vercel Deployment](https://human-resource-management-frontend.vercel.app)
+
 ## Containerization
 
 ### Requirements
 
 - [Docker](https://www.docker.com/products/docker-desktop) installed on your machine.
 
-### Deployment
 
 To deploy the Human Resources Management (HRM) application using Docker, follow these steps:
 
