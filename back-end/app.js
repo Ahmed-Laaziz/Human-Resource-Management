@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
 require('dotenv').config();
+const connectDB = require('./database/db');
 
 var indexRouter = require('./routes/index');
 
@@ -20,6 +21,9 @@ var profDemandeRouter = require('./routes/demande/demandes');
 var notifRouter = require('./routes/notifications/notification');
 var fileRouter = require('./routes/file/fileRouter');
 var app = express();
+
+// Connect to the database when the app starts
+connectDB();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
