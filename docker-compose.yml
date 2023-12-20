@@ -1,8 +1,9 @@
 version: "3"
 services:
   node-app:
-    container_name: express-node-app-container-test1
-    image: ahmedlaaziz/grh_app
+    container_name: express-node-app-container-test
+    # image: ahmedlaaziz/grh_app
+    build: ./back-end
     ports:
       - "4000:4000"
     env_file:
@@ -15,6 +16,7 @@ services:
     restart: always
     volumes:
       - mongo-db:/data/db
+      - ./back-end/init_db/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
