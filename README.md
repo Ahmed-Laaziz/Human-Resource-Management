@@ -1,4 +1,4 @@
-# ENSAJ GRH: Design and Implementation of a Human Resource Management System.
+# ENSAJ GRH: Design and Implementation of a Human Resource Management System
 
 This project aims to maximize the efficiency of human capital management by leveraging a comprehensive set of features related to employee management, leave requests, certificates, and movements, whether they are professional or travel-related.
 
